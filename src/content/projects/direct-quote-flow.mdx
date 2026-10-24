@@ -1,0 +1,558 @@
+---
+title: Direct Quote Flow Redesign
+filename: direct-quote-flow.md
+mode: NORMAL
+type: UI / UX · Research
+year: "2026"
+# TODO(image): replace with a hero export once the Figma frames are ready,
+# e.g. /images/direct-quote/hero.jpg (the sequential Pet Details screen works well).
+image: /images/placeholder.svg
+imageAlt: The redesigned Perfect Pet quote flow, asking one question at a time beneath a named step progress bar
+oneliner: >-
+  A restructuring of Perfect Pet's direct quote flow around the information the price depends on,
+  so that customers reach their quotes sooner and are asked the remaining questions once they have
+  seen a price.
+eyebrow: Web · Quote journey · Multi-pet · AI-assisted prototyping
+problem: >-
+  The direct quote flow asked for most of its questions, including a full set of health and behaviour
+  questions for each pet, before showing a price, and approximately one in five users left at each
+  step.
+outcomeValue: In progress
+# TODO: update once the sequential layout ships and there is something (qualitative) to say about results.
+outcomeLabel: The revised question order and sequential layout are scheduled for the next sprint, in the new Perfect Pet visual identity.
+isNew: true
+hidden: true
+statusline:
+  - label: NORMAL
+    lime: true
+  - label: ui/ux · research
+  - label: "2026"
+  - label: Figma · Claude · Tokens Studio
+  - label: Lyssna · co-design
+order: 2
+device: pager
+sections:
+  - component: ProjectHero
+    props:
+      title: Direct Quote Flow Redesign
+      type: UI / UX · Research
+      year: "2026"
+      scope: "Lead designer · Two brands · Product, engineering, underwriting, pricing and compliance"
+  - component: ProjectGallery
+    props:
+      # TODO(image): same hero export as above.
+      image: /images/placeholder.svg
+      imageAlt: The redesigned Perfect Pet quote flow, asking one question at a time beneath a named step progress bar
+  - component: ProjectMeta
+    props:
+      statusline:
+        - label: NORMAL
+          lime: true
+        - label: ui/ux · research
+        - label: "2026"
+        - label: Figma · Claude · Tokens Studio
+        - label: Lyssna · co-design
+  - component: ProjectIntro
+    props:
+      eyebrow: Perfect Pet & Now Pet Insurance — Case study 04
+      title: Direct Quote Flow Redesign
+      summary: >-
+        The direct quote flow is the journey customers begin when they select "Get a quote" on the
+        Perfect Pet or Now Pet website. Because they arrive directly from the brand site, the flow needs
+        to read as a continuation of it, and because they are being asked for information before they
+        have been offered anything in return, the form itself should demand as little attention as
+        possible. When a form is designed well, customers move from one question to the next without
+        stopping to consider how long it will take or whether the effort is worthwhile. The existing
+        flow did the opposite. It presented every question on a single page, asked for the pet's full
+        health and behaviour history before showing a price, and lost approximately one in five users
+        at each of its five steps.
+
+
+        Only a small number of answers are used to calculate a price: the pet's species, breed, age,
+        sex, purchase cost and neutering status, together with the owner's date of birth and postcode.
+        The redesign is organised around reaching that price as quickly as possible. The flow now
+        begins with the pet's basic details, followed by the owner's email address, date of birth,
+        address and preferred start date, and the questions that determine which type of cover is
+        shown. The quotes follow immediately. The health questions, warranty checks and remaining
+        personal details are asked afterwards, once the customer has seen a price and has a reason to
+        continue. In the process, I removed a question on which the price did not depend, combined three behaviour and insurance-history questions into a single checklist asked
+        once per household, and ended the repetition of every health question for each additional pet.
+        The result is a shorter route to the quote and a form that asks its more demanding questions at
+        a point where customers are prepared to answer them.
+  - component: ProjectBeforeAfter
+    props:
+      beforeTitle: Before
+      beforeBody: >-
+        All of the pet questions appeared on one long page, and before the quote they included
+        pre-existing conditions, microchipping, vaccinations, aggression, previously refused insurance
+        and third-party incidents. Adding a second pet repeated each of these questions in full. A
+        second page then asked for the owner's title, name, date of birth, email address, phone number
+        and address, and the customer saw a price only after completing both pages.
+      afterTitle: After
+      afterBody: >-
+        Before the quote, the flow asks only for the pet's basic details, the owner's email address,
+        date of birth and address, the preferred start date and the cover preferences that determine
+        which policies are shown. Each question appears once the previous one has been answered. The
+        health and warranty questions and the remaining personal details are asked after the quote,
+        and questions that apply to the whole household are asked once for all pets.
+  - component: ProjectMetricsBand
+    props:
+      items:
+        - value: "~20%"
+          label: Of users leaving at each step of the original five-step flow
+        - value: Pre / post quote
+          label: Every question classified by whether the price depends on it
+        - value: Two brands
+          label: Perfect Pet and Now Pet, sharing one flow and one token structure
+        - value: Conversion
+          label: Direct quote completion, the main measure of success
+  - component: ProjectProblemKeyInfo
+    props:
+      problemBody: >-
+        Most of Perfect Pet's sales come through price comparison websites, where customers have
+        already seen a price before they reach us. Customers who come to us directly have not, and
+        they must complete our form to obtain one. That form was long, included questions that had no
+        bearing on the price, and displayed its full length on the first page. Users abandoned the
+        flow at every step, some of those who continued telephoned the contact centre to complete
+        their purchase with an agent, and customers with more than one pet were required to answer the
+        same health questions separately for each animal.
+      contextBody: >-
+        I carried out this work with the Head of Product, engineering, underwriting, pricing,
+        compliance and the aggregator team. Changes to the questions in an insurance quote have
+        consequences beyond design, since some answers are used to calculate the price and others
+        support underwriting or regulatory requirements, so every change to the question set was
+        agreed with pricing and underwriting before it progressed to development.
+      infoItems:
+        - label: Objective
+          value: >-
+            Reduce the time and effort required to reach a price, and support households with more
+            than one pet without the need for a phone call
+        - label: Success measures
+          value: >-
+            Direct quote completion, drop-off at each step, and the number of customers who telephone
+            to complete a purchase
+        - label: Constraints
+          value: >-
+            [[fca|FCA]] Consumer Duty, the data required by pricing and underwriting, two brands on
+            shared infrastructure, and a new visual identity introduced during the project
+  - component: ProjectImageCarousel
+    props:
+      eyebrow: Context — the original direct flow
+      title: The original direct quote flow
+      body: >-
+        The first page collected the pet's details and then, under the heading "A little bit more
+        about your pet", moved directly on to pre-existing conditions, neutering, microchipping,
+        vaccinations, aggression, previously refused insurance and third-party incidents. A button
+        labelled "Add a sidekick" added a second pet, which required the customer to answer the same
+        questions again. The second page collected the owner's details and the first cover question,
+        and the quotes that followed listed policies separately for each pet.
+      images:
+        - src: /images/direct-quote/original/01-pet-details.jpg
+          alt: The original Pet Details page under a "Welcome hooman" banner, with pet information and a long block of health and behaviour questions on one scrolling page
+        - src: /images/direct-quote/original/02-your-details.jpg
+          alt: The original Your Details page asking for title, names, date of birth, email, phone and address, followed by the first cover option question
+        - src: /images/direct-quote/original/03-pet-details-multi-pet.jpg
+          alt: The original Pet Details page with a second pet added, repeating the full set of pet, health and behaviour questions for each pet
+        - src: /images/direct-quote/original/04-quotes-multi-pet.jpg
+          alt: The original quotes page for a two-pet household, asking the customer to select a policy for each pet in turn
+  - component: ProjectProcessSteps
+    props:
+      title: Research methodology
+      steps:
+        - title: Heuristic and UX audits
+          body: >-
+            I evaluated the flow against Nielsen's ten usability heuristics and, separately, against
+            the Baymard Institute's e-commerce checklist. The two audits identified many of the same
+            problems, including the absence of any way to save and resume a quote, an overloaded first
+            step, a quotes page that offered little support for comparing policies, and informal
+            button labels such as "Paw-ceed to hooman info" at the points where customers most needed
+            reassurance.
+        - title: Customer contact and call analysis
+          body: >-
+            I analysed the pre-purchase contacts recorded by the contact centre and reviewed a sample
+            of call recordings drawn from across the quote journey. AI tools were used for
+            transcription and for an initial grouping of calls into themes, and I checked each theme
+            against the underlying calls before including it in the findings.
+        - title: Cross-functional heuristic workshop
+          body: >-
+            Seven colleagues from teams affected by the quote flow reviewed it with me screen by screen
+            on an anonymous Miro board, recording issues and opportunities individually before any
+            group discussion took place. In a second session, the group organised these notes into
+            themes and prioritised them through a buy-a-feature exercise, in which each participant
+            allocates a fixed budget, so that the ranking reflected everyone's view rather than the
+            most senior or most vocal participants.
+        - title: Co-design workshop
+          body: >-
+            The themes formed the basis of a ninety-minute design studio with four stations, each
+            presenting the research behind one theme, at which participants worked through "How might
+            we" questions and Crazy 8s sketching exercises.
+        - title: Testing with Lyssna
+          body: >-
+            I used Lyssna to test individual design ideas with participants outside the business, so
+            that proposals presented to stakeholders were supported by evidence from potential
+            customers.
+          # TODO: name the specific Lyssna tests (e.g. preference, first-click) and what they settled, without figures.
+  - component: ProjectTextImage
+    props:
+      eyebrow: Synthesis — research and evidence map
+      title: Research streams and themes
+      body: >-
+        I brought every research stream together on a single map, linking each source of evidence to
+        the theme it supported. Four themes emerged, and the workshop gave each a memorable name: "Are
+        we nearly there yet?" for form length and progress, "The grey area" for
+        [[pre-existing condition|pre-existing conditions]], "Back to square one" for the loss of
+        progress when a session is interrupted, and "Go on then" for confidence at the quotes stage.
+        The map also allowed me to show stakeholders that each theme was supported by several
+        independent sources.
+      image: /images/direct-quote/research/evidence-map.jpg
+      imageAlt: >-
+        A map linking eight research streams, including the heuristic audits, workshop, call and
+        contact analysis and the question audit, to four themes that feed the co-design workshop.
+  - component: ProjectFindingsGrid
+    props:
+      title: Findings from the audits, contact analysis and heuristic workshop
+      items:
+        - title: Questions asked before they were needed
+          body: >-
+            The price depends on a short list of answers, yet the flow asked for considerably more
+            before showing one. Health and behaviour questions become relevant only once a customer has
+            decided to buy, and asking them first made the form feel like a far greater commitment
+            than was necessary.
+        - title: Treatment of multi-pet households
+          body: >-
+            The flow assumed a single pet. The multi-pet discount appeared only on the quotes page, as
+            a strikethrough price without explanation, and some customers who wished to insure several
+            pets were directed to telephone for a quote. Multi-pet quotes and policies account for a
+            significant share of the direct flow, so this required proper consideration in the design.
+        - title: Uncertainty about pre-existing conditions
+          body: >-
+            This was the most frequent reason for customers pausing or calling. The online question
+            accepts only a yes or no answer, whereas most veterinary histories are less clear-cut, and
+            the accompanying note conflated pre-existing conditions with the [[waiting period]].
+        - title: Late discovery of eligibility
+          body: >-
+            Some customers completed most of a quote before learning that their address or their dog's
+            breed could not be covered.
+        - title: Cover questions framed in insurance terms
+          body: >-
+            The [[demands and needs]] questions did not correspond to decisions a pet owner would
+            recognise, and because their only effect was to change the order in which quotes were
+            displayed, colleagues questioned their purpose.
+        - title: Lack of orientation
+          body: >-
+            With every question on one page and a progress bar that named only the five pages,
+            customers had no indication of how close they were to a price. This concern gave the first
+            workshop station its name.
+  - component: ProjectImageGalleryGrid
+    props:
+      title: Co-design workshop outputs
+      images:
+        - src: /images/direct-quote/research/codesign-whiteboard-01.jpg
+          alt: "Station one whiteboard, Are we nearly there yet: multi-pet as a first step with the 15% discount, and pet date of birth reduced to month and year"
+        - src: /images/direct-quote/research/codesign-whiteboard-02.jpg
+          alt: "Station two whiteboard, The grey area: split the pre-existing condition and waiting period messages, use plain English, and fix unreadable yellow text"
+        - src: /images/direct-quote/research/codesign-whiteboard-03.jpg
+          alt: "Station three whiteboard: a Been here before? entry screen that collects an email to resume a quote, then asks how many pets you would like to insure"
+        - src: /images/direct-quote/research/codesign-whiteboard-04.jpg
+          alt: "Station four whiteboard: video and audio explainers of how pet insurance works, policy types and exclusions"
+  - component: ProjectQuote
+    props:
+      quote: >-
+        Very few customers called because they considered the telephone easier than the website. Most
+        called because the website could not do something they needed, or because they wanted a member
+        of staff to confirm a detail before they committed to a purchase.
+      attribution: Synthesis of the customer call analysis
+  - component: ProjectHowMightWe
+    props:
+      title: Problem framing through “How might we” statements
+      intro: The research and the workshop outputs were consolidated into four questions.
+      items:
+        - question: >-
+            How might we bring customers to a price by asking only what the price depends on, and defer
+            all other questions until they have seen it?
+          theme: Length
+        - question: >-
+            How might we show customers where they are in the flow, and how much remains, at every
+            stage?
+          theme: Orientation
+        - question: >-
+            How might we make insuring several pets as straightforward as insuring one, without the
+            need for a phone call?
+          theme: Multi-pet
+        - question: >-
+            How might we phrase the cover questions in terms a pet owner understands, and show how
+            their answers affect the policies they are offered?
+          theme: Clarity
+  - component: ProjectCallout
+    props:
+      variant: principle
+      label: Guiding design principle
+      body: >-
+        Before the quote, ask only what the price depends on. Every other question needed a clear
+        justification to remain in the flow, and those that were retained were, in most cases, moved
+        to after the quote.
+  - component: ProjectProcessSteps
+    props:
+      title: Revised question order
+      steps:
+        - title: Pet details
+          body: >-
+            The pet's name, whether it is a dog or a cat, its sex, its breed type followed by its breed
+            or expected adult size, its date of birth, whether it is a rescue and, if so, when it came
+            home, its purchase price, and whether it has been neutered or spayed. The customer is then
+            asked whether they would like to add a second pet.
+        - title: Owner details and cover
+          body: >-
+            The owner's email address, date of birth and address, and the date on which cover should
+            begin, followed by the cover questions that determine which type of policy is shown,
+            written in plain English and summarised before the quotes are displayed.
+        - title: Quotes
+          body: >-
+            The customer sees their quotes at this stage, having answered only the questions on which
+            those prices depend.
+        - title: Pet checks and remaining details
+          body: >-
+            Pre-existing conditions, microchipping and vaccinations, followed by a single checklist
+            covering aggression, previously refused insurance and third-party incidents, completed once
+            for the whole household. The remaining personal details, including the owner's name, phone
+            number and any joint policyholder, are collected at the end.
+  - component: ProjectFindingsGrid
+    props:
+      title: Questions removed, merged and moved
+      items:
+        - title: Pet colour
+          body: >-
+            The original flow asked customers to choose their pet's colour from a long list. The price
+            does not depend on it, and participants in the heuristic workshop observed that first-time
+            owners could not reasonably be expected to distinguish between some of the options. The
+            question has been removed.
+        - title: Behaviour and insurance history
+          body: >-
+            Aggression, previously refused or cancelled insurance, and third-party incidents were three
+            separate questions asked for every pet. They are now a single checklist, presented after
+            the quote and completed once for the household.
+        - title: Health questions
+          body: >-
+            Pre-existing conditions, microchipping and vaccinations have no effect on the price, so
+            they are now asked after it, when customers who have decided to proceed can give the
+            pre-existing conditions question the attention it requires.
+        - title: Owner details
+          body: >-
+            Email address, date of birth and address remain before the quote, since the quote is sent
+            by email and the price depends on the owner's age and postcode. Title, name, phone number
+            and joint policyholder details have moved to after the quote.
+  - component: ProjectDecisionLog
+    props:
+      title: Design decisions and rationale
+      intro: The principal design decisions, the reasoning behind them, and their effect on the flow.
+      decisions:
+        - decision: The question set was divided into pre-quote and post-quote questions
+          rationale: >-
+            I reviewed every question with the pricing and underwriting teams to establish whether the
+            price depended on it. Questions that did not, other than the cover questions that determine
+            which products are shown, were either moved to after the quote or removed.
+          outcome: >-
+            Customers now reach a price after considerably fewer questions, and the questions that
+            follow are asked once they have decided the policy is worth pursuing.
+          outcomeType: positive
+          # TODO(image): export the Post Quote "Pet checks" frame from the Next Sprint page.
+          image: /images/placeholder.svg
+          imageAlt: The post-quote Pet checks step, asking household questions about both pets at once
+        - decision: Questions are presented one at a time
+          rationale: >-
+            Displaying every question at once made the form appear longer than it was and drew
+            attention to the form itself. I built one question per screen, a scroll-as-you-answer
+            layout and a sequential layout as working prototypes, and compared them before choosing an
+            approach.
+          outcome: >-
+            Each question appears once the previous one has been answered, and earlier answers remain
+            visible above it, so customers can review or change them without returning to a previous
+            page.
+          outcomeType: positive
+          # TODO(image): export Screen 1 → Screen 4 from the Next Sprint page (or a short GIF of the Claude demo).
+          image: /images/placeholder.svg
+          imageAlt: The Pet Details step building up one question at a time
+        - decision: The progress indicator names each step
+          rationale: >-
+            The original indicator consisted of five dots, which showed the customer's current page but
+            neither its purpose nor the number of pages remaining.
+          outcome: >-
+            The indicator now reads, for example, "Step 2 of 5, Your Details", and remains visible
+            as the customer scrolls.
+          outcomeType: positive
+          # TODO(image): export the Progress Indicator component states.
+          image: /images/placeholder.svg
+          imageAlt: The named step progress indicator reading Step 2 of 5, Your Details
+        - decision: A second pet is offered once the first pet's details are complete
+          rationale: >-
+            Customers with more than one pet were repeating every question for each animal or
+            telephoning instead, and the multi-pet discount was visible only as an unexplained
+            strikethrough price on the quotes page.
+          outcome: >-
+            The offer and the discount now appear at the end of the first pet's details. The first pet
+            is then summarised in a card while the second is entered, and the household questions after
+            the quote apply to both.
+          outcomeType: positive
+          # TODO(image): export Pet Details - multi pet from the Next Sprint page.
+          image: /images/placeholder.svg
+          imageAlt: A second pet being added, with the first pet summarised in a card above
+        - decision: The cover questions were rewritten and followed by a summary
+          rationale: >-
+            The [[demands and needs]] questions are a regulatory requirement, but customers found them
+            difficult to understand and could not see how their answers affected the results.
+          outcome: >-
+            The questions now ask, for example, how long the customer would like help with vet bills if
+            their pet became ill, and a short summary explains which policies will be shown and why.
+            The wording remains subject to compliance review and may change.
+          outcomeType: tradeoff
+          # TODO(image): export the Your Cover Options frame with the summary callout.
+          image: /images/placeholder.svg
+          imageAlt: The Your Cover Options questions with a summary explaining which policies will be shown
+        - decision: Eligibility restrictions are stated before the relevant questions are answered
+          rationale: >-
+            Some customers discovered at the address step, after completing most of a quote, that they
+            were not eligible for cover.
+          # TODO: confirm this matches what ships.
+          outcome: >-
+            The address question now states which areas cannot be covered, and the breed question
+            refers to the breeds that cannot be covered, before the customer answers either.
+          outcomeType: positive
+  - component: ProjectTextImage
+    props:
+      eyebrow: Method — teaching Claude the design system
+      title: Design tokens in generated prototypes
+      body: >-
+        Prototypes are useful to stakeholders only if they closely resemble the finished product. I
+        exported the Perfect Pet and Now Pet [[design token|design tokens]] from Figma using Tokens
+        Studio and provided them to Claude, so that the demos it produced used the correct colours,
+        typography and spacing for each brand. Later in the project I replaced the manual export with
+        a direct connection: Claude now reads the variables from the Figma file, compares them with the
+        tokens committed to the repository, and records any differences in a dated changelog for each
+        brand, which the developer reviews before updating the code. When I changed the selected-state
+        colour from light blue to dark teal, for example, the change reached engineering as a single
+        entry in that changelog.
+      # TODO(image): screenshot of design-system.html or a changelog entry.
+      image: /images/placeholder.svg
+      imageAlt: The living design system page generated from the exported Perfect Pet tokens
+  - component: ProjectImageCarousel
+    props:
+      eyebrow: Method — Figma and Claude in parallel
+      title: Working demonstrations for stakeholders and the board
+      reverse: true
+      body: >-
+        I produced the initial wireframes in Figma and then described each interaction to Claude,
+        including when a question should appear, how it should behave once answered and when the
+        second pet should be offered, so that it could build working HTML demonstrations. Because the
+        changes involved removing questions, reordering the flow and loading questions in a different
+        way, static mock-ups could not convey how the new flow would feel in use, whereas an
+        interactive demonstration allowed stakeholders and the board to experience it directly. The
+        same approach made it practical to compare alternatives, including one question per screen
+        against a scrolling layout, several positions for the continue button, and eighteen versions
+        of the breed selector, four of which were fully functional. Claude built the prototypes, and I
+        selected which to take forward based on testing and the findings of the research.
+      # TODO(image): screenshots of the HTML demos (Quote Start, Pet Details Form, breed-selector-variants,
+      # one-question-vs-scrolling). These files are currently permission-locked on disk.
+      images:
+        - src: /images/placeholder.svg
+          alt: The working Pet Details demo built in HTML, loading questions one at a time
+        - src: /images/placeholder.svg
+          alt: A side-by-side comparison of one question per screen and a scrolling layout
+        - src: /images/placeholder.svg
+          alt: Breed selector variants, from plain-language cards to a search-first selector that classifies the breed automatically
+  - component: ProjectTextImage
+    props:
+      eyebrow: Implementation — the new visual identity
+      title: Application of the new visual identity
+      body: >-
+        Perfect Pet introduced a new visual identity across the company during this project, including
+        a new logo, typeface, colour palette and component library. I applied it to the quote flow as
+        the work progressed, beginning with the review page and then converting the quote screens into
+        reusable components, which also helps the flow read as a continuation of the brand site from
+        which customers arrive. Now Pet uses the same token structure with its own brand values, so a
+        single set of components serves both brands.
+      # TODO(image): export the 24 Aug Componentisation V1 review page, or an old vs new identity comparison.
+      image: /images/placeholder.svg
+      imageAlt: The review page rebuilt in the new Perfect Pet visual identity
+      reverse: true
+  - component: ProjectImageCarousel
+    props:
+      eyebrow: Implementation — next sprint
+      title: The sequential quote flow
+      body: >-
+        The next sprint introduces the sequential layout. The "Let's get to know your pet" section
+        presents the pet questions one at a time and then offers a second pet. The "Just a little about
+        you" section asks for the owner's email address, date of birth, address and start date, with
+        the areas that cannot be covered and the waiting period explained alongside the relevant
+        questions. The cover questions and their summary follow, then the quotes, and the pet checks
+        are completed after the quote.
+      # TODO(image): export from "Next Sprint - Layout Change V1 (desktop)": Screen 1, Pet Details,
+      # Pet Details - multi pet, Your Details, Post Quote. Save to /images/direct-quote/next-sprint/.
+      images:
+        - src: /images/placeholder.svg
+          alt: The opening question of the sequential Pet Details step
+        - src: /images/placeholder.svg
+          alt: Pet Details fully answered, with the offer to add a second pet and the discount explained
+        - src: /images/placeholder.svg
+          alt: A second pet's details, with the first pet collapsed into a summary card
+        - src: /images/placeholder.svg
+          alt: Your Details and the plain-English cover options, with a summary of the policies that will be shown
+        - src: /images/placeholder.svg
+          alt: The post-quote Pet checks step for both pets
+  - component: ProjectImageCarousel
+    props:
+      eyebrow: Further work — multi-pet first
+      title: Establishing the number of pets at the start
+      reverse: true
+      body: >-
+        A subsequent iteration will open the flow by asking how many pets the customer wishes to
+        insure, an approach proposed by one of the groups at the co-design workshop. A label will
+        indicate which pet the customer is currently answering for, and a side panel will summarise the
+        answers given so far, which responds to a further request from the workshop.
+      # TODO(image): export from "Later - Pill + Multi Pet (desktop)": the How many pets screen and the Pill / summary.
+      images:
+        - src: /images/placeholder.svg
+          alt: An opening screen asking how many pets you are insuring, with a number picker
+        - src: /images/placeholder.svg
+          alt: A pill reading Now answering for Pet 1 of 2, beside a Your quote so far summary panel
+  - component: ProjectLearnings
+    props:
+      title: Reflection and further work
+      points:
+        - >-
+          The most consequential piece of work was the review of every question with pricing and
+          underwriting to establish whether the price depended on it. Once that classification had been
+          agreed, most of the design followed from it, and subsequent discussions about individual
+          questions were considerably easier to resolve.
+        - >-
+          Interactive demonstrations changed the character of stakeholder reviews. Stakeholders could
+          experience the difference between the original and revised flows, and disagreements emerged
+          early, when they were simple to address. Because a polished demonstration can appear more
+          settled than the thinking behind it, I presented each one as a proposal supported by research
+          rather than as a final decision.
+        - >-
+          Measurement is the first area I would strengthen. The existing analytics could not
+          distinguish new visitors from customers returning to a saved quote, which makes it difficult
+          to attribute changes in behaviour to specific design decisions, and I have therefore asked for
+          tracking to be in place before the revised flow is released.
+        - >-
+          Further work includes the ability to save and resume a quote, a guided assessment of
+          pre-existing conditions to replace the current yes or no question, and opening the flow with
+          the number of pets to be insured.
+        # TODO: add a line on results once the sequential layout is live.
+  - component: MoreProjects
+    props:
+      title: More projects
+      projects:
+        - title: Pet Insurance Checkout Redesign
+          blurb: >-
+            Redesigning the review page so people could tell what they were buying before they paid,
+            informed by eleven sessions with the teams who handle complaints and claims.
+          slug: pet-insurance-checkout
+          category: UI / UX
+        - title: Perro Onboarding & Subscription
+          blurb: >-
+            A shorter, value-first onboarding and subscription redesign that reduced drop-offs and
+            lifted conversion, implemented directly in Flutter.
+          slug: perro-onboarding
+          category: UX / Flutter
+---

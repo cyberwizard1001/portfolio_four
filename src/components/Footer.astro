@@ -1,0 +1,124 @@
+---
+const base = import.meta.env.BASE_URL;
+const projects = [
+  { title: 'Perro Onboarding', slug: 'perro-onboarding' },
+  { title: 'Crafting Counselling Companions', slug: 'counselling-companions' },
+];
+---
+
+<footer class="site-footer" id="contact">
+  <div class="page footer-grid">
+    <div class="footer-brand">
+      <h2 class="t-wordmark">Nirmal Karthikeyan</h2>
+      <p>UX designer focused on clear, thoughtful digital experiences across product, service, and web journeys.</p>
+      <a href="mailto:hello@nirmalkarthikeyan.com" class="t-action">hello@nirmalkarthikeyan.com</a>
+    </div>
+
+    <nav class="footer-col" aria-label="Navigate">
+      <h3 class="t-label">navigate</h3>
+      <a href={base}>Home</a>
+      <a href={`${base}about`}>About</a>
+      <a href={`${base}ai`}>How I use AI</a>
+      <a href={`${base}contact`}>Contact</a>
+    </nav>
+
+    <nav class="footer-col" aria-label="Projects">
+      <h3 class="t-label">projects</h3>
+      {projects.map((p) => (
+        <a href={`${base}projects/${p.slug}`}>{p.title}</a>
+      ))}
+    </nav>
+
+    <nav class="footer-col" aria-label="Website">
+      <h3 class="t-label">website</h3>
+      <a href={`${base}colophon`}>Site documentation</a>
+      <a href={`${base}tokens`}>Token reference</a>
+      <a href={`${base}accessibility`}>Accessibility</a>
+    </nav>
+
+    <nav class="footer-col" aria-label="Elsewhere">
+      <h3 class="t-label">elsewhere</h3>
+      <a href="https://linkedin.com/in/nirmal-karthikeyan" target="_blank" rel="noopener">LinkedIn<span class="visually-hidden"> (opens in new tab)</span></a>
+      <a href="https://medium.com/@nirmalkarthikeyan" target="_blank" rel="noopener">Medium<span class="visually-hidden"> (opens in new tab)</span></a>
+      <a href={`${base}Resume.pdf`} target="_blank" rel="noopener">CV<span class="visually-hidden"> (opens in new tab)</span></a>
+      <a href="mailto:hello@nirmalkarthikeyan.com">Email</a>
+    </nav>
+  </div>
+
+  <div class="page footer-bottom">
+    <span class="t-label">© 2026 Nirmal Karthikeyan</span>
+    <span class="footer-built">Built with Astro &amp; TypeScript by Nirmal Karthikeyan.</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--ink);
+    background: var(--panel);
+  }
+
+  .footer-grid {
+    padding-top: 36px;
+    padding-bottom: 28px;
+    display: grid;
+    grid-template-columns: minmax(240px, 1.4fr) repeat(4, minmax(0, 1fr));
+    gap: 28px;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .footer-brand h2 { font-size: 24px; }
+
+  .footer-brand p {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 32ch;
+  }
+
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    font-size: 15px;
+  }
+
+  .footer-col h3 { font-weight: 400; margin-bottom: 4px; }
+
+  .footer-col a {
+    font-weight: 500;
+    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* A sentence, so text face rather than a pixel label. */
+  .footer-built { font-size: 13px; color: var(--muted); }
+
+  .footer-bottom {
+    padding-top: 14px;
+    padding-bottom: 28px;
+    border-top: 1px dashed var(--rule);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  @media (max-width: 1024px) {
+    .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .footer-brand { grid-column: 1 / -1; }
+  }
+
+  @media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-col a { min-height: 44px; }
+  }
+</style>

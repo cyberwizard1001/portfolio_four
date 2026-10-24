@@ -1,0 +1,124 @@
+---
+title: Pawlog — copy management tool
+filename: pawlog.mdx
+mode: NORMAL
+type: Tool design / Full-stack
+year: "2026"
+image: /images/pawlog/hero.svg
+imageAlt: The Pawlog dashboard, framed and rotated
+oneliner: Copy was living everywhere and nowhere at once. I designed and built a browser tool that turns every save into a real git commit.
+statusline:
+  - label: NORMAL
+    lime: true
+  - label: tool design
+  - label: "2026"
+  - label: Astro · Alpine.js
+  - label: Git · docx
+order: 1
+device: cd
+sections:
+  - component: ProjectHero
+    props:
+      title: Pawlog — copy management tool
+      type: Tool design / Full-stack
+      year: "2026"
+  - component: ProjectGallery
+    props:
+      image: /images/pawlog/hero.svg
+      imageAlt: The Pawlog dashboard — journeys, pages, and a recent commit feed
+  - component: ProjectMeta
+    props:
+      statusline:
+        - label: NORMAL
+          lime: true
+        - label: tool design
+        - label: "2026"
+        - label: Astro · Alpine.js
+        - label: Git · docx
+  - component: ProjectIntro
+    props:
+      eyebrow: Internal tool — designed and built solo
+      title: Pawlog — copy management tool
+      summary: >-
+        This project had an unconventional start: it started with me being annoyed, not with a research plan or a brief. 
+        I was working with my product manager on a set of copy changes that had to go through
+        compliance, and every time the wording shifted, I was updating the components on Figma so
+        the compliance team and the developers could see the latest state of play.
+        Alongside that, we were tracking changes in Word documents, the kind with a change
+        management table at the top, and these documents were being passed around in Teams chats.
+        So at any given moment the real source of truth was spread across a Figma file I kept
+        editing, a Word doc somebody had commented on, and a thread I had to scroll back through to
+        understand why a line had changed. Working out the current state of a single string meant
+        checking three places that didn't agree with each other.
+
+        Then there was handover. When the copy was finally settled, the way we got it to developers
+        was by sharing a Figma prototype and hoping they read it correctly. There was no proper
+        mechanism for moving agreed copy from us to them. It worked, in the way a lot of things work
+        right up until they don't. So I built Pawlog to fix my own problem first, and then realised
+        it might fix a few other people's too.
+        
+  - component: ProjectProblemKeyInfo
+    props:
+      problemBody: >-
+        Before Pawlog, copy didn't really live anywhere. It was in Figma, in Word docs, in Teams
+        threads, in comments, wherever it happened to land. Developers and writers worked from
+        different versions, small strings got changed with no record of who changed them or why, and
+        if something broke there was no way to know what the line used to say. Non-technical
+        stakeholders couldn't touch the copy without pulling in a developer, and developers were
+        understandably reluctant to change copy without being sure it was the approved version. None
+        of it had a stable identity either, no key a developer could safely reference in code.
+      contextBody: >-
+        The answer was never going to be another Notion doc or a headless CMS. What the work needed
+        was something lightweight and local that treated copy the way we already treat code:
+        versioned, structured, and reviewable. I originated the tool, shaped the information
+        architecture, and built the full stack myself, demoing it to colleagues as it came together
+        and folding their feedback back in.
+      infoItems:
+        - label: Objective
+          value: >-
+            Give copy a single source of truth that is versioned, reviewable, and easy to move
+            between writers, compliance, and developers
+        - label: Role
+          value: >-
+            Product designer and developer. Originated the tool, designed the IA, built the full
+            stack solo
+        - label: Stack
+          value: >-
+            Astro 5 (SSR), Alpine.js, plain CSS, Node.js, Git via shell-out, JSON files, docx for
+            Word generation
+        - label: Timeline
+          value: >-
+            A few weeks to design and build, May 2026, with periodic demos and feedback along the way
+---
+
+### The decisions that shaped it
+
+Most of the choices that made Pawlog what it is were about deciding what not to build. The obvious path for versioning was a custom audit table with version IDs and rollback logic. But git had already solved that problem, and solved it better than I would have. So the copy folder is its own git repository, and every save shells out to `git add` and `git commit`. The tool just puts a friendly face on something git already does. You can run `git log` in that folder without touching the app at all.
+
+The copy repository is also kept separate from the app code, which matters more than it sounds. If app changes and copy changes share a single history, neither is readable. A writer reviewing what changed to the homepage headline shouldn't have to scroll past commits about CSS. The two repos are entirely independent, which means the copy history stays clean and can be pushed to a remote for backup on its own schedule.
+
+The stack follows the same logic. Alpine.js off a CDN, plain CSS with custom properties, no build step. A local copy-editing tool doesn't need a reactive component tree, and it took a small amount of judgment to not add one anyway. The constraint keeps the whole thing maintainable by one person.
+
+Each page of copy is a single JSON file with a shallow, predictable structure and snake_case keys that developers can reference safely in code. When you run a diff, you can read exactly what changed. No migration scripts, no schema versions to manage.
+
+The terminology was also a deliberate choice. The previous model of channels, sections, and widgets didn't match the way writers think about their own work. Journey, Page, Section maps more naturally to how a product is actually structured, and the words a tool uses quietly shape how people think about the thing they're managing.
+
+Saves only ever move forward. No amend, no force-push, no overwrite. If someone saves the wrong thing, the previous version is always one commit back. History is the safety net and it can't be removed by accident.
+
+The export formats came last and were the most user-facing decision. The process Pawlog was replacing ran on Word documents with tracked changes, passed around in Teams chats. Asking compliance reviewers to learn a new workflow was the fastest way to get the tool ignored, so pages and journeys export as `.docx` files with an optional section filter and optional revision history pulled from the git log. JSON export and import sit alongside it for the developer handoff case. Two formats for two audiences, from the same underlying data.
+
+> Version history isn't a feature you build. It's a primitive you expose. Most copy tools either ignore history or write their own inferior version of it. The bet of Pawlog was that git had already solved that problem better than I could — and the same history a developer reads as a diff is the revision log a reviewer reads at the end of a Word document.
+
+### What it does
+
+The dashboard is the first thing you see, with live counts of journeys, pages, and copy items, plus a feed of recent commits so you can tell at a glance what's been touched. The sidebar gives you the hierarchy — journeys collapsing open to reveal their pages — with full create, rename, and delete for both. Selecting a page brings up every copy item grouped by section, and selecting an item slides a panel over the top so you can edit the string, leave a commit note, and save without losing your place.
+
+The history tab shows the git log for that page, and you can pick two commits and read a colour-coded diff inline, so a writer can see exactly what changed and when without leaving the browser. Export works in two shapes for two audiences: JSON across a single page, a whole journey, or all of the copy at once, with every import landing in history like any other save; and Word for compliance review or sign-off, with the embedded revision history meeting reviewers in the format they already use.
+
+### Where I'd push back on myself
+
+This started as a personal project to scratch a personal itch, and that is also its weakness. I went from "this annoys me" to building working prototypes fairly quickly, when I could have done more research into how a tool like this might help other teams before I started making technical decisions. I could have gathered most of the feedback I needed with just a working UI, or even a Figma prototype, rather than a running backend.
+
+That said, the backend turned out to be so quick to build — a few hours, really — that I don't regret it entirely. I demoed the tool periodically as it came together and collected feedback and feature requests from colleagues along the way, so it didn't develop in a vacuum even if it didn't begin from formal research.
+
+It's currently being trialled internally and the reviews have been positive. There's genuine room for a system like this, especially if product and engineering can agree on a standard set of copy keys. If they do, a copy change becomes as simple as exporting and importing a JSON file, which was the whole point.

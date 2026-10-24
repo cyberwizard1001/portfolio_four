@@ -1,0 +1,135 @@
+---
+// Menu bar. Marks the current page with aria-current (tangerine underline).
+// On case studies it swaps About, AI and CV for a "Work / title" breadcrumb and a next link.
+import Device from './Device.astro';
+
+interface Props {
+  caseStudy?: { title: string; next?: { title: string; href: string } };
+}
+
+const { caseStudy } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const path = Astro.url.pathname.slice(base.length).replace(/^\/+|\/+$/g, '');
+const current = (key: string) => (path === key ? 'page' : undefined);
+
+const items = [
+  { key: 'about', label: 'About' },
+  { key: 'ai', label: 'How I use AI' },
+];
+---
+
+<header class="menubar">
+  <div class="page menubar-inner">
+    <a href={base} class="mb-home">
+      <Device name="pager" scale={2} />
+      <span class="t-wordmark">Nirmal Karthikeyan</span>
+    </a>
+    <nav aria-label="Main" class="mb-nav t-ui">
+      <a href={base} aria-current={caseStudy ? undefined : current('')}>Home</a>
+      {caseStudy ? (
+        <>
+          <span class="mb-crumb">
+            <a href={`${base}#work`}>Work</a>
+            <span class="mb-sep" aria-hidden="true">/</span>
+            <span class="mb-here" aria-current="page" title={caseStudy.title}>{caseStudy.title}</span>
+          </span>
+          {caseStudy.next && (
+            <a href={caseStudy.next.href} class="mb-next">Next: {caseStudy.next.title} →</a>
+          )}
+        </>
+      ) : (
+        <>
+          <a href={`${base}#work`}>Work</a>
+          {items.map((item) => (
+            <a href={`${base}${item.key}`} aria-current={current(item.key)}>{item.label}</a>
+          ))}
+          <a href={`${base}Resume.pdf`} target="_blank" rel="noopener">CV<span class="visually-hidden"> (opens in new tab)</span></a>
+        </>
+      )}
+      <a href={`${base}contact`} class="mbtn go mb-contact" aria-current={current('contact')}>contact</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .menubar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--paper);
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .menubar-inner {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px 16px;
+    flex-wrap: wrap;
+  }
+
+  .mb-home {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .mb-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px 22px;
+    flex-wrap: wrap;
+  }
+
+  .mb-nav a:not(.mbtn) {
+    color: var(--ink);
+    text-decoration: none;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .mb-nav a:not(.mbtn):hover { color: var(--blue); text-decoration: underline; }
+
+  /* You are here. */
+  .mb-nav a:not(.mbtn)[aria-current='page'],
+  .mb-here {
+    text-decoration: underline 2px var(--tangerine);
+    text-underline-offset: 6px;
+  }
+
+  .mb-crumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .mb-sep { color: var(--muted); }
+
+  .mb-here {
+    max-width: 28ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* Room for the underline inside the clipped box. */
+    padding-bottom: 8px;
+    margin-bottom: -8px;
+  }
+
+  .mb-contact { min-height: 34px; padding: 0 14px; }
+
+  @media (max-width: 640px) {
+    .mb-next { display: none !important; }
+    .mb-here { max-width: 16ch; }
+  }
+
+  @media (max-width: 480px) {
+    .menubar-inner { padding-block: 4px; }
+    .mb-nav { gap: 0 16px; }
+  }
+</style>

@@ -1,0 +1,64 @@
+---
+import '@fontsource/playfair-display/500.css';
+import '@fontsource/playfair-display/500-italic.css';
+import '@fontsource/playfair-display/600.css';
+import '@fontsource/pixelify-sans/400.css';
+import '@fontsource/pixelify-sans/600.css';
+import '@fontsource/instrument-sans/400.css';
+import '@fontsource/instrument-sans/500.css';
+import '@fontsource/instrument-sans/600.css';
+import '../styles/tokens.css';
+import '../styles/global.css';
+import MenuBar from '../components/MenuBar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  bodyClass?: string;
+  /** Set on case studies: the menu bar shows the breadcrumb and next link instead. */
+  caseStudy?: { title: string; next?: { title: string; href: string } };
+}
+
+const { title = 'Nirmal — Portfolio', bodyClass, caseStudy } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <script is:inline>
+      // Opening or reloading a page starts at the top. Links like "Work" still jump to
+      // their section, but the #hash is dropped afterwards so a reload (or the browser's
+      // autocomplete) doesn't keep scrolling back to it. Back/forward keep their position.
+      (function () {
+        var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+        var clean = function () {
+          if (location.hash) history.replaceState(history.state, '', location.pathname + location.search);
+        };
+        var fromSite = false;
+        try { fromSite = new URL(document.referrer).origin === location.origin; } catch (e) {}
+        if (nav && nav.type === 'reload') {
+          history.scrollRestoration = 'manual';
+          clean();
+        } else if (!fromSite) {
+          // Typed, bookmarked or autocompleted /#work: open at the top.
+          clean();
+        }
+        window.addEventListener('load', clean);
+        window.addEventListener('hashchange', clean);
+      })();
+    </script>
+  </head>
+  <body class={bodyClass}>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <MenuBar caseStudy={caseStudy} />
+    <slot />
+    <Footer />
+    <script>
+      import '../scripts/devices';
+    </script>
+  </body>
+</html>

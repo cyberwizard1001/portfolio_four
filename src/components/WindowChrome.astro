@@ -1,0 +1,97 @@
+---
+// Mac OS 8/9 window: pinstriped title bar with a bevelled box at each end and the
+// title centred on a solid strip. An optional NEW badge replaces the right-hand box.
+// The `actions` slot sits in the title bar before the right-hand box.
+interface Props {
+  title: string;
+  isNew?: boolean;
+  /** Element for the window root, e.g. "section" or "article". */
+  as?: string;
+  class?: string;
+  /** Accepted for older call sites; no longer rendered. */
+  activeTitle?: string;
+  icon?: string;
+  [key: string]: unknown;
+}
+
+const { title, isNew, as: Tag = 'div', class: className, activeTitle: _a, icon: _i, ...rest } = Astro.props;
+---
+
+<Tag class:list={['window', className]} {...rest}>
+  <div class="win-bar">
+    <span class="win-box" aria-hidden="true"></span>
+    <span class="win-title">{title}</span>
+    <slot name="actions" />
+    {isNew ? <span class="win-new">NEW</span> : <span class="win-box" aria-hidden="true"></span>}
+  </div>
+  <div class="win-body">
+    <slot />
+  </div>
+</Tag>
+
+<style is:global>
+  .window {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    box-shadow: var(--win-shadow);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+  }
+
+  .win-bar {
+    height: 24px;
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 6px;
+    border-bottom: 1px solid var(--ink);
+    background: repeating-linear-gradient(to bottom, var(--chrome-hi) 0 2px, var(--chrome-lo) 2px 3px);
+  }
+
+  .win-box {
+    width: 11px;
+    height: 11px;
+    flex: none;
+    border: 1px solid var(--ink);
+    background: var(--chrome-hi);
+    box-shadow: inset 1px 1px 0 var(--paper), inset -1px -1px 0 var(--bevel-lo);
+  }
+
+  .win-title {
+    margin: 0 auto;
+    background: var(--chrome-hi);
+    padding: 0 10px;
+    font-family: var(--font-machine);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%;
+  }
+
+  .win-new {
+    font-family: var(--font-machine);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    padding: 0 6px;
+    background: var(--tangerine);
+    color: var(--ink);
+    border: 1px solid var(--ink);
+  }
+
+  .win-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: var(--paper);
+  }
+</style>

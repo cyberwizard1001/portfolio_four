@@ -1,0 +1,386 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WindowChrome from '../components/WindowChrome.astro';
+import BackToHome from '../components/BackToHome.astro';
+
+// Literal values mirrored from src/styles/tokens.css. Keep in sync.
+const colorTokens = [
+  { name: 'paper', value: '#FFFFFF' },
+  { name: 'ink', value: '#000000' },
+  { name: 'ink-2', value: '#3A3A3A' },
+  { name: 'muted', value: '#5F5F5F' },
+  { name: 'grey-dark', value: '#1A1A1A' },
+  { name: 'grey-mid', value: '#8C8C8C' },
+  { name: 'grey-light', value: '#D6D6D6' },
+  { name: 'panel', value: '#F2F2F2' },
+  { name: 'blue', value: '#1F4BFF' },
+  { name: 'tangerine', value: '#FF7A1A' },
+];
+const fontTokens = [
+  { name: 'font-display', value: "'Playfair Display', Georgia, serif" },
+  { name: 'font-text', value: "'Instrument Sans', system-ui, sans-serif" },
+  { name: 'font-machine', value: "'Pixelify Sans', ui-monospace, monospace" },
+];
+
+---
+
+<Layout title="Token Reference — Nirmal">
+
+  <main id="main-content">
+  <article class="tok-page">
+    <div class="tok-inner">
+      <header class="tok-header">
+        <div class="back-home-row"><BackToHome /></div>
+        <h1 class="tok-h1">Token Reference</h1>
+        <p class="tok-sub">
+          Every colour and font token in <code>tokens.css</code>.
+        </p>
+      </header>
+
+      <div class="tok-window">
+        <WindowChrome title="tokens.css" activeTitle="[+]" icon="UTF-8">
+          <div class="tok-window-body">
+            <div class="tok-body">
+              <section class="theme-block">
+                <h2>Live preview</h2>
+                <p class="demo-note">Built from <code>var(--token)</code>, not hardcoded values.</p>
+                <div class="demo-grid">
+                  <div class="demo-row">
+                    <button type="button" class="demo-btn-primary">Primary button</button>
+                    <button type="button" class="demo-btn-outline">Outline button</button>
+                    <a href="#" class="demo-link" onclick="return false;">A text link</a>
+                    <span class="demo-badge">Badge</span>
+                  </div>
+                  <div class="demo-row demo-text">
+                    <p class="demo-text-main">Body text in <code>--text</code>.</p>
+                    <p class="demo-text-sub">Secondary text in <code>--sub</code>.</p>
+                    <p class="demo-text-dim">Dim/meta text in <code>--dim</code>.</p>
+                  </div>
+                  <div class="demo-row">
+                    <code class="demo-code">const lime = "var(--lime)";</code>
+                  </div>
+                  <div class="demo-row">
+                    <div class="demo-card">
+                      <span class="demo-card-label">--bg2 card on --bg1 surface</span>
+                      <div class="demo-card-inner">--border-hi outline</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="theme-block">
+                <h2>Colours</h2>
+                <ul class="token-list">
+                  {colorTokens.map((row) => (
+                    <li class="token-row">
+                      <span class="token-swatch" style={`background:${row.value}`}></span>
+                      <span class="token-name">--{row.name}</span>
+                      <span class="token-value">{row.value}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <section class="theme-block">
+                <h2>Fonts</h2>
+                <ul class="token-list font-list">
+                  {fontTokens.map((row) => (
+                    <li class="token-row">
+                      <span class="token-name">--{row.name}</span>
+                      <span class="token-value" style={`font-family:${row.value}`}>{row.value}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </div>
+          </div>
+        </WindowChrome>
+      </div>
+    </div>
+  </article>
+  </main>
+</Layout>
+
+<style>
+  .tok-page {
+    padding: 4rem 3rem;
+  }
+
+  .tok-inner {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .tok-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .back-home-row {
+    margin-bottom: 1.5rem;
+  }
+
+  .tok-h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  .tok-sub {
+    font-size: 0.9375rem;
+    color: var(--sub);
+    line-height: 1.6;
+    max-width: 64ch;
+  }
+
+  .tok-sub code {
+    font-family: var(--font-machine);
+    font-size: 0.85em;
+    color: var(--lime);
+    background: var(--lime-dim);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+  }
+
+
+
+  .tok-window {
+    padding-bottom: 3rem;
+  }
+
+  .tok-window :global(.window) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tok-window-body {
+    background: var(--bg1);
+    padding: 2rem 1.75rem;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .tok-body {
+    font-size: 0.9375rem;
+    color: var(--sub);
+    line-height: 1.75;
+    animation: tok-fade-in 0.18s ease-out;
+  }
+
+  @keyframes tok-fade-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tok-body { animation: none; }
+  }
+
+  .theme-block {
+    margin-bottom: 2.5rem;
+  }
+
+  .theme-block:last-child {
+    margin-bottom: 0;
+  }
+
+  .theme-block h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin: 0 0 1.25rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+
+  .demo-note {
+    font-family: var(--font-machine);
+    font-size: 12px;
+    color: var(--dim);
+    margin-bottom: 1.25rem;
+  }
+
+  .demo-note code {
+    font-family: var(--font-machine);
+    color: var(--lime);
+  }
+
+  .demo-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .demo-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .demo-btn-primary {
+    cursor: pointer;
+    background: var(--lime);
+    color: var(--lime-contrast);
+    border: none;
+    border-radius: 4px;
+    font-family: var(--font-machine);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 0.5rem 0.9rem;
+  }
+
+  .demo-btn-outline {
+    cursor: pointer;
+    background: transparent;
+    color: var(--lime);
+    border: 1px solid var(--lime);
+    border-radius: 4px;
+    font-family: var(--font-machine);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 0.5rem 0.9rem;
+  }
+
+  .demo-link {
+    color: var(--lime);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(158,255,87,0.35);
+    font-size: 0.9375rem;
+  }
+
+  .demo-badge {
+    font-family: var(--font-machine);
+    font-size: 11px;
+    color: var(--lime);
+    background: var(--lime-dim);
+    border-radius: 3px;
+    padding: 0.25rem 0.55rem;
+  }
+
+  .demo-text p {
+    margin: 0;
+  }
+
+  .demo-text-main {
+    color: var(--text);
+  }
+
+  .demo-text-sub {
+    color: var(--sub);
+  }
+
+  .demo-text-dim {
+    color: var(--dim);
+  }
+
+  .demo-text code,
+  .demo-text-main code,
+  .demo-text-sub code,
+  .demo-text-dim code {
+    font-family: var(--font-machine);
+    color: var(--lime);
+  }
+
+  .demo-code {
+    display: block;
+    width: 100%;
+    font-family: var(--font-machine);
+    font-size: 13px;
+    color: var(--lime);
+    background: var(--bg0);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+  }
+
+  .demo-card {
+    background: var(--bg2);
+    border: 1px solid var(--border-hi);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    width: 100%;
+  }
+
+  .demo-card-label {
+    display: block;
+    font-family: var(--font-machine);
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 0.6rem;
+  }
+
+  .demo-card-inner {
+    border: 1px solid var(--border-hi);
+    border-radius: 4px;
+    padding: 0.6rem 0.8rem;
+    font-family: var(--font-machine);
+    font-size: 12px;
+    color: var(--sub);
+  }
+
+
+
+  .token-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .token-row {
+    display: grid;
+    grid-template-columns: 18px 110px 1fr;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-machine);
+    font-size: 12px;
+  }
+
+  .token-swatch {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    border: 1px solid var(--border-hi);
+    flex-shrink: 0;
+  }
+
+  .token-name {
+    color: var(--lime);
+  }
+
+  .token-value {
+    color: var(--dim);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .font-list .token-row {
+    grid-template-columns: 90px 1fr;
+  }
+
+  .font-list .token-value {
+    color: var(--text);
+    font-size: 13px;
+  }
+
+  @media (max-width: 860px) {
+    .tok-page { padding: 2.5rem 1.25rem; }
+    .tok-window { height: auto !important; }
+    .tok-window :global(.window) { height: auto; position: static; }
+    .tok-window-body { overflow-y: visible; flex: none; }
+  }
+
+  @media (max-width: 480px) {
+    .tok-page { padding: 1.75rem 0.75rem; }
+    .token-row { grid-template-columns: 16px 90px 1fr; }
+  }
+</style>
+

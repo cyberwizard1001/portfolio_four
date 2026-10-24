@@ -1,0 +1,44 @@
+---
+// Inline SVG pixel device, parsed from src/data/sprites.ts at build time.
+// Rendered awake (lit screen, tangerine LED), so the page is complete without JS;
+// devices.ts switches screens off at start-up and wakes, dims and sleeps them from there.
+import { spritePaths, type DeviceName } from '../data/sprites';
+
+interface Props {
+  name: DeviceName;
+  /** Whole-number multiple of the sprite's pixel size. */
+  scale?: number;
+  class?: string;
+  /** Project or build slug this device stands for (collected onto the shelf). */
+  project?: string;
+  style?: string;
+  /** Always awake: devices.ts leaves it alone (used on the shelf). */
+  static?: boolean;
+}
+
+const { name, scale = 4, class: className, project, style, static: isStatic } = Astro.props;
+const p = spritePaths(name);
+const s = Math.max(1, Math.round(scale));
+---
+
+<svg
+  class:list={['device', className]}
+  viewBox={`0 0 ${p.width} ${p.height}`}
+  width={p.width * s}
+  height={p.height * s}
+  shape-rendering="crispEdges"
+  aria-hidden="true"
+  focusable="false"
+  data-device={name}
+  data-project={project}
+  data-screen="awake"
+  data-screen-static={isStatic ? '' : undefined}
+  style={style}
+>
+  {p.light && <path fill="#D6D6D6" d={p.light} />}
+  {p.body && <path fill="#8C8C8C" d={p.body} />}
+  {p.screen && <path class="screen" d={p.screen} />}
+  {p.text && <path class="screen-text" d={p.text} />}
+  {p.led && <path class="screen-led" d={p.led} />}
+  {p.dark && <path fill="#1A1A1A" d={p.dark} />}
+</svg>

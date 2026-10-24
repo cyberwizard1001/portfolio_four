@@ -1,0 +1,84 @@
+---
+import WindowChrome from './WindowChrome.astro';
+import Device from './Device.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<section class="intro" aria-label="How I think and working with me">
+  <Device name="calc" scale={5} class="spr gut" style="left: -116px; top: 120px;" />
+  <Device name="player" scale={5} class="spr gut" style="right: -112px; bottom: 30px;" />
+
+  <WindowChrome title="how_i_think">
+    <div class="intro-pane">
+      <p>
+        Interfaces are vehicles that get users places. I care about making them easy to understand
+        and operate. For first-time drivers and seasoned ones alike, whether they're tired,
+        distracted, or under pressure.
+      </p>
+      <p>
+        Working in insurance, I'm used to being part of multidisciplinary teams and keeping
+        compliance, user outcomes and business outcomes in mind at all times. I do my own research,
+        and I often build working prototypes to explain myself as best I can (now with a hand from AI!).
+      </p>
+      <div class="intro-chips">
+        <span class="chip active">UX research</span>
+        <span class="chip active">design systems</span>
+        <span class="chip active">prototyping in code</span>
+        <span class="chip">Flutter</span>
+      </div>
+    </div>
+  </WindowChrome>
+
+  <WindowChrome title="working_with_me">
+    <div class="intro-pane">
+      <p>
+        My education has taught me to seek out lived experience and to put myself in the user's
+        shoes wherever possible. I am a proponent of co-design and aim to bring in the right people
+        at the right time, threading the needle between democratic design principles and delivery
+        timelines.
+      </p>
+      <div class="intro-actions">
+        <a href="#work" class="mbtn go def">View my work ↓</a>
+        <a href={`${base}contact`} class="mbtn">Contact me ↗</a>
+      </div>
+    </div>
+  </WindowChrome>
+</section>
+
+<style>
+  .intro {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+    padding-bottom: 96px;
+  }
+
+  .intro-pane {
+    flex: 1;
+    padding: 26px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .intro-pane p { color: #1C1C1C; }
+
+  .intro-chips,
+  .intro-actions {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: auto;
+    padding-top: 6px;
+    list-style: none;
+  }
+
+  .intro-chips { gap: 8px; }
+  .intro-actions { gap: 16px; }
+
+  @media (max-width: 860px) {
+    .intro { grid-template-columns: 1fr; padding-bottom: 72px; }
+    .intro-pane { padding: 22px 20px 24px; }
+  }
+</style>

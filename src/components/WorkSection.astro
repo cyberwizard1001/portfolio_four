@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from './ProjectCard.astro';
+import Device from './Device.astro';
+
+const projects = (await getCollection('projects', ({ data }) => !data.hidden)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const base = import.meta.env.BASE_URL;
+---
+
+<div class="divider" aria-hidden="true">
+  <span class="t-label divider-label">selected work</span>
+  <span class="divider-rule"></span>
+  <Device name="tape" scale={4} />
+  <span class="divider-rule"></span>
+  <span class="t-label divider-label">{String(projects.length).padStart(2, '0')} projects</span>
+</div>
+
+<section class="work" id="work" aria-labelledby="work-h">
+  <h2 id="work-h" class="visually-hidden">Selected work</h2>
+  <Device name="walkie" scale={5} class="spr gut" style="left: -104px; top: 40px;" />
+  <Device name="camera" scale={5} class="spr gut" style="right: -122px; top: 46%;" />
+  <Device name="instant" scale={5} class="spr gut" style="left: -122px; bottom: 120px;" />
+  <div class="work-grid">
+    {projects.map((project) => (
+      <ProjectCard
+        href={`${base}projects/${project.id}/`}
+        slug={project.id}
+        filename={project.data.filename}
+        eyebrow={project.data.eyebrow ?? project.data.type}
+        year={project.data.year}
+        title={project.data.title}
+        problem={project.data.problem ?? project.data.oneliner}
+        outcomeValue={project.data.outcomeValue ?? ''}
+        outcomeLabel={project.data.outcomeLabel ?? ''}
+        device={project.data.device}
+        isNew={project.data.isNew}
+      />
+    ))}
+  </div>
+</section>
+
+<style>
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    padding: 0 0 72px;
+  }
+
+  .divider-label { color: var(--ink); white-space: nowrap; }
+
+  .divider-rule { flex: 1; border-top: 2px dotted var(--ink); }
+
+  .work {
+    position: relative;
+    padding-bottom: 96px;
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr));
+    gap: 36px;
+  }
+
+  @media (max-width: 860px) {
+    .divider { gap: 16px; padding-bottom: 40px; }
+    .divider :global(.device) { display: none; }
+    .work { padding-bottom: 72px; }
+    .work-grid { grid-template-columns: 1fr; gap: 28px; }
+  }
+</style>

@@ -1,0 +1,244 @@
+---
+title: The Portfolio Project on Portfolios
+filename: portfolio-meta.md
+mode: NORMAL
+type: Reflection
+year: "2026"
+image: /images/portfolio-meta/hero.svg
+imageAlt: Seven fanned-out terminal windows labelled v1 through v7, the lime-highlighted v7 marked "you are here"
+oneliner: A little secret about me and portfolios — this is my seventh iteration. Every year or so I redesign this site, and every time I get most of the way there before I start arguing with myself about whether any of it is right.
+eyebrow: Reflection · Design Process · Flutter → Astro
+problem: I redesign this site about once a year. Every time, I get most of the way there and then start doubting all of it.
+outcomeValue: v7 shipped
+outcomeLabel: Rebuilt in Astro after two Flutter versions, published with the doubts still there. This case study is about them.
+isNew: true
+statusline:
+  - label: NORMAL
+    lime: true
+  - label: reflection
+  - label: "2026"
+  - label: design process · self-doubt · Flutter → Astro
+order: 4
+device: instant
+hidden: true
+sections:
+  - component: ProjectHero
+    props:
+      title: The Portfolio Project on Portfolios
+      type: Reflection
+      year: "2026"
+      scope: "Solo designer + dev · Personal project"
+  - component: ProjectGallery
+    props:
+      image: /images/portfolio-meta/hero.svg
+      imageAlt: Seven fanned-out terminal windows labelled v1 through v7, the lime-highlighted v7 marked "you are here"
+  - component: ProjectMeta
+    props:
+      statusline:
+        - label: NORMAL
+          lime: true
+        - label: reflection
+        - label: "2026"
+        - label: design process · self-doubt · Flutter → Astro
+  - component: MoreProjects
+    props:
+      title: More projects
+      projects:
+        - title: Perro Onboarding & Subscription
+          blurb: >-
+            A shorter, value-first onboarding and subscription redesign that reduced drop-offs and lifted
+            conversion, implemented directly in Flutter.
+          slug: perro-onboarding
+          category: UX / Flutter
+        - title: Crafting Counselling Companions
+          blurb: >-
+            An MSc dissertation exploring what a tool built specifically for solo and small counselling
+            practices, rather than borrowed from elsewhere, could give back.
+          slug: counselling-companions
+          category: UX Research
+---
+
+import ProjectTextImage from '../../components/project-blocks/ProjectTextImage.astro';
+import ProjectImageGalleryGrid from '../../components/project-blocks/ProjectImageGalleryGrid.astro';
+import ProjectImageCarousel from '../../components/project-blocks/ProjectImageCarousel.astro';
+import v1Hero from './portfolio-meta-assets/v1-hero.png';
+import v1Works from './portfolio-meta-assets/v1-works.png';
+import v2Hero from './portfolio-meta-assets/v2-hero.png';
+import v2Me from './portfolio-meta-assets/v2-me.png';
+import v2Works from './portfolio-meta-assets/v2-works.png';
+import v2Socials from './portfolio-meta-assets/v2-socials.png';
+import v3Hero from './portfolio-meta-assets/v3-hero2.png';
+import v3About from './portfolio-meta-assets/v3-about.png';
+import v3Projects from './portfolio-meta-assets/v3-projects.png';
+import v3Contact from './portfolio-meta-assets/v3-contact.png';
+import v4Landing from './portfolio-meta-assets/v4-landing.png';
+import v4About from './portfolio-meta-assets/v4-about.png';
+import v5Home from './portfolio-meta-assets/v5-home-section.png';
+import v5About from './portfolio-meta-assets/v5-about.png';
+import v5Projects from './portfolio-meta-assets/v5-projects-section.png';
+import v5Contact from './portfolio-meta-assets/v5-contact-crop.png';
+
+# The Portfolio Project on Portfolios
+
+*A little secret about me and portfolios: this is my seventh iteration. Every year or so I redesign this site, and every time I get most of the way there before I start arguing with myself about whether any of it is right.*
+
+<dl class="meta-card">
+  <div><dt>Role</dt><dd>Designer and developer, also the only user I ever properly tested it on</dd></div>
+  <div><dt>Subject</dt><dd>six rebuilds and counting</dd></div>
+  <div><dt>Built with</dt><dd>Flutter, then Flutter again, then plain HTML once I'd had enough</dd></div>
+  <div><dt>Live</dt><dd><a href="https://nirmalkarthikeyan.com">nirmalkarthikeyan.com</a>, with the older Flutter ones still up at <a href="https://cyberwizard1001.github.io">cyberwizard1001.github.io</a> and <a href="https://cyberwizard1001.github.io/portfolio_two">cyberwizard1001.github.io/portfolio_two</a></dd></div>
+</dl>
+
+---
+
+## ...why?
+
+Most of the displayed work on this site points outwards, at problems faced by others. Pet insurance buyers need reassurance, Perro users needed a quicker and more meaningful onboarding experience, mental health practitioners were lacking a single system to manage their workflows. This one is about me, as the portfolio itself has turned out to be the longest-running and most stubborn design problem so far, and I figured I might as well be honest about it.
+
+In short, I've redesigned this site six times now and rebuilt it thrice, with each iteration having a fairly similar progression. I'll spend a couple of weeks enjoying it and designing somehting I'm proud of, and somewhere around the point where it's nearly ready, the doubts start showing up, right on schedule. Is it too much? Is it too little? Will a recruiter who spends 10 seconds on the hero section understand who I am, what I do, and what I bring to the party? Have I made the text too generic? Does it sound wishy-washy? I start slowly sanding the thing down or piling more onto it, depending on which fear got to me first that week, until I've talked myself out of liking the first draft. 
+
+This is a case study about a design process that includes, as a load-bearing step, me getting in my own way.
+
+## The pattern
+
+I've realised that naming the issue in my creative process helps, as I can at least know when it's happening. It looks something like this: 
+
+I begin by designing for myself. I'd be browsing something or just going on with my life when inspiration strikes. I pick a direction that feels like me, design the hero section, and congratulate myself on the brilliance of my genius. Give it a couple days, and the doubt starts creeping in: the question changes from "Does this feel like me?" to "What will other people think of this?". The question sounds like mature thinking but is actually where the trouble starts. I go on overdrive, imagine a sceptical hiring manager, or a designer who will find it derivative, or a developer who will question the quality of the site. Now, I'm designing for this imaginary crowd instead, the voices in my head. 
+
+From there, it could go one of two ways depending on how I feel. Some weeks, I convince myself it's all too noisy and that I need to strip it back to something austere and minimal, the kind of site that's mostly white space and confidence, because that's what serious people make. Other weeks, I decide it's too plain, too safe, that it doesn't show any personality or craft, and I should make it bigger and weirder and more expressive so it actually stands out and screams 'Nirmal'. I've come to realise that both of these are just fear wearing different outfits, fear of being judged for my output - not just in terms of conversion or adoption, but as a reflection of me, my skills and my values. One, is the fear of looking like I'm trying too hard, the other is the fear of being forgettable, and I've gaslit myself in both directions more times than I'd like to admit.
+
+What I've learnt through all of this is that neither the maximalist or the minimalist insticts are wrong on their own. The mistake is letting the imaginary audience drive, because the imaginary audience doesn't actually exist and the real people who look at this site are far more generous and far less interested in catching me out than the version of them I keep inventing. The history of these redesigns is basically a record of me learning that lesson and then forgetting it again a few months later, over and over.
+
+<ProjectTextImage
+  eyebrow="V1"
+  title="The Loud One"
+  body={`This is where it started, and you can tell I had no fear yet (or understand accessibility - at this point in time, I'm a final year CS student, not a full-time designer). The name fills the entire screen, half of it solid and half of it outlined, sitting on a dark slate background with a coral accent and a little diamond chevron asking you to scroll. "Designer, developer and cooking enthusiast", which is at least honest about who was making it. There's a confidence here that I sort of miss, the confidence of someone who hasn't started worrying about what anyone thinks yet.`}
+  image={v1Hero.src}
+  imageAlt="V1 hero with an enormous outlined NIRMAL KARTHIKEYAN wordmark in muted purple on a dark slate background"
+  raw
+/>
+
+<ProjectTextImage
+  eyebrow=""
+  title=""
+  body={`The works section carried the same idea, an oversized ghosted heading behind the actual content, projects with Visit and Check on GitHub links. It was placeholder-heavy and a bit raw, but the personality was all there. If I'm being fair to my younger self, the instinct was good. It just hadn't been tested against anything yet, and I hadn't put in work into writing case studies.`}
+  image={v1Works.src}
+  imageAlt="V1 works section with a giant grey WORKS heading and lorem ipsum project blocks"
+  raw
+  reverse
+/>
+
+<ProjectImageCarousel
+  eyebrow="V2"
+  title="The One With a Pacifier"
+  body={`Then the doubt showed up at the door for the first time, and you can watch it happen between V1 and V2. Everything got quiet and orderly. Too quiet and orderly. Light background, neat rules between sections, a calm "Me." and "Works." structure, toggles for Code and Designs, a tidy little socials block at the bottom. "I design and develop clean, easy to understand digital experiences for mobile and web," which reads like someone reassuring an interviewer rather than introducing themselves.<br /><br />This was the first time I traded the loud version for a safer version, and on its own merits it's a perfectly nice site. The problem is that I made it nice by sanding off most of what made V1 mine. I'd swung from "too much" all the way to "tasteful and forgettable" without stopping anywhere in the middle, which is a move I'd go on to repeat a couple times.`}
+  raw
+  reverse
+  images={[
+    { src: v2Hero.src, alt: 'V2 light-mode hero with the nirmal karthikeyan wordmark, a Works link, and LinkedIn and GitHub buttons' },
+    { src: v2Me.src, alt: 'V2 Me. section with a portrait photo and tag bubbles for designs, technical, blogs, books, music, random and youtube' },
+    { src: v2Works.src, alt: 'V2 Works. section with Code and Designs toggles above a grid of project cards' },
+    { src: v2Socials.src, alt: 'V2 Socials section listing github, medium, blogger, behance, instagram and linkedin beside a GitHub card' },
+  ]}
+/>
+
+<ProjectImageCarousel
+  eyebrow="V3"
+  title="The Maximalist Swing Back"
+  body={`V3 is the pendulum swinging the other way, hard. Back to dark, but this time with ambition. Enormous ghosted section headings (which, if you think about it, is just V1 headings, slightly more refined), an outlined card aesthetic, a little 3D figure with a speech bubble, a side rail of section labels, a "continuously scrolling text, random facts, could be a tech news API" idea that I clearly thought was very clever. There's a contact form, a flower illustration, the works.<br /><br />Now we swing back to maximalism, post my decision that the tidy site was too forgettable and overcorrected into making something expressive enough to prove I had taste. A lot of it I still like. Some of it is me showing off. Reflecting, V2 and V3 are the same anxiety solved two opposite ways, and you can almost date each redesign by which worry was winning that month.`}
+  raw
+  images={[
+    { src: v3Hero.src, alt: 'V3 dark-mode hero with a glassy ghosted DESIGNER DEVELOPER card, a 3D abstract flower shape, an nk logo, and a vertical ABOUT/PROJECTS/CONTACT rail' },
+    { src: v3About.src, alt: 'V3 About section with a huge ghosted ABOUT heading, an illustrated silhouette with speech bubbles, and interests and resume links' },
+    { src: v3Projects.src, alt: 'V3 Projects section with a huge ghosted PROJECTS heading and outlined design and development cards' },
+    { src: v3Contact.src, alt: 'V3 Contact section with a huge ghosted CONTACT heading and outlined cards for email, github, linkedin, blogger, behance, instagram and medium' },
+  ]}
+/>
+
+<ProjectTextImage
+  eyebrow="V4"
+  title="Editorial Minimalism"
+  body={`By V4 I'd calmed down and gone properly minimal, but in a more considered way than V2. Black and white with a single red square doing all the accent work, an editorial serif, a vintage streetlamp illustration, monochrome device mockups, and vertical text down the side reading "Quirky solutions for unusual problems." "Seeking to build better experiences for everyone." This was me trying to look like a grown-up, still in uni, still figuring out career paths and goals.`}
+  image={v4Landing.src}
+  imageAlt="V4 landing with a streetlamp illustration, a red square, monochrome device mockups and the line Seeking to build better experiences for everyone"
+  raw
+/>
+
+<ProjectTextImage
+  eyebrow=""
+  title=""
+  body={`The about page is the bit I'm fondest of, partly because of the line tucked at the bottom: "I have to say this. It's really difficult to write about oneself. Also, I like fonts." Which is the most accurate thing on the entire site and the whole reason this meta page exists. V4 is the first time the minimalism felt like a choice rather than a retreat, even if I did still start questioning myself in a fortnight.`}
+  image={v4About.src}
+  imageAlt="V4 about page in the same monochrome editorial style with sections for descriptor, experience and academia"
+  raw
+  reverse
+/>
+
+<ProjectImageCarousel
+  eyebrow="V5"
+  title="The One That Was Built"
+  body={`V5 is the one that became a (partly) real, live, deployed site at <a href="https://cyberwizard1001.github.io">cyberwizard1001.github.io</a>, and it's the most resolved of the lot up to this point. We've graduated with Master's in HCI and just landed a full-time design job. "Weaving dreams into digital realities," a confident dark layout, colourful rounded project cards showing actual app work, a proper about section, a grid of skills, and a big friendly "Let's talk!" at the bottom. It pulls the minimalist discipline of V4 and the personality of the earlier ones into something that mostly holds together. This is roughly where I stopped fighting myself long enough to put a flag in the ground, and it's the first of the two sites I built in Flutter.`}
+  raw
+  images={[
+    { src: v5Projects.src, alt: 'V5 projects section showing the Crtly mobile app and Tansto web design project cards' },
+    { src: v5Home.src, alt: 'V5 dark-mode live site with the heading Weaving dreams into digital realities and colourful project cards' },
+    { src: v5About.src, alt: 'V5 about page with a fake terminal, a list of numbered commands, and a friendly "no AI here yet" response' },
+    { src: v5Contact.src, alt: 'V5 closing Let’s talk! section with an email address and Dribbble, Instagram and LinkedIn links' },
+  ]}
+/>
+
+## V6 - Maturity
+
+This one is special, because if you look at the current site and squint, you're basically looking at this. The second Flutter build, live at [cyberwizard1001.github.io/portfolio_two](https://cyberwizard1001.github.io/portfolio_two), is from a April 2026, and when I finally found my identity. A dark layout on a faint dotted grid, a small "Nirmal" wordmark in monospace, "Observing people, Crafting experiences" as the headline with "insight-led user experiences" sitting under it in soft purple, and the honest description, "A UX designer who builds." After five attempts I'd finally found something that felt like me and didn't make me flinch a fortnight later, which is the closest I've come to winning the argument with myself (but as you might've noticed, didn't last very long).
+
+The work section grew up too. Instead of placeholder blocks it has proper project cards, each one carrying an overview and a few highlights, the same case studies that anchor the site now. This was the first version that had the projects being the focal point of the site rather than just being a work in progress with no real world studies.
+
+The About section is the part I'm fondest of and the part that gives the whole thing away, harkening back to my earlier designs with the terminal. It's a fake terminal! You watch commands type themselves out, `about --nirmal`, then `skills --list`, then `contact --open` quietly opening a links panel. It's the developer half of me showing through the designer half, and it's the bit that makes this version unmistakably mine rather than a tasteful template anyone could have made.
+
+So this was the one I was happiest with. It was also the one that finally broke my patience with the tooling, because the footer says it plainly: designed and built in Flutter. Which brings me to the part of the story I'd warn anyone else away from when they're working on portfolios.
+
+## The Flutter Web Rant
+
+I want to be clear that I love Flutter. You'll see loads of Flutter projects on my Github profile, dating back to 2021. As a way to build apps, it's a pleasure to work with, and the fact that I can design something and then go and build the real thing myself in the next few hours is a big part of my process and is something I'd never give up. So none of what follows is me bad-mouthing the framework and is instead me being annoyed, as someone who likes it, that the web ecosystem has been lagging behind for years and becomes a crutch the moment you try to ship a website with it.
+
+The trouble is that Flutter on the web doesn't render a normal web page. It paints onto a canvas, which means the browser doesn't really understand the thing it's showing you, and all the small behaviours you take completely for granted on a website magically poof themselves out of existance. As an example, selecting a line of text, doesn't work by default and needs additional scaffolding. The back button, which every person alive expects to *navigate backwards*, didn't reliably behave like a back button, so I ended up having to wire up routing workarounds just to make the browser act like a browser. Each of these might feel like a small niggle, but put enough small things in the way and you're spending your evenings testing minute interactions and writing new code and adding on additional maintenance baggage. I had a portfolio site which was 10k lines strong. Not ideal for a newly-minted designer trying to spin up a portfolio site to showcase design work.
+
+So after two Flutter sites and a lot of workarounds I didn't enjoy maintaining, I made the least exciting and most sensible decision of the whole saga, switching to HTML.
+
+## V7 - More Me, More HTML
+
+The version live now at [nirmalkarthikeyan.com](https://nirmalkarthikeyan.com) is, give or take, a very Linux desktop themed V6 design rebuilt from scratch using Astro and good ol' HTML and CSS, lightened up and stripped of unnecessary bloat. No canvas, no fighting browsers or decades of human-internet interaction experience. Everything... just works.
+
+Going back to basics felt almost embarrassingly freeing after years of working around a renderer. There's a lesson buried in that which I keep relearning across all of this, that the fanciest tool isn't the one that serves the work, it's the one that gets out of the way. The same is true of the design. The current site resonates with me, but this time I think it's working because it is showcasing content while still representing me and my journey into UX.
+
+## Defending (some of) this behaviour
+
+The temptation with a story like this is to tie it up with a neat moral and draw a positive, straight-forward conclusion, but I find myself unable to do that. I don't think any of these redesigns were a mistake, even the ones I overcorrected into, because each one taught me something and led to improvements in the next version. V1 taught me I had a voice. V2 taught me how easily I'd abandon it the second I got nervous. V3 showed me where my taste was once I stopped being careful. V4 taught me that minimalism is a choice you make for the reader, not somewhere to hide inabilities. V5 was me finally shipping something, and V6 was me finding the layouts I'd keep. Finally, V7, the site you're on, is me admitting that the clever framework choice was making my life harder for no benefit the visitor would ever notice, and leaning into the roots of my UX design story, the Linux desktop ricing scene and the constant scripting.
+
+If there's anything in this journey I'd do differently, that would be to keep doing it badly in public rather than waiting until I felt sure. I have never once felt sure. Every version of this site has gone live while some part of me was still convinced it was either too much or too little. That's true for this site too, I'm sure you'll find this included as a step in my next website in a year or two. Waiting for the doubt to clear would have meant never having a site to share, because the doubt is not a bug in my process, it's the part of the process where I care. The trick is to let the doubt have its say and publish anyway, which, now that I think of it, is exactly what I'm doing by writing all of this down.
+
+## Addendum: Accessibility
+
+After finishing this piece, I audited the site against the Web Content Accessibility Guidelines (WCAG) 2.2 at the AA level. My main reason for leaving Flutter was that the browser could not read a page drawn on a canvas. Screen readers and keyboard navigation rely on the browser reading the page, so moving to HTML should have helped them too, and I wanted to check that before claiming that everything just works.
+
+### Method
+
+I worked through the site without a mouse, reaching every interactive element by keyboard and checking each page for landmarks, a sensible heading order and a visible focus state, and I turned on the reduced motion setting in macOS to see which animations ignored it. Colour contrast had previously been judged by eye, so I wrote a short script that compares each text colour token with each background token in all five themes, in both light and dark mode. I carried out the audit with Claude as a second reviewer, in line with the approach described in <a href={`${import.meta.env.BASE_URL}ai`}>how I use AI</a>, and every change was reviewed by me before it was published.
+
+### Findings
+
+Most of the site passed, largely because of an earlier round of fixes, and the problems that remained showed up only when using a keyboard or a screen reader. The biggest affected the case studies, this one included, which sit inside a "vim window" that scrolls along with the page. When a keyboard user tabbed to a link further down, the browser scrolled the window independently, and the next page scroll pushed the focused link back out of view; focus now moves the page itself, so the focused element remains visible. The games on the toys page responded only to hover, which left them unplayable from the keyboard, and they can now be selected with Tab and played without a mouse. The theme picker on the same page also lost focus each time a theme was chosen, which has been corrected.
+
+Two issues affected screen reader users. The typing hint on the homepage was marked as a live region and rewrote itself every few dozen milliseconds, so a screen reader would repeatedly interrupt itself to read it. The animated text is now hidden from assistive technology and replaced by a static equivalent, and it no longer animates when reduced motion is requested. The image carousels advanced every seven seconds and paused only on hover or focus, and each now has a pause control, announces only the changes made by the reader, and hides slides that are off screen.
+
+The remaining findings were structural. Sections on the homepage moved from a first-level heading directly to third-level ones, glossary tooltips closed before the pointer could reach them, links that open in a new tab gave no indication of doing so, and the browser's default focus outline was difficult to see on the darker themes. Each of these has since been addressed.
+
+### Contrast
+
+I was least pleased with the contrast results, since the palette is what I liked most about V7. Six of the ten theme and mode combinations contained at least one pairing below the 4.5:1 ratio that WCAG requires for body text, mostly muted text in the Nord, Gruvbox and Dracula themes and the accent colour in several of the light themes. The adjustments were small, a deeper blue in one theme and a lighter pink in another, and I expect few visitors will notice them, although anyone who struggled with the old colours should now find the text easier to read.
+
+### Limitations
+
+This was a self-audit rather than a formal evaluation, and the site has not yet been tested with people who use assistive technology every day. Their feedback would tell me more than my own checks can. The contrast script also does not cover text placed over images or the canvas-based toys. The <a href={`${import.meta.env.BASE_URL}accessibility`}>accessibility page</a> records what has been fixed and what is still outstanding, and I will keep it up to date as I find new issues.
+
+V1 was built before I knew much about accessibility, and V7 now has a written list of where it still falls short. The list is not finished, and, as with every other version described here, I am publishing it before I feel sure of it.

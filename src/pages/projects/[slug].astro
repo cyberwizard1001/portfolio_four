@@ -1,0 +1,61 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import CaseStudy from '../../components/CaseStudy.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content, headings } = await render(project);
+const tldr = await getEntry('projectTldrs', project.id);
+const base = import.meta.env.BASE_URL;
+
+const sections = project.data.sections ?? [
+  { component: 'ProjectGallery' as const, props: { image: project.data.image, imageAlt: project.data.imageAlt } },
+];
+
+// "Case study NN" comes from the intro block's own eyebrow, so the number matches the copy.
+const intro = sections.find((s) => s.component === 'ProjectIntro');
+const caseNo = String(intro?.props?.eyebrow ?? '').match(/Case study \d+/)?.[0];
+const eyebrowLine = [caseNo, project.data.eyebrow ?? project.data.type, project.data.year]
+  .filter(Boolean)
+  .join(' · ');
+
+// Next stop: the next listed project by order, wrapping round.
+const listed = (await getCollection('projects', ({ data }) => !data.hidden)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const nextEntry =
+  listed[(listed.findIndex((p) => p.id === project.id) + 1) % listed.length] ??
+  listed.find((p) => p.data.order > project.data.order) ??
+  listed[0];
+const next = nextEntry && nextEntry.id !== project.id
+  ? { title: nextEntry.data.title, href: `${base}projects/${nextEntry.id}/`, device: nextEntry.data.device }
+  : undefined;
+---
+
+<Layout title={`${project.data.title} — Nirmal`} caseStudy={{ title: project.data.title, next }}>
+  <CaseStudy
+    slug={project.id}
+    title={project.data.title}
+    filename={project.data.filename}
+    eyebrowLine={eyebrowLine}
+    device={project.data.device}
+    outcomeValue={project.data.outcomeValue}
+    outcomeLabel={project.data.outcomeLabel}
+    oneliner={project.data.oneliner}
+    sections={sections}
+    tldrBody={tldr?.body}
+    headings={headings}
+    next={next}
+    hasBody={Boolean(project.body?.trim())}
+  >
+    <Content />
+  </CaseStudy>
+</Layout>

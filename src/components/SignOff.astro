@@ -1,0 +1,37 @@
+---
+import Device from './Device.astro';
+---
+
+<section class="signoff" aria-label="Sign-off">
+  <Device name="radio" scale={4} class="deco" />
+  <p class="signoff-line">
+    <span class="signoff-grey">Less friction,</span>
+    more clarity,
+    <span class="hl signoff-hl">better decisions.</span>
+  </p>
+</section>
+
+<style>
+  .signoff {
+    padding: 8px 0 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  /* Echoes the hero headline: the page starts and ends in the same voice. */
+  .signoff-line {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+    font-weight: 500;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  /* --muted rather than --grey-mid: the lighter grey fails AA at the small end of the clamp. */
+  .signoff-grey { color: var(--muted); }
+
+  .signoff-hl { padding: 0 4px; }
+</style>

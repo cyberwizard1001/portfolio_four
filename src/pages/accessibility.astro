@@ -1,0 +1,266 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BackToHome from '../components/BackToHome.astro';
+import WindowChrome from '../components/WindowChrome.astro';
+
+const base = import.meta.env.BASE_URL;
+const lastUpdated = '29 September 2026';
+
+const fixed = [
+  {
+    title: 'Main landmark & skip link',
+    body: 'No page had a <main> region, so screen-reader users had no way to jump past the repeated top bar. Every page now wraps its content in <main id="main-content">, and a skip-link is the first focusable element on every page.',
+  },
+  {
+    title: 'Motion respects your preference',
+    body: 'The terminal on the homepage played a scripted typing animation regardless of system settings. It now checks prefers-reduced-motion and renders instantly when motion is reduced.',
+  },
+  {
+    title: 'Visible focus on text inputs',
+    body: 'A few inputs (the terminal command line, the vim-style search) had outline: none with nothing to replace it, so tabbing to them showed no focus ring. They now get a visible outline on :focus-visible.',
+  },
+  {
+    title: 'Decorative ASCII art hidden from screen readers',
+    body: 'Large ASCII banners in the terminal were read aloud character-by-character. They are now marked aria-hidden, and the live command output area announces results via aria-live.',
+  },
+  {
+    title: 'Keyboard focus stays visible in scrolling windows',
+    body: 'The case study and documentation windows scroll their content as the page scrolls. Tabbing to a link further down used to scroll the window body on its own, and the next page scroll pushed the focused link out of view. Focus now scrolls the page instead, so the focused element stays on screen.',
+  },
+  {
+    title: 'Consistent focus ring',
+    body: 'Links, cards and top bar controls fell back to the browser default focus ring, which is hard to see. Every focusable element now gets a 2px outline in the current accent colour.',
+  },
+  {
+    title: 'Less noise for screen readers',
+    body: 'The typing hint on the homepage was a live region that changed every 45ms, so screen readers kept interrupting. It is now hidden from assistive tech, with a static version of the hint in its place. Carousels no longer announce every automatic slide change, and off-screen slides are hidden.',
+  },
+  {
+    title: 'Carousel pause button',
+    body: 'Image carousels advance every 7 seconds. They used to pause only while hovered or focused. Each one now has a pause/play button.',
+  },
+  {
+    title: 'Reduced motion, everywhere',
+    body: 'Blinking cursors, pulsing badges and the homepage typing hint now stop when your system asks for reduced motion, not just the terminal intro.',
+  },
+  {
+    title: 'Tooltips you can hover',
+    body: 'Glossary tooltips in case studies closed as soon as the pointer left the underlined word, so you could not move onto the tooltip to read it. They now stay open while the pointer is over either one.',
+  },
+  {
+    title: 'Headings and landmarks',
+    body: 'Homepage section titles were styled text, so project cards jumped from h1 to h3. Section titles are now h2s, the footer heading levels follow on, the top bar links sit in a nav landmark, and links that open a new tab say so.',
+  },
+  {
+    title: 'Colour contrast',
+    body: 'Every text colour token was checked against every background token. Pairings below 4.5:1 have been adjusted until every one passes WCAG AA.',
+  },
+];
+
+const ongoing = [
+  'Alt text on project gallery images is sourced from each case study\'s frontmatter — worth a periodic re-read for quality, not just presence.',
+  'Colour contrast is checked with a script over every text/background token pairing, but not yet on text laid over images.',
+];
+---
+
+<Layout title="Accessibility — Nirmal">
+
+  <main id="main-content">
+  <article class="colo-page">
+    <div class="colo-inner">
+      <header class="colo-header">
+        <div class="back-home-row"><BackToHome /></div>
+        <h1 class="colo-h1">Accessibility</h1>
+        <p class="colo-sub">
+          What I checked, what I fixed, and what's still on the list. Last reviewed {lastUpdated}.
+        </p>
+      </header>
+
+      <div class="colo-window">
+        <WindowChrome title="accessibility.md" activeTitle="[+]" icon="UTF-8">
+          <div class="colo-window-body">
+            <div class="colo-body">
+              <h2>How this gets checked</h2>
+              <p>
+                This site is read by a screen reader and walked through by keyboard, not just clicked through in a
+                browser. The audit covers landmarks and skip navigation, keyboard access on every interactive control,
+                visible focus states, motion preferences, colour contrast across all five workspaces, and whether
+                decorative content is hidden from assistive tech rather than read aloud as noise.
+              </p>
+
+              <h2>Fixed in the last pass</h2>
+              <ul class="audit-list">
+                {fixed.map((item) => (
+                  <li class="audit-item">
+                    <h3 class="audit-item-title">{item.title}</h3>
+                    <p>{item.body}</p>
+                  </li>
+                ))}
+              </ul>
+
+              <h2>Still on the list</h2>
+              <ul class="colo-list">
+                {ongoing.map((line) => <li>{line}</li>)}
+              </ul>
+
+              <h2>Found something?</h2>
+              <p>
+                If something doesn't work with a keyboard, screen reader, or any assistive tech, that's a bug —
+                <a href={`${base}contact`}>tell me about it</a> and I'll fix it.
+              </p>
+            </div>
+          </div>
+        </WindowChrome>
+      </div>
+    </div>
+  </article>
+  </main>
+</Layout>
+
+<style>
+  .colo-page {
+    padding: 4rem 3rem;
+  }
+
+  .colo-inner {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .colo-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .back-home-row {
+    margin-bottom: 1.5rem;
+  }
+
+  .colo-h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  .colo-sub {
+    font-size: 0.9375rem;
+    color: var(--sub);
+    line-height: 1.6;
+    max-width: 56ch;
+  }
+
+  .colo-window {
+    padding-bottom: 3rem;
+  }
+
+  .colo-window :global(.window) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .colo-window-body {
+    background: var(--bg1);
+    padding: 2rem 1.75rem;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .colo-body {
+    font-size: 0.9375rem;
+    color: var(--sub);
+    line-height: 1.75;
+    animation: colo-fade-in 0.18s ease-out;
+  }
+
+  @keyframes colo-fade-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .colo-body { animation: none; }
+  }
+
+  .colo-body h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin: 2.5rem 0 1.25rem;
+  }
+
+  .colo-body h2:first-child {
+    margin-top: 0;
+  }
+
+  .colo-body p {
+    margin-bottom: 1.25rem;
+    max-width: 68ch;
+  }
+
+  .colo-body a {
+    color: var(--lime);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(158,255,87,0.35);
+  }
+
+  .colo-body a:hover {
+    border-bottom-color: var(--lime);
+  }
+
+  .colo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+    max-width: 68ch;
+  }
+
+  .colo-list li {
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .colo-list li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--lime);
+  }
+
+  .audit-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 68ch;
+    margin-bottom: 1.25rem;
+  }
+
+  .audit-item-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  .audit-item p {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 860px) {
+    .colo-page { padding: 2.5rem 1.25rem; }
+    .colo-window { height: auto !important; }
+    .colo-window :global(.window) { height: auto; position: static; }
+    .colo-window-body { overflow-y: visible; flex: none; }
+  }
+
+  @media (max-width: 480px) {
+    .colo-page { padding: 1.75rem 0.75rem; }
+  }
+</style>
+

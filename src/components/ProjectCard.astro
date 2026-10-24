@@ -1,0 +1,100 @@
+---
+import WindowChrome from './WindowChrome.astro';
+import Device from './Device.astro';
+import type { DeviceName } from '../data/sprites';
+
+interface Props {
+  href: string;
+  slug: string;
+  filename: string;
+  eyebrow: string;
+  year: string;
+  title: string;
+  problem: string;
+  outcomeValue: string;
+  outcomeLabel: string;
+  device?: DeviceName;
+  isNew?: boolean;
+}
+
+const { href, slug, filename, eyebrow, year, title, problem, outcomeValue, outcomeLabel, device, isNew } = Astro.props;
+---
+
+<WindowChrome as="a" href={href} title={filename} isNew={isNew} class="pcard">
+  <div class="pcard-image dither mono-img">
+    <span class="dither-label" aria-hidden="true">[ case study image, greyscale ]</span>
+    {device && <Device name={device} scale={4} project={slug} class="pcard-device" />}
+  </div>
+  <div class="pcard-body">
+    <div class="pcard-meta">
+      <span class="t-label">{eyebrow}</span>
+      <span class="t-label">{year}</span>
+    </div>
+    <h3 class="pcard-title">{title}</h3>
+    <p class="pcard-problem">{problem}</p>
+    {outcomeValue && (
+      <p class="pcard-outcome"><span class="hl pcard-value">{outcomeValue}.</span> {outcomeLabel}</p>
+    )}
+    <span class="t-action action-link pcard-open">open case study ↗</span>
+  </div>
+</WindowChrome>
+
+<style>
+  .pcard { text-decoration: none; color: var(--ink); }
+  .pcard:hover { color: var(--ink); }
+
+  .pcard-image {
+    position: relative;
+    height: 220px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .pcard:hover .pcard-image,
+  .pcard:focus-visible .pcard-image { filter: grayscale(0); }
+
+  .pcard-image :global(.pcard-device) {
+    position: absolute;
+    right: 16px;
+    bottom: 12px;
+  }
+
+  .pcard-body {
+    flex: 1;
+    padding: 22px 26px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pcard-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .pcard-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 1.12;
+  }
+
+  .pcard-problem,
+  .pcard-outcome { font-size: 16px; }
+
+  .pcard-problem { color: var(--ink-2); }
+
+  .pcard-value { font-weight: 600; }
+
+  .pcard-open {
+    margin-top: auto;
+    padding-top: 6px;
+  }
+
+  .pcard:hover .pcard-open { color: var(--blue-hover); }
+
+  @media (max-width: 480px) {
+    .pcard-body { padding: 18px 18px 20px; }
+    .pcard-title { font-size: 26px; }
+  }
+</style>

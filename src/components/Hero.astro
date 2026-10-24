@@ -1,0 +1,89 @@
+---
+import Device from './Device.astro';
+---
+
+<section class="hero" aria-labelledby="hero-h">
+  <div class="hero-copy">
+    <p class="t-label hero-label">about.txt · product designer</p>
+    <h1 id="hero-h" class="hero-h1">
+      I take the <span class="hero-strike">faff<span class="hero-strike-line" aria-hidden="true"></span></span><br />
+      out of <span class="hl hero-hl">life admin</span>.
+    </h1>
+  </div>
+  <div class="hero-devices deco" aria-hidden="true">
+    <Device name="phone" scale={7} class="hero-phone" />
+    <Device name="pager" scale={6} class="hero-pager" />
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 40px 56px;
+    padding: 72px 0 64px;
+  }
+
+  .hero-copy {
+    flex: 999 1 640px;
+    min-width: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-label { margin: 0 0 28px; }
+
+  .hero-h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(3.2rem, 7.2vw, 7.2rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  /* "faff" is struck with a drawn line, not <del>, so screen readers read the sentence as written. */
+  .hero-strike {
+    position: relative;
+    display: inline-block;
+    color: var(--grey-mid);
+  }
+
+  .hero-strike-line {
+    position: absolute;
+    left: -4%;
+    right: -4%;
+    top: 54%;
+    height: 0.08em;
+    background: var(--blue);
+  }
+
+  /* An inline background spans the font's full ascent and descent, which runs up into
+     the line above. An inline-block with a tight line-height keeps the block to the letters. */
+  .hero-hl {
+    display: inline-block;
+    line-height: 0.9;
+    padding: 0.04em 0.1em 0.1em;
+    white-space: nowrap;
+  }
+
+  .hero-devices {
+    flex: 1 1 260px;
+    position: relative;
+    min-height: 340px;
+  }
+
+  .hero-devices :global(.hero-phone) { position: absolute; right: 14%; top: 0; }
+  .hero-devices :global(.hero-pager) { position: absolute; left: 4%; bottom: 0; }
+
+  @media (max-width: 860px) {
+    .hero { padding: 48px 0 40px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-h1 { line-height: 1.12; }
+    .hero-hl { white-space: normal; }
+  }
+</style>

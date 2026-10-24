@@ -1,0 +1,226 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BackToHome from '../components/BackToHome.astro';
+import WindowChrome from '../components/WindowChrome.astro';
+
+const base = import.meta.env.BASE_URL;
+
+
+const lastUpdated = 'June 22, 2026';
+---
+
+<Layout title="How I use AI — Nirmal">
+
+  <main id="main-content">
+  <article class="ai-page">
+    <div class="ai-inner">
+      <header class="ai-header">
+        <div class="back-home-row"><BackToHome /></div>
+        <h1 class="ai-h1">How I use AI</h1>
+        <p class="ai-updated">Last updated: <span class="lime">{lastUpdated}</span></p>
+      </header>
+
+      <div class="ai-window">
+        <WindowChrome title="how-i-use-ai.md" activeTitle="[+]" icon="UTF-8">
+          <div class="ai-window-body">
+            <div class="ai-body">
+              <p>
+              This page is a work in progress and will (hopefully) see regular updates, and it should be. I'm still 
+              figuring out how AI fits into my daily life and where it is genuinely good for design, and where it is not.
+              Treat this page as a record of where I've fgotten to so far and not as a fixed position.
+              </p>
+
+              <h2>Do I need a human designer? AI can make nice websites now.</h2>
+              <p>
+                Yeah! In 2026, most LLMs I've tried are really good at producing good looking websites. I vibe coded a wedding website for myself and 
+                it looked fine! Do the sites all look just a bit similar? I'll leave that to you. So why should someone still employ a human designer? What do I 
+                bring to the table that Gemini cannot? What are my thoughts on AI? Am I stuck in the past? Head strong? Rowing against the tide?
+                
+                Eh, no. I use AI where it helps. I design for humans (until the agentic web becomes a reality and we start designing for agents to have positive life-changing experiences) 
+                My default answer is to keep my work grounded in real experiences of real people. AI is useful for moving faster and 
+                for automating mundane work, but it's easy to let it sand the judgement out of a project: to accept a plausible 
+                hypothesis instead of digging for an actual finding. I strive to keep a human in the loop wherever decisions are being made,
+                to undestand research, what needs building, and what shouldn't be built.
+              </p>
+              <p>
+                However, I'm not against designing for AI or a blanket "Keep AI away from the interface" rule. If there's a chance 
+                to design useful AI tools, designing that interaction well is an important part of the job - this is craft and not compromise, 
+                and nor will it be treated as one. My work on the chatbot in the Counselling Companions project is a demonstration of this commitment.
+              </p>
+
+              <h2>Restraint</h2>
+              <p>
+              I believe that the use of AI in interfaces has to come with clear guardrails and clear communication. Not 
+              just for my peace of mind, but for improved adoption too. For my MSc thesis, I followed the Responsible Research and Innovation
+              principles and mapped out sensitive data to understand what (and what couldn't) be handed over to AI. This helped place 
+              key guardrails and build informed consent into the product from the ground up, also ensuring that a human reviewed 
+              and approved any AI approved material before it could go onto the client record. This lesson has stayed, and I still think 
+              that AI should feel like a tool held in the user's hand, and not an agent acting on its own. A lot of good design 
+              is deciding where it belongs. 
+                <em>(See: <a href={`${base}projects/counselling-companions`}>Crafting Counselling Companions</a>.)</em>
+              </p>
+
+              <h2>So how do you use AI?</h2>
+              <p>
+                I'm less precious about AI in the parts of the work where it speeds me up without making decisions for
+                me.
+              </p>
+              <p>
+                <strong>Research.</strong> I use AI to help process and synthesise: transcript and anonymise, cluster codes, surface patterns across
+                transcripts, draft first-pass analyses. I treat its output as a draft to verify against the raw
+                data, never as the finding itself. I would like for the thinking to stay mine while the typing gets faster.
+              </p>
+              <p>
+                <strong>Tracking and planning.</strong> I lean on AI to keep projects organised — producing interactive HTML
+                gantt chartgs turning messy notes into structure, keeping track of decisions and open threads: 
+                so more of my attention goes into designing and less to the admin around it.
+              </p>
+              <p>
+                <strong>Building.</strong> This is where it's changed my work most. I use Claude skills and artifacts
+                to scaffold, prototype, and generate live sites for usability testing, allowing me to test ideas in fairly high fidelity without
+                having to invest hours into realistic Figma prototypes or trying to explain interactivity to testers while using 
+                a static mockup with two buttons which have hover states. Speed only helps if the output stays true to the design system. I make 
+                it a point to export design tokens off Figma and to store it in tool memory to generate realistic renders of concepts: the design 
+                system keeps me consistent while the AI makes my processes quicker. 
+
+                I <em><b>never treat AI models as stand-in users</b></em> as I understand how LLMs fundamentally work: they're great at finding the next word to from
+                coherent sentences, but aren't human (no matter how many people I know talk to Chat GPT like it's their best friend) and cannot be trusted to
+                understand human interactions or how site designs and layouts might be failing.
+              </p>
+
+              <h2>TL;DR</h2>
+              <p>
+              I'm trying to use AI as what it is - a tool. It's not a user, it's not a solution to all the world's problems (just yet). Humans 
+              are still answerable for end results, and I only use it where it actually makes the work better. Do I have a subscription? Sure, I use
+              Claude Pro and I experiment with local models in my free time, but this is all experimentation and will not affect work, unless I'm 
+              happy with the results of any experiments while staying true to my fundamental beliefs around use of the technology. As my understanding shifts,
+              so will this page.
+                page.
+              </p>
+            </div>
+          </div>
+        </WindowChrome>
+      </div>
+    </div>
+  </article>
+  </main>
+</Layout>
+
+<style>
+  .ai-page {
+    padding: 4rem 3rem;
+  }
+
+  .ai-inner {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .ai-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .back-home-row {
+    margin-bottom: 1.5rem;
+  }
+
+  .ai-h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  .ai-updated {
+    font-family: var(--font-machine);
+    font-size: 12px;
+    color: var(--dim);
+  }
+
+  .ai-updated .lime {
+    color: var(--lime);
+  }
+
+  .ai-window {
+    padding-bottom: 3rem;
+  }
+
+  .ai-window :global(.window) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ai-window-body {
+    background: var(--bg1);
+    padding: 2rem 1.75rem;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .ai-body {
+    font-size: 0.9375rem;
+    color: var(--sub);
+    line-height: 1.75;
+    animation: ai-fade-in 0.18s ease-out;
+  }
+
+  @keyframes ai-fade-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ai-body { animation: none; }
+  }
+
+  .ai-body p {
+    margin-bottom: 1.5rem;
+    max-width: 68ch;
+  }
+
+  .ai-body h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin: 2.5rem 0 1rem;
+  }
+
+  .ai-body h2:first-child {
+    margin-top: 0;
+  }
+
+  .ai-body strong {
+    color: var(--text);
+  }
+
+  .ai-body em {
+    color: var(--dim);
+    font-style: italic;
+  }
+
+  .ai-body a {
+    color: var(--lime);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(158,255,87,0.35);
+  }
+
+  .ai-body a:hover {
+    border-bottom-color: var(--lime);
+  }
+
+  @media (max-width: 860px) {
+    .ai-page { padding: 2.5rem 1.25rem; }
+    .ai-window { height: auto !important; }
+    .ai-window :global(.window) { height: auto; position: static; }
+    .ai-window-body { overflow-y: visible; flex: none; }
+  }
+
+  @media (max-width: 480px) {
+    .ai-page { padding: 1.75rem 0.75rem; }
+  }
+</style>
+

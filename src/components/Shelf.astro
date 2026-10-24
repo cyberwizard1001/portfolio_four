@@ -1,0 +1,134 @@
+---
+// A small Nudge Shelf: devices the visitor has met sit on the shelf, and the list
+// suggests three things to read next. devices.ts drives it; without JS the shelf
+// is empty and the list shows the first three items in the default order.
+import { getCollection } from 'astro:content';
+import Device from './Device.astro';
+
+const base = import.meta.env.BASE_URL;
+const projects = (await getCollection('projects', ({ data }) => !data.hidden)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const builds = (await getCollection('builds')).sort((a, b) => a.data.order - b.data.order);
+
+const pool = [
+  ...projects.map((p) => ({
+    slug: p.id,
+    title: p.data.title,
+    kind: 'case study',
+    href: `${base}projects/${p.id}/`,
+    device: p.data.device,
+  })),
+  ...builds.map((b) => ({
+    slug: b.id,
+    title: b.data.title,
+    kind: 'build',
+    href: b.data.link.startsWith('/') ? `${base.replace(/\/$/, '')}${b.data.link}` : b.data.link,
+    device: b.data.device,
+  })),
+];
+---
+
+<section class="shelf" aria-labelledby="shelf-h" data-shelf>
+  <p class="shelf-intro">[SHELF INTRO: from Nirmal]</p>
+
+  <div class="shelf-layout">
+    <div class="shelf-unit" aria-hidden="true">
+      <div class="shelf-row" data-shelf-row></div>
+      <div class="shelf-board"></div>
+    </div>
+
+    <div class="shelf-next">
+      <h2 id="shelf-h" class="visually-hidden">Read next</h2>
+      <ul class="shelf-list" data-shelf-list>
+        {pool.map((item, i) => (
+          <li data-shelf-item={item.slug} hidden={i >= 3}>
+            <a href={item.href} class="shelf-link">
+              {item.device && <Device name={item.device} scale={2} static />}
+              <span class="shelf-title">{item.title}</span>
+              <span class="t-label">{item.kind}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="shelf-empty" data-shelf-empty hidden>[SHELF EMPTY STATE: from Nirmal]</p>
+      <button type="button" class="mbtn shelf-more" data-shelf-more hidden={pool.length <= 3}>
+        show me three others
+      </button>
+      <p class="visually-hidden" aria-live="polite" data-shelf-status></p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .shelf {
+    padding-bottom: 72px;
+  }
+
+  .shelf-intro { margin-bottom: 24px; color: var(--ink-2); }
+
+  .shelf-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: end;
+  }
+
+  /* The shelf: a 2px dark line with small bracket ends. */
+  .shelf-row {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+    min-height: 72px;
+    padding: 0 16px;
+  }
+
+  .shelf-board {
+    position: relative;
+    height: 2px;
+    background: var(--grey-dark);
+  }
+
+  .shelf-board::before,
+  .shelf-board::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    width: 6px;
+    height: 8px;
+    border: 2px solid var(--grey-dark);
+    border-top: 0;
+  }
+
+  .shelf-board::before { left: 10%; border-right: 0; }
+  .shelf-board::after { right: 10%; border-left: 0; }
+
+  .shelf-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--ink);
+  }
+
+  .shelf-list li { border-bottom: 1px dashed var(--rule); }
+
+  .shelf-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 52px;
+    padding: 6px 4px;
+    text-decoration: none;
+  }
+
+  .shelf-title { flex: 1; text-decoration: underline; text-underline-offset: 3px; }
+
+  .shelf-more { margin-top: 18px; }
+  .shelf-more[hidden] { display: none; }
+
+  @media (max-width: 860px) {
+    .shelf-layout { grid-template-columns: 1fr; }
+    .shelf-unit { display: none; }
+  }
+</style>

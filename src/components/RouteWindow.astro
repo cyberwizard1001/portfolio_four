@@ -1,0 +1,118 @@
+---
+import WindowChrome from './WindowChrome.astro';
+import { arrowFor, type Stop } from '../lib/caseStudy';
+
+interface Props {
+  stops: Stop[];
+}
+
+const { stops } = Astro.props;
+---
+
+<aside class="route" aria-label="Route">
+  <WindowChrome title="route">
+    <div class="route-head">
+      <span class="t-label">{stops.length} stops</span>
+      <span class="t-label route-here">you are here: <span class="hl" data-route-here>1</span></span>
+    </div>
+    <ol class="route-list" data-route-list>
+      {stops.map((stop, i) => (
+        <li>
+          <a href={`#${stop.id}`} class="route-row t-ui" data-route-target={stop.id} aria-current={i === 0 ? 'location' : undefined}>
+            <span class="route-arrow t-count" aria-hidden="true">{arrowFor(i, stops.length)}</span>
+            <span>{stop.name}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </WindowChrome>
+</aside>
+
+<style>
+  .route {
+    flex: 1 1 280px;
+    max-width: 340px;
+    position: sticky;
+    top: calc(var(--bar-h) + 24px);
+  }
+
+  .route-head {
+    padding: 14px 16px 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .route-here { color: var(--ink); }
+
+  .route-list {
+    list-style: none;
+    max-height: calc(100vh - var(--bar-h) - 140px);
+    overflow-y: auto;
+  }
+
+  .route-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 16px;
+    min-height: 44px;
+    border-top: 1px dashed var(--rule);
+    line-height: 1.3;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .route-row:hover { background: var(--panel); color: var(--ink); }
+  .route-row:focus-visible { outline-offset: -3px; }
+  .route-row[aria-current] { background: var(--tangerine-tint); }
+
+  .route-arrow {
+    width: 22px;
+    flex: none;
+    text-align: center;
+    color: var(--blue);
+  }
+
+  /* Under 860px: a plain contents box above the first stop. */
+  @media (max-width: 860px) {
+    .route { position: static; max-width: none; flex-basis: 100%; }
+    .route-list { max-height: none; }
+  }
+</style>
+
+<script>
+  // Updates "you are here" and the highlighted row as the reader passes each stop.
+  const list = document.querySelector<HTMLElement>('[data-route-list]');
+  const here = document.querySelector<HTMLElement>('[data-route-here]');
+  if (list && here && 'IntersectionObserver' in window) {
+    const rows = Array.from(list.querySelectorAll<HTMLAnchorElement>('[data-route-target]'));
+    const targets = rows.map((r) => document.getElementById(r.dataset.routeTarget!));
+    let current = 0;
+
+    const update = () => {
+      const line = window.innerHeight * 0.4;
+      let next = 0;
+      targets.forEach((t, i) => {
+        if (t && t.getBoundingClientRect().top <= line) next = i;
+      });
+      if (next === current) return;
+      rows[current]?.removeAttribute('aria-current');
+      rows[next].setAttribute('aria-current', 'location');
+      here.textContent = String(next + 1);
+      current = next;
+      // Keep the current row visible inside the list without moving the page.
+      const row = rows[next];
+      if (list.scrollHeight > list.clientHeight) {
+        const top = row.offsetTop - list.offsetTop;
+        if (top < list.scrollTop || top + row.offsetHeight > list.scrollTop + list.clientHeight) {
+          list.scrollTop = top - list.clientHeight / 2;
+        }
+      }
+    };
+
+    const io = new IntersectionObserver(update, { rootMargin: '0px 0px -60% 0px' });
+    targets.forEach((t) => t && io.observe(t));
+  }
+</script>

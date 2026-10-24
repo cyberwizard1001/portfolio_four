@@ -1,0 +1,570 @@
+---
+import { jargonify } from '../../lib/jargon';
+interface CarouselImage {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  /** Set when a case study stop already shows this heading. */
+  hideHeading?: boolean;
+  eyebrow: string;
+  title: string;
+  body: string;
+  images: CarouselImage[];
+  reverse?: boolean;
+  raw?: boolean;
+}
+
+const { eyebrow, title, body, images, reverse = false, raw = false, hideHeading } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<section class:list={['proj-car', { 'proj-car-reverse': reverse }]}>
+  <div class="proj-car-textbody">
+    <span class="proj-car-eyebrow">{eyebrow}</span>
+    {!hideHeading && <h2 class="proj-car-title">{title}</h2>}
+    <p class="proj-car-body" set:html={jargonify(body)} />
+  </div>
+  <div
+    class="proj-carousel"
+    role="region"
+    aria-roledescription="carousel"
+    aria-label={title}
+    tabindex="0"
+  >
+    <div class="proj-carousel-panel">
+      <div class="proj-carousel-stage">
+        <div class="proj-carousel-viewport">
+          <div class="proj-carousel-track">
+            {images.map((img) => (
+              <div class="proj-carousel-slide">
+                <img src={raw ? img.src : `${base}${img.src.replace(/^\//, '')}`} alt={img.alt} />
+              </div>
+            ))}
+          </div>
+        </div>
+        <button type="button" class="proj-carousel-btn proj-carousel-prev" aria-label="Previous image">‹</button>
+        <button type="button" class="proj-carousel-btn proj-carousel-next" aria-label="Next image">›</button>
+      </div>
+      <div class="proj-carousel-base"></div>
+      <div class="proj-carousel-footer">
+        <p class="proj-carousel-caption">{images[0]?.alt}</p>
+        <div class="proj-carousel-controls">
+        <button type="button" class="proj-carousel-play" aria-label="Pause slideshow" hidden>❚❚</button>
+        {images.length > 5 ? (
+          <div class="proj-carousel-counter" aria-hidden="true">
+            <span class="proj-carousel-counter-current">1</span>/<span>{images.length}</span>
+          </div>
+        ) : (
+          <div class="proj-carousel-dots">
+            {images.map((_, i) => (
+              <button
+                type="button"
+                class="proj-carousel-dot"
+                aria-label={`Go to image ${i + 1}`}
+                aria-current={i === 0 ? 'true' : 'false'}
+              />
+            ))}
+          </div>
+        )}
+        </div>
+      </div>
+    </div>
+    <span class="proj-carousel-status" aria-live="polite"></span>
+  </div>
+</section>
+
+<style>
+  .proj-car {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+    align-items: start;
+    padding: 0 3rem 5rem;
+  }
+
+  .proj-car-eyebrow {
+    display: block;
+    font-family: var(--font-machine);
+    font-size: 12px;
+    line-height: 1;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-bottom: 0.25rem;
+  }
+
+  .proj-car-textbody {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .proj-carousel {
+    grid-column: 2;
+    grid-row: 1;
+    position: relative;
+    border-radius: var(--radius-md);
+    outline: none;
+  }
+
+  .proj-carousel:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
+  }
+
+  .proj-car-reverse .proj-car-textbody {
+    grid-column: 2;
+  }
+
+  .proj-car-reverse .proj-carousel {
+    grid-column: 1;
+  }
+
+  .proj-car-title {
+    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .proj-car-body {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--sub);
+    line-height: 1.7;
+  }
+
+  .proj-car-body :global(a) {
+    color: var(--blue);
+    text-decoration: underline;
+    text-decoration-color: rgba(158,255,87,0.35);
+    text-underline-offset: 2px;
+  }
+
+  .proj-car-body :global(a:hover) {
+    text-decoration-color: var(--blue);
+  }
+
+  .proj-carousel-panel {
+    background: var(--bg0);
+    border: 1px solid var(--border-hi);
+    border-radius: 16px;
+    padding: 1.1rem 0.625rem 0.625rem;
+    position: relative;
+  }
+
+  .proj-carousel-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 7px;
+    background: var(--bg);
+    border-radius: 0 0 6px 6px;
+    box-shadow: inset 0 -1px 0 var(--border-hi);
+  }
+
+  .proj-carousel-panel::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--border-hi);
+    box-shadow: 0 0 0 1px var(--bg);
+  }
+
+  .proj-carousel-stage {
+    position: relative;
+  }
+
+  .proj-carousel-viewport {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 12px 32px -16px rgba(0, 0, 0, 0.5);
+  }
+
+  .proj-carousel-base {
+    width: 42%;
+    max-width: 200px;
+    height: 9px;
+    margin: 3px auto 0;
+    background: linear-gradient(180deg, var(--bg2), var(--bg1));
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    position: relative;
+    box-shadow: 0 6px 14px -10px rgba(0, 0, 0, 0.5);
+  }
+
+  .proj-carousel-base::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 26%;
+    height: 3px;
+    background: var(--bg);
+  }
+
+  .proj-carousel-footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 0.875rem;
+    padding: 0 0.125rem;
+  }
+
+  .proj-carousel-caption {
+    margin: 0;
+    min-width: 0;
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    color: var(--sub);
+    opacity: 0.75;
+  }
+
+  .proj-carousel-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .proj-carousel-track {
+      transition: none;
+    }
+  }
+
+  .proj-carousel-slide {
+    flex: 0 0 100%;
+  }
+
+  .proj-carousel-slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .proj-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-hi);
+    background: var(--bg1);
+    color: var(--text);
+    font-family: var(--font-machine);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.4);
+    transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+
+  .proj-carousel-btn:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+    transform: translateY(-50%) scale(1.08);
+  }
+
+  .proj-carousel-btn:active {
+    transform: translateY(-50%) scale(0.96);
+  }
+
+  .proj-carousel-btn:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+  }
+
+  .proj-carousel-prev {
+    left: 0.625rem;
+  }
+
+  .proj-carousel-next {
+    right: 0.625rem;
+  }
+
+  .proj-carousel-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    flex-shrink: 0;
+  }
+
+  .proj-carousel-play {
+    font-family: var(--font-machine);
+    font-size: 13px;
+    line-height: 1;
+    color: var(--sub);
+    background: transparent;
+    border: 1px solid var(--border-hi);
+    border-radius: 3px;
+    padding: 0.25rem 0.375rem;
+    cursor: pointer;
+  }
+
+  .proj-carousel-play:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+
+  .proj-carousel-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.4375rem;
+    flex-shrink: 0;
+    padding-bottom: 0.125rem;
+  }
+
+  .proj-carousel-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    border: 1px solid var(--border-hi);
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    position: relative;
+  }
+
+  .proj-carousel-dot::before {
+    content: '';
+    position: absolute;
+    inset: -10px -6px;
+  }
+
+  .proj-carousel-dot:hover {
+    border-color: var(--blue);
+    transform: scale(1.2);
+  }
+
+  .proj-carousel-dot[aria-current="true"] {
+    background: var(--blue);
+    border-color: var(--blue);
+  }
+
+  .proj-carousel-dot:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+  }
+
+  .proj-carousel-counter {
+    flex-shrink: 0;
+    font-family: var(--font-machine);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: var(--sub);
+    white-space: nowrap;
+  }
+
+  .proj-carousel-counter-current {
+    color: var(--text);
+  }
+
+  .proj-carousel-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  @media (max-width: 860px) {
+    .proj-car {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+      padding: 0 1.25rem 3rem;
+      row-gap: 1.5rem;
+    }
+    .proj-car-textbody {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .proj-carousel {
+      grid-column: 1;
+      grid-row: 2;
+    }
+    .proj-car-reverse .proj-car-textbody {
+      grid-column: 1;
+      grid-row: 2;
+    }
+    .proj-car-reverse .proj-carousel {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .proj-carousel-btn {
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+
+    .proj-carousel-dot::before {
+      inset: -14px -8px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const carousels = document.querySelectorAll<HTMLElement>('.proj-carousel');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    carousels.forEach((carousel) => {
+      const viewport = carousel.querySelector<HTMLElement>('.proj-carousel-viewport');
+      const track = carousel.querySelector<HTMLElement>('.proj-carousel-track');
+      const slides = carousel.querySelectorAll<HTMLElement>('.proj-carousel-slide');
+      const dots = carousel.querySelectorAll<HTMLButtonElement>('.proj-carousel-dot');
+      const prevBtn = carousel.querySelector<HTMLButtonElement>('.proj-carousel-prev');
+      const nextBtn = carousel.querySelector<HTMLButtonElement>('.proj-carousel-next');
+      const status = carousel.querySelector<HTMLElement>('.proj-carousel-status');
+      const caption = carousel.querySelector<HTMLElement>('.proj-carousel-caption');
+      const counterCurrent = carousel.querySelector<HTMLElement>('.proj-carousel-counter-current');
+      const playBtn = carousel.querySelector<HTMLButtonElement>('.proj-carousel-play');
+      if (!viewport || !track || slides.length === 0 || !prevBtn || !nextBtn) return;
+
+      const count = slides.length;
+      let index = 0;
+      let timer: ReturnType<typeof setInterval> | null = null;
+      let userStopped = false;
+
+      const syncHeight = () => {
+        const img = slides[index]?.querySelector<HTMLImageElement>('img');
+        if (!img || !img.naturalWidth) return;
+        const ratio = img.naturalHeight / img.naturalWidth;
+        viewport.style.height = `${viewport.clientWidth * ratio}px`;
+      };
+
+      const render = (announce = false) => {
+        track.style.transform = `translateX(-${index * 100}%)`;
+        slides.forEach((slide, i) => {
+          slide.toggleAttribute('data-active', i === index);
+          slide.setAttribute('aria-hidden', String(i !== index));
+        });
+        dots.forEach((dot, i) => dot.setAttribute('aria-current', i === index ? 'true' : 'false'));
+        // Only announce user-driven changes; autoplay announcements every 7s are noise.
+        if (status && announce) status.textContent = `Image ${index + 1} of ${count}`;
+        if (counterCurrent) counterCurrent.textContent = String(index + 1);
+        if (caption) caption.textContent = slides[index]?.querySelector('img')?.alt ?? '';
+        const activeImg = slides[index]?.querySelector<HTMLImageElement>('img');
+        if (activeImg?.complete) syncHeight();
+        else activeImg?.addEventListener('load', syncHeight, { once: true });
+      };
+
+      const pauseAutoplay = () => {
+        if (timer !== null) {
+          clearInterval(timer);
+          timer = null;
+        }
+      };
+
+      const resumeAutoplay = () => {
+        if (!userStopped && timer === null && !prefersReducedMotion && count > 1) {
+          timer = setInterval(() => next(false), 7000);
+        }
+      };
+
+      const syncPlayBtn = () => {
+        if (!playBtn) return;
+        playBtn.textContent = userStopped ? '▶' : '❚❚';
+        playBtn.setAttribute('aria-label', userStopped ? 'Play slideshow' : 'Pause slideshow');
+      };
+
+      const stopAutoplay = () => {
+        userStopped = true;
+        pauseAutoplay();
+        syncPlayBtn();
+      };
+
+      const goTo = (i: number, fromUser: boolean) => {
+        index = ((i % count) + count) % count;
+        render(fromUser);
+        if (fromUser) stopAutoplay();
+      };
+
+      // WCAG 2.2.2: autoplay needs an explicit pause control, not just hover/focus pause.
+      if (playBtn && !prefersReducedMotion && count > 1) {
+        playBtn.hidden = false;
+        playBtn.addEventListener('click', () => {
+          if (userStopped) {
+            userStopped = false;
+            syncPlayBtn();
+            // Focus is inside the carousel, so the focusout handler resumes; nothing else to do.
+          } else {
+            stopAutoplay();
+          }
+        });
+      }
+
+      const next = (fromUser: boolean) => goTo(index + 1, fromUser);
+      const prev = (fromUser: boolean) => goTo(index - 1, fromUser);
+
+      prevBtn.addEventListener('click', () => prev(true));
+      nextBtn.addEventListener('click', () => next(true));
+      dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i, true)));
+
+      carousel.addEventListener('keydown', (event) => {
+        switch (event.key) {
+          case 'ArrowLeft':
+            event.preventDefault();
+            prev(true);
+            break;
+          case 'ArrowRight':
+            event.preventDefault();
+            next(true);
+            break;
+          case 'Home':
+            event.preventDefault();
+            goTo(0, true);
+            break;
+          case 'End':
+            event.preventDefault();
+            goTo(count - 1, true);
+            break;
+        }
+      });
+
+      carousel.addEventListener('mouseenter', pauseAutoplay);
+      carousel.addEventListener('mouseleave', resumeAutoplay);
+      carousel.addEventListener('focusin', pauseAutoplay);
+      carousel.addEventListener('focusout', resumeAutoplay);
+
+      let touchStartX: number | null = null;
+      carousel.addEventListener('touchstart', (event) => {
+        touchStartX = event.touches[0].clientX;
+      }, { passive: true });
+      carousel.addEventListener('touchend', (event) => {
+        if (touchStartX === null) return;
+        const deltaX = event.changedTouches[0].clientX - touchStartX;
+        touchStartX = null;
+        if (Math.abs(deltaX) < 40) return;
+        if (deltaX < 0) next(true);
+        else prev(true);
+      });
+
+      window.addEventListener('resize', syncHeight);
+
+      render();
+      resumeAutoplay();
+    });
+  })();
+</script>

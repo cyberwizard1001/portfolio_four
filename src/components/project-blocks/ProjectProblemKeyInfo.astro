@@ -1,0 +1,182 @@
+---
+import { jargonify } from '../../lib/jargon';
+
+interface InfoItem {
+  label: string;
+  value: string;
+}
+
+interface BriefFinding {
+  label: string;
+  body: string;
+}
+
+interface Props {
+  problemBody: string;
+  contextBody?: string;
+  briefFindings?: BriefFinding[];
+  infoItems: InfoItem[];
+  image?: string;
+  imageAlt?: string;
+}
+
+const { problemBody, contextBody, briefFindings, infoItems, image, imageAlt } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const imageSrc = image ? `${base}${image.replace(/^\//, '')}` : undefined;
+---
+
+<section class="proj-pki proj-section">
+  <div class="proj-pki-narrative">
+    <span class="proj-pki-label">Problem</span>
+    <p class="proj-pki-body">{problemBody}</p>
+    <span class="proj-pki-label proj-pki-label-context">Brief</span>
+    {briefFindings ? (
+      <ul class="proj-pki-findings">
+        {briefFindings.map((f) => (
+          <li class="proj-pki-finding">
+            <span class="proj-pki-finding-label">{f.label}</span>
+            <p class="proj-pki-finding-body">{f.body}</p>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="proj-pki-context">{contextBody}</p>
+    )}
+    {imageSrc && (
+      <img class="proj-pki-image" src={imageSrc} alt={imageAlt ?? ''} loading="lazy" />
+    )}
+  </div>
+  <div class="proj-pki-side">
+    <div class="proj-pki-panel">
+      {infoItems.map((item) => (
+        <div class="proj-pki-info-item">
+          <span class="proj-pki-info-label">{item.label}</span>
+          <span class="proj-pki-info-value" set:html={jargonify(item.value)} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .proj-pki {
+    display: grid;
+    grid-template-columns: 7fr 3fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .proj-pki-label {
+    display: block;
+    font-family: var(--font-machine);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+  }
+
+  .proj-pki-body {
+    max-width: 760px;
+    margin-bottom: 1.5rem;
+  }
+
+  .proj-pki-label-context {
+    margin-bottom: 0.75rem;
+  }
+
+  .proj-pki-context {
+    line-height: 1.65;
+    max-width: 62ch;
+  }
+
+  .proj-pki-findings {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: 62ch;
+  }
+
+  .proj-pki-finding {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .proj-pki-finding:first-child {
+    padding-top: 0;
+  }
+
+  .proj-pki-finding:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .proj-pki-finding-label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    margin-bottom: 0.4rem;
+  }
+
+  .proj-pki-finding-body {
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .proj-pki-image {
+    display: block;
+    width: 100%;
+    margin-top: 1.75rem;
+    border: 1px solid var(--border-hi);
+    border-radius: var(--radius-md);
+  }
+
+  .proj-pki-side {
+    align-self: start;
+  }
+
+  .proj-pki-panel {
+    border: 1px solid var(--border-hi);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    background: var(--bg1);
+  }
+
+  .proj-pki-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .proj-pki-info-item:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+  }
+
+  .proj-pki-info-label {
+    font-family: var(--font-machine);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-bottom: 0.25rem;
+  }
+
+  .proj-pki-info-value {
+    font-size: 0.9375rem;
+    color: var(--text);
+  }
+
+  @media (max-width: 860px) {
+    .proj-pki { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+</style>

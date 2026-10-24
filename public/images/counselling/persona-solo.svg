@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="112" height="112" viewBox="0 0 112 112">
+  <rect width="112" height="112" fill="#0a0a0a"/>
+  <!-- single desk + chair, line art -->
+  <g stroke="#9eff57" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="28" y="56" width="56" height="6" />
+    <line x1="34" y1="62" x2="34" y2="80" />
+    <line x1="78" y1="62" x2="78" y2="80" />
+    <circle cx="56" cy="38" r="10" />
+    <path d="M40 70 Q40 52 56 52 Q72 52 72 70" />
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portfolio-four",
+  "main": "./worker/index.ts",
+  "compatibility_date": "2026-06-17",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist"
+  },
+  "send_email": [
+    {
+      "name": "SEND_EMAIL"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "FEEDBACK_RATE_LIMIT",
+      "id": "fd82d11ac36742c2af0b37876b86129c"
+    }
+  ]
+}

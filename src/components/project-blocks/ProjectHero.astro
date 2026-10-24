@@ -1,0 +1,72 @@
+---
+interface Props {
+  title: string;
+  type: string;
+  year: string;
+  scope?: string;
+}
+
+const { title, type, year, scope } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<section class="proj-hero">
+  <a href={`${base}#work`} class="proj-hero-back">&larr; Back to projects</a>
+  <span class="proj-hero-meta">{type} · {year}</span>
+  <h1 class="proj-hero-title">{title}</h1>
+  {scope && <p class="proj-hero-scope">{scope}</p>}
+</section>
+
+<style>
+  .proj-hero {
+    padding: 3rem;
+    position: relative;
+  }
+
+  .proj-hero-back,
+  .proj-hero-back:link,
+  .proj-hero-back:visited {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-machine);
+    font-size: 12px;
+    color: var(--sub);
+    text-decoration: none;
+    margin-bottom: 1rem;
+    transition: color 0.15s ease;
+  }
+
+  .proj-hero-back:hover {
+    color: var(--blue);
+  }
+
+  .proj-hero-meta {
+    font-family: var(--font-machine);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  .proj-hero-title {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    margin-top: 0.75rem;
+  }
+
+  .proj-hero-scope {
+    font-family: var(--font-machine);
+    font-size: 12px;
+    color: var(--dim);
+    letter-spacing: 0.06em;
+    margin-top: 0.875rem;
+  }
+
+  @media (max-width: 860px) {
+    .proj-hero { padding: 2rem 1.25rem; }
+  }
+</style>

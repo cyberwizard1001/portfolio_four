@@ -1,0 +1,44 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import CaseStudy from '../../components/CaseStudy.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('buildPages');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const base = import.meta.env.BASE_URL;
+
+const sections = entry.data.sections ?? [
+  { component: 'ProjectGallery' as const, props: { image: entry.data.image, imageAlt: entry.data.imageAlt } },
+];
+
+// Next stop after a build: the first listed case study.
+const first = (await getCollection('projects', ({ data }) => !data.hidden)).sort(
+  (a, b) => a.data.order - b.data.order
+)[0];
+const next = first && { title: first.data.title, href: `${base}projects/${first.id}/`, device: first.data.device };
+---
+
+<Layout title={`${entry.data.title} — Nirmal`} caseStudy={{ title: entry.data.title, next }}>
+  <CaseStudy
+    slug={entry.id}
+    title={entry.data.title}
+    filename={entry.data.filename}
+    eyebrowLine={[entry.data.type, entry.data.year].join(' · ')}
+    device={entry.data.device}
+    oneliner={entry.data.oneliner}
+    sections={sections}
+    headings={headings}
+    next={next}
+    hasBody={Boolean(entry.body?.trim())}
+  >
+    <Content />
+  </CaseStudy>
+</Layout>

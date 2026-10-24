@@ -1,0 +1,46 @@
+---
+interface StatuslineChunk {
+  label: string;
+  lime?: boolean;
+}
+
+interface Props {
+  statusline: StatuslineChunk[];
+}
+
+const { statusline } = Astro.props;
+---
+
+<section class="proj-meta">
+  {statusline.map((chunk) => (
+    <span class={chunk.lime ? 'pm-chunk lime' : 'pm-chunk'}>{chunk.label}</span>
+  ))}
+</section>
+
+<style>
+  .proj-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 3rem 3rem;
+    font-family: var(--font-machine);
+    font-size: 12px;
+  }
+
+  .pm-chunk {
+    border: 1px solid var(--border-hi);
+    border-radius: 2px;
+    padding: 4px 10px;
+    color: var(--dim);
+  }
+
+  .pm-chunk.lime {
+    color: var(--ink);
+    background: var(--tangerine-tint);
+    border-color: rgba(158,255,87,0.25);
+  }
+
+  @media (max-width: 860px) {
+    .proj-meta { padding: 0 1.25rem 2rem; }
+  }
+</style>

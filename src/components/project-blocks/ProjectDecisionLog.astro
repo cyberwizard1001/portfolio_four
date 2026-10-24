@@ -1,0 +1,227 @@
+---
+import { jargonify } from '../../lib/jargon';
+
+interface DecisionItem {
+  decision: string;
+  rationale: string;
+  outcome: string;
+  outcomeType?: 'positive' | 'neutral' | 'tradeoff';
+  image?: string;
+  imageAlt?: string;
+}
+
+interface Props {
+  /** Set when a case study stop already shows this heading. */
+  hideHeading?: boolean;
+  decisions: DecisionItem[];
+  title?: string;
+  intro?: string;
+}
+
+const { decisions, title = 'Decision log', intro, hideHeading } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+const outcomeLabels: Record<string, string> = {
+  positive: 'Positive result',
+  neutral:  'Neutral',
+  tradeoff: 'Trade-off',
+};
+---
+
+<section class="proj-dlog proj-section">
+  {!hideHeading && <h2 class="proj-dlog-title section-title">{title}</h2>}
+  {intro && <p class="proj-dlog-intro">{intro}</p>}
+  <ol class="proj-dlog-list">
+    {decisions.map((d, i) => {
+      const type = d.outcomeType ?? 'neutral';
+      return (
+        <li class="proj-dlog-item">
+          <span class="proj-dlog-num" aria-hidden="true">{i + 1}</span>
+          <div class:list={['proj-dlog-content', { 'proj-dlog-content-media': d.image }]}>
+            <div class="proj-dlog-text">
+              <h3 class="proj-dlog-decision" set:html={jargonify(d.decision)} />
+              <p class="proj-dlog-rationale">{d.rationale}</p>
+              <div class:list={['proj-dlog-outcome', `proj-dlog-outcome-${type}`]}>
+                <span class="proj-dlog-outcome-label">{outcomeLabels[type]}</span>
+                <p class="proj-dlog-outcome-text">{d.outcome}</p>
+              </div>
+            </div>
+            {d.image && (
+              <figure class="proj-dlog-media">
+                <div class="proj-dlog-frame">
+                  <img src={`${base}${d.image.replace(/^\//, '')}`} alt={d.imageAlt ?? ''} />
+                </div>
+                {d.imageAlt && <figcaption class="proj-dlog-caption">{d.imageAlt}</figcaption>}
+              </figure>
+            )}
+          </div>
+        </li>
+      );
+    })}
+  </ol>
+</section>
+
+<style>
+  .proj-dlog-title {
+    margin-bottom: 0.5rem;
+  }
+
+  .proj-dlog-intro {
+    margin-bottom: 1.5rem;
+    max-width: 720px;
+  }
+
+  .proj-dlog-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-top: 1.5rem;
+  }
+
+  .proj-dlog-item {
+    display: grid;
+    grid-template-columns: 2.75rem 1fr;
+    gap: 0 0.5rem;
+    padding: 2.25rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .proj-dlog-item:first-child {
+    padding-top: 0;
+  }
+
+  .proj-dlog-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .proj-dlog-num {
+    font-family: var(--font-machine);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--dim);
+    line-height: 1;
+    padding-top: 0.2em;
+    text-align: right;
+    user-select: none;
+  }
+
+  .proj-dlog-content,
+  .proj-dlog-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .proj-dlog-content-media {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
+    column-gap: 3rem;
+    align-items: start;
+  }
+
+  .proj-dlog-media {
+    margin: 0;
+    padding: 0.625rem;
+    background: var(--bg0);
+    border: 1px solid var(--border-hi);
+    border-radius: 10px;
+  }
+
+  .proj-dlog-frame {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .proj-dlog-frame img {
+    display: block;
+    width: 100%;
+  }
+
+  .proj-dlog-caption {
+    margin: 0.5rem 0.125rem 0;
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    color: var(--sub);
+    opacity: 0.75;
+  }
+
+  .proj-dlog-decision {
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  .proj-dlog-rationale {
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    color: var(--sub);
+    max-width: 62ch;
+    margin: 0;
+  }
+
+  .proj-dlog-outcome {
+    margin-top: 0.375rem;
+    padding: 0.75rem 1rem;
+    border-left: 3px solid;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .proj-dlog-outcome-positive {
+    border-left-color: #1e9e61;
+    background: rgba(30, 158, 97, 0.07);
+  }
+
+  .proj-dlog-outcome-neutral {
+    border-left-color: var(--tangerine);
+    background: var(--tangerine-tint);
+  }
+
+  .proj-dlog-outcome-tradeoff {
+    border-left-color: #d97706;
+    background: rgba(217, 119, 6, 0.07);
+  }
+
+  .proj-dlog-outcome-label {
+    display: block;
+    font-family: var(--font-machine);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+
+  .proj-dlog-outcome-positive .proj-dlog-outcome-label { color: #1e9e61; }
+  .proj-dlog-outcome-neutral  .proj-dlog-outcome-label { color: var(--muted); }
+  .proj-dlog-outcome-tradeoff .proj-dlog-outcome-label { color: #d97706; }
+
+  .proj-dlog-outcome-text {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin: 0;
+  }
+
+  @media (max-width: 860px) {
+    .proj-dlog-item {
+      grid-template-columns: 2rem 1fr;
+      gap: 0 0.375rem;
+      padding: 1.75rem 0;
+    }
+
+    .proj-dlog-num {
+      font-size: 1.125rem;
+    }
+
+    .proj-dlog-content-media {
+      grid-template-columns: 1fr;
+      row-gap: 1.25rem;
+    }
+
+    .proj-dlog-media {
+      max-width: 24rem;
+    }
+  }
+</style>

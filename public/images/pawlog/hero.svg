@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M 0 0 H 56 M 0 0 V 56" stroke="rgba(245,244,240,0.07)" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#9eff57" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#9eff57" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
+    <linearGradient id="timeline" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(245,244,240,0.12)"/>
+      <stop offset="100%" stop-color="#9eff57"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="900" fill="#0a0a0a"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+
+  <!-- Ambient glow at HEAD commit -->
+  <ellipse cx="1420" cy="560" rx="300" ry="180" fill="url(#glow)"/>
+
+  <!-- Eyebrow pill -->
+  <rect x="140" y="78" width="224" height="34" rx="17" fill="rgba(158,255,87,0.08)" stroke="rgba(158,255,87,0.35)"/>
+  <text x="252" y="100" fill="#9eff57" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="700" letter-spacing="0.08em" text-anchor="middle">TOOL DESIGN / FULL-STACK</text>
+
+  <!-- Headline -->
+  <text x="140" y="196" fill="#f0ede6" font-family="'JetBrains Mono', monospace" font-size="52" font-weight="700" letter-spacing="-1">every save is</text>
+  <text x="140" y="252" fill="#f0ede6" font-family="'JetBrains Mono', monospace" font-size="52" font-weight="700" letter-spacing="-1">a real commit.</text>
+  <text x="140" y="296" fill="rgba(240,237,230,0.55)" font-family="'JetBrains Mono', monospace" font-size="20">browser tool that gives product copy real version history — no CMS, just git.</text>
+
+  <!-- ── Commit timeline ── -->
+
+  <!-- Timeline line (gradient, dim → lime) -->
+  <line x1="140" y1="560" x2="1420" y2="560" stroke="url(#timeline)" stroke-width="3" filter="url(#soft)" opacity="0.5"/>
+  <line x1="140" y1="560" x2="1420" y2="560" stroke="url(#timeline)" stroke-width="2"/>
+
+  <!-- Commit 1 (oldest) x=140 -->
+  <circle cx="140" cy="560" r="12" fill="#111111" stroke="rgba(245,244,240,0.22)" stroke-width="2"/>
+  <text x="140" y="534" fill="#5a5a50" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">e9b1f4a</text>
+  <text x="140" y="588" fill="rgba(240,237,230,0.5)" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle">init: import from Figma</text>
+  <text x="140" y="604" fill="#5a5a50" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">4 days ago</text>
+
+  <!-- Commit 2 x=420 -->
+  <circle cx="420" cy="560" r="12" fill="#111111" stroke="rgba(245,244,240,0.26)" stroke-width="2"/>
+  <text x="420" y="534" fill="#5a5a50" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">7f203cc</text>
+  <text x="420" y="588" fill="rgba(240,237,230,0.5)" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle">hero: add headline variant B</text>
+  <text x="420" y="604" fill="#5a5a50" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">yesterday</text>
+
+  <!-- Commit 3 x=700 -->
+  <circle cx="700" cy="560" r="12" fill="#111111" stroke="rgba(245,244,240,0.3)" stroke-width="2"/>
+  <text x="700" y="534" fill="#5a5a50" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">a14dc09</text>
+  <text x="700" y="588" fill="rgba(240,237,230,0.55)" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle">empty_state: update body copy</text>
+  <text x="700" y="604" fill="#5a5a50" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">3 hr ago</text>
+
+  <!-- Commit 4 x=980 -->
+  <circle cx="980" cy="560" r="12" fill="#111111" stroke="rgba(245,244,240,0.35)" stroke-width="2"/>
+  <text x="980" y="534" fill="#5a5a50" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">3c82bfd</text>
+  <text x="980" y="588" fill="rgba(240,237,230,0.6)" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle">pricing: rename CTA label</text>
+  <text x="980" y="604" fill="#5a5a50" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">1 hr ago</text>
+
+  <!-- Commit 5 x=1200 -->
+  <circle cx="1200" cy="560" r="12" fill="#111111" stroke="rgba(245,244,240,0.4)" stroke-width="2"/>
+  <text x="1200" y="534" fill="#5a5a50" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">b7e23a1</text>
+  <text x="1200" y="588" fill="rgba(240,237,230,0.65)" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle">confirmation: soften tone</text>
+  <text x="1200" y="604" fill="#5a5a50" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">30 min ago</text>
+
+  <!-- HEAD commit (latest) x=1420 -->
+  <!-- HEAD badge -->
+  <rect x="1368" y="494" width="104" height="20" rx="10" fill="rgba(158,255,87,0.12)" stroke="#9eff57" stroke-width="1"/>
+  <text x="1420" y="508" fill="#9eff57" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="0.06em">HEAD · main</text>
+  <!-- Hash -->
+  <text x="1420" y="524" fill="#e5c07b" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">9e4f1a2</text>
+  <!-- Outer glow ring -->
+  <circle cx="1420" cy="560" r="30" fill="rgba(158,255,87,0.06)" stroke="rgba(158,255,87,0.18)" stroke-width="1"/>
+  <!-- Main circle -->
+  <circle cx="1420" cy="560" r="20" fill="#111111" stroke="#9eff57" stroke-width="3"/>
+  <!-- Inner dot -->
+  <circle cx="1420" cy="560" r="6" fill="#9eff57"/>
+  <!-- Message + time -->
+  <text x="1420" y="598" fill="#9eff57" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">hero: shorten subline copy</text>
+  <text x="1420" y="616" fill="rgba(158,255,87,0.6)" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">2 min ago · Nirmal</text>
+
+  <!-- Diff card below HEAD -->
+  <rect x="1230" y="650" width="380" height="84" rx="6" fill="rgba(9,30,0,0.6)" stroke="rgba(158,255,87,0.25)" stroke-width="1"/>
+  <text x="1248" y="672" fill="rgba(240,237,230,0.4)" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="0.06em">diff — onboarding/hero.copy</text>
+  <rect x="1230" y="679" width="380" height="1" fill="rgba(158,255,87,0.12)"/>
+  <text x="1248" y="700" fill="#e06c75" font-family="'JetBrains Mono', monospace" font-size="12">- "Track your words, always."</text>
+  <text x="1248" y="720" fill="#9eff57" font-family="'JetBrains Mono', monospace" font-size="12">+ "Track every word, forever."</text>
+
+  <!-- Footer -->
+  <text x="140" y="858" fill="rgba(240,237,230,0.4)" font-family="monospace" font-size="16">pawlog.md · tool design / full-stack · 2026</text>
+</svg>

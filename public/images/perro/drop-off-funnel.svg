@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 0 0 H 40 M 0 0 V 40" stroke="rgba(245,244,240,0.07)" stroke-width="1"/>
+    </pattern>
+    <marker id="arrowRed" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(255,138,122,0.7)"/>
+    </marker>
+  </defs>
+
+  <rect width="800" height="480" fill="#0a0a0a"/>
+  <rect width="800" height="480" fill="url(#grid)"/>
+
+  <!-- eyebrow chip -->
+  <rect x="56" y="44" width="130" height="26" rx="13" fill="rgba(158,255,87,0.08)" stroke="rgba(158,255,87,0.35)"/>
+  <text x="121" y="61" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="0.1em" text-anchor="middle" fill="#9eff57">ORIGINAL FLOW</text>
+
+  <!-- track: fades from left to right as users drop off -->
+  <line x1="80" y1="198" x2="210" y2="198" stroke="rgba(245,244,240,0.30)" stroke-width="2" stroke-dasharray="3 6"/>
+  <line x1="210" y1="198" x2="370" y2="198" stroke="rgba(245,244,240,0.20)" stroke-width="2" stroke-dasharray="3 6"/>
+  <line x1="370" y1="198" x2="530" y2="198" stroke="rgba(245,244,240,0.13)" stroke-width="2" stroke-dasharray="3 6"/>
+  <line x1="530" y1="198" x2="680" y2="198" stroke="rgba(245,244,240,0.07)" stroke-width="2" stroke-dasharray="3 6"/>
+  <line x1="680" y1="198" x2="745" y2="198" stroke="rgba(245,244,240,0.04)" stroke-width="2" stroke-dasharray="3 6"/>
+
+  <!-- step labels (above nodes) -->
+  <g font-family="'JetBrains Mono', monospace" font-size="11" fill="rgba(240,237,230,0.45)" text-anchor="middle">
+    <text x="80"  y="166">landing</text>
+    <text x="80"  y="180">+ sign-in</text>
+    <text x="290" y="166">dog profile</text>
+    <text x="290" y="180">setup</text>
+    <text x="530" y="166">user profile</text>
+    <text x="530" y="180">setup</text>
+    <text x="680" y="172">paywall</text>
+    <text x="745" y="172">home</text>
+  </g>
+
+  <!-- drop-off nodes (red-tinted) -->
+  <circle cx="80"  cy="198" r="16" fill="#0d0d0d" stroke="#ff8a7a" stroke-width="2"/>
+  <circle cx="290" cy="198" r="16" fill="#0d0d0d" stroke="#ff8a7a" stroke-width="2"/>
+  <circle cx="530" cy="198" r="16" fill="#0d0d0d" stroke="#ff8a7a" stroke-width="2"/>
+
+  <!-- surviving nodes (very faint) -->
+  <circle cx="680" cy="198" r="13" fill="#0d0d0d" stroke="rgba(245,244,240,0.18)" stroke-width="1.5"/>
+  <circle cx="745" cy="198" r="13" fill="#0d0d0d" stroke="rgba(245,244,240,0.10)" stroke-width="1.5"/>
+
+  <!-- drop-off arrows (downward) -->
+  <line x1="80"  y1="214" x2="80"  y2="264" stroke="rgba(255,138,122,0.55)" stroke-width="1.5" marker-end="url(#arrowRed)"/>
+  <line x1="290" y1="214" x2="290" y2="264" stroke="rgba(255,138,122,0.55)" stroke-width="1.5" marker-end="url(#arrowRed)"/>
+  <line x1="530" y1="214" x2="530" y2="264" stroke="rgba(255,138,122,0.55)" stroke-width="1.5" marker-end="url(#arrowRed)"/>
+
+  <!-- annotation boxes -->
+  <!-- drop 1 -->
+  <rect x="20"  y="272" width="120" height="52" rx="6" fill="rgba(255,138,122,0.05)" stroke="rgba(255,138,122,0.28)"/>
+  <text x="80"  y="292" font-family="'JetBrains Mono', monospace" font-size="10" fill="rgba(255,138,122,0.85)" text-anchor="middle" font-weight="700">SIGN-IN FRICTION</text>
+  <text x="80"  y="308" font-family="'JetBrains Mono', monospace" font-size="10" fill="rgba(240,237,230,0.45)" text-anchor="middle">cluttered landing,</text>
+  <text x="80"  y="320" font-family="'JetBrains Mono', monospace" font-size="10" fill="rgba(240,237,230,0.45)" text-anchor="middle">no value shown</text>
+
+  <!-- drop 2 -->
+  <rect x="186" y="272" width="208" height="70" rx="6" fill="rgba(255,138,122,0.05)" stroke="rgba(255,138,122,0.28)"/>
+  <text x="290" y="292" font-family="'JetBrains Mono', monospace" font-size="10" fill="rgba(255,138,122,0.85)" text-anchor="middle" font-weight="700">DOG PROFILE BLOCKERS</text>
+  <text x="290" y="308" font-family="'JetBrains Mono', monospace" font-size="10" fill="rgba(240,237,230,0.45)" text-anchor="middle">photo upload sent users</text>
+  <text x="290" y="320" font-family="'JetBrains Mono', monospace" font-size="10" fill="rgba(240,237,230,0.45)" text-anchor="middle">out of the app to find</text>
+  <text x="290" y="332" font-family="'JetBrains Mono', monospace" font-size="10" fill="rgba(240,237,230,0.45)" text-anchor="middle">a photo — and didn't return</text>
+
+  <!-- drop 3 -->
+  <rect x="436" y="272" width="188" height="52" rx="6" fill="rgba(255,138,122,0.05)" stroke="rgba(255,138,122,0.28)"/>
+  <text x="530" y="292" font-family="'JetBrains Mono', monospace" font-size="10" fill="rgba(255,138,122,0.85)" text-anchor="middle" font-weight="700">LATE-FUNNEL FATIGUE</text>
+  <text x="530" y="308" font-family="'JetBrains Mono', monospace" font-size="10" fill="rgba(240,237,230,0.45)" text-anchor="middle">fitness + location questions</text>
+  <text x="530" y="320" font-family="'JetBrains Mono', monospace" font-size="10" fill="rgba(240,237,230,0.45)" text-anchor="middle">after users already worn down</text>
+
+  <!-- footer note -->
+  <text x="56" y="452" font-family="'JetBrains Mono', monospace" font-size="11" fill="rgba(240,237,230,0.28)">Source: Mixpanel funnels via Twilio Segment + usability session recordings</text>
+</svg>

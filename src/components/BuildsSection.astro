@@ -1,0 +1,122 @@
+---
+import { getCollection } from 'astro:content';
+import WindowChrome from './WindowChrome.astro';
+import Device from './Device.astro';
+
+const builds = (await getCollection('builds')).sort((a, b) => a.data.order - b.data.order);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const hrefFor = (link: string) => (link.startsWith('/') ? `${base}${link}` : link);
+---
+
+<section class="builds" id="builds" aria-labelledby="built-h">
+  <div class="builds-head">
+    <h2 id="built-h" class="t-label builds-label">things i've built</h2>
+    <span class="builds-rule" aria-hidden="true"></span>
+    <Device name="cd" scale={4} class="deco" />
+  </div>
+
+  {builds.map((build) => (
+    <WindowChrome as="a" href={hrefFor(build.data.link)} title={build.id} class="bcard">
+      <div class="bcard-grid">
+        <div class="bcard-preview">
+          <div class="mp3" aria-hidden="true">
+            <div class="mp3-title">{build.data.title}</div>
+            <div class="mp3-row mp3-active">Product copy<span>›</span></div>
+            <div class="mp3-row">History<span>›</span></div>
+            <div class="mp3-row mp3-last">Commits<span>›</span></div>
+          </div>
+          {build.data.device && <Device name={build.data.device} scale={3} project={build.id} class="bcard-device" />}
+        </div>
+        <div class="bcard-body">
+          {build.data.tags && <span class="t-label">{build.data.tags.join(' · ')}</span>}
+          <h3 class="bcard-title">{build.data.title}</h3>
+          <p>{build.data.description}</p>
+          <span class="t-action action-link">take a look ↗</span>
+        </div>
+      </div>
+    </WindowChrome>
+  ))}
+</section>
+
+<style>
+  .builds {
+    position: relative;
+    padding-bottom: 96px;
+  }
+
+  .builds-head {
+    display: flex;
+    align-items: flex-end;
+    gap: 22px;
+    margin-bottom: 30px;
+  }
+
+  .builds-label { color: var(--ink); white-space: nowrap; }
+
+  .builds-rule { flex: 1; border-top: 2px dotted var(--ink); margin-bottom: 7px; }
+
+  .bcard { text-decoration: none; color: var(--ink); }
+  .bcard:hover { color: var(--ink); }
+
+  .bcard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    flex: 1;
+  }
+
+  .bcard-preview {
+    position: relative;
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--ink);
+    background: var(--panel);
+  }
+
+  .bcard-preview :global(.bcard-device) { position: absolute; right: 12px; bottom: 10px; }
+
+  /* MP3-player menu: a one-off LCD green, part of the illustration rather than the palette. */
+  .mp3 {
+    width: 100%;
+    max-width: 280px;
+    background: #DADFD2;
+    border: 2px solid var(--grey-dark);
+    border-radius: 6px;
+    font-family: var(--font-machine);
+    font-size: 15px;
+    color: var(--grey-dark);
+    overflow: hidden;
+  }
+
+  .mp3-title { background: var(--grey-dark); color: #DADFD2; padding: 4px 10px; }
+
+  .mp3-row { padding: 6px 16px; display: flex; justify-content: space-between; }
+  .mp3-active { background: var(--grey-dark); color: #DADFD2; margin: 6px 6px 0; padding: 6px 10px; }
+  .mp3-last { padding-bottom: 10px; }
+
+  .bcard-body {
+    padding: 26px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .bcard-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.1;
+  }
+
+  .bcard-body .action-link { margin-top: auto; }
+  .bcard:hover .action-link { color: var(--blue-hover); }
+
+  @media (max-width: 860px) {
+    .builds { padding-bottom: 72px; }
+    .builds-head :global(.device) { display: none; }
+    .bcard-grid { grid-template-columns: 1fr; }
+    .bcard-preview { border-right: 0; border-bottom: 1px solid var(--ink); padding: 20px 20px 56px; }
+    .bcard-body { padding: 22px 20px 24px; }
+  }
+</style>

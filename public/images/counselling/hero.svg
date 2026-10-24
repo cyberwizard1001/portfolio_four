@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M 0 0 H 56 M 0 0 V 56" stroke="rgba(245,244,240,0.08)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="900" fill="#0a0a0a"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+
+  <text x="100" y="140" fill="#f0ede6" font-family="'JetBrains Mono', monospace" font-size="52" font-weight="700" letter-spacing="-1">less paperwork,</text>
+  <text x="100" y="196" fill="#f0ede6" font-family="'JetBrains Mono', monospace" font-size="52" font-weight="700" letter-spacing="-1">more practice.</text>
+  <text x="100" y="236" fill="rgba(240,237,230,0.55)" font-family="'JetBrains Mono', monospace" font-size="20">an MSc dissertation into a tool built for solo and small counselling practices.</text>
+
+  <!-- legend -->
+  <circle cx="1130" cy="100" r="7" fill="rgba(245,244,240,0.3)"/>
+  <text x="1146" y="106" fill="rgba(240,237,230,0.55)" font-family="monospace" font-size="15">admin time</text>
+  <circle cx="1290" cy="100" r="7" fill="#9eff57"/>
+  <text x="1306" y="106" fill="#9eff57" font-family="monospace" font-size="15">practice time</text>
+
+  <!-- before: a 40-minute session, mostly spent on admin -->
+  <g transform="translate(550,620)">
+    <circle r="120" fill="none" stroke="rgba(245,244,240,0.16)" stroke-width="32"/>
+    <circle r="120" fill="none" stroke="rgba(245,244,240,0.45)" stroke-width="32"
+      stroke-dasharray="490 264" transform="rotate(-90)"/>
+    <text y="8" fill="#f0ede6" font-family="monospace" font-size="20" text-anchor="middle">before</text>
+  </g>
+  <text x="550" y="800" fill="rgba(240,237,230,0.55)" font-family="monospace" font-size="16" text-anchor="middle">most of the session spent on admin</text>
+
+  <!-- after: a tool built for the work, time shifts back to the client -->
+  <g transform="translate(1050,620)">
+    <circle r="120" fill="none" stroke="rgba(245,244,240,0.16)" stroke-width="32"/>
+    <circle r="120" fill="none" stroke="#9eff57" stroke-width="32"
+      stroke-dasharray="565 189" transform="rotate(-90)"/>
+    <text y="8" fill="#9eff57" font-family="monospace" font-weight="700" font-size="20" text-anchor="middle">after</text>
+  </g>
+  <text x="1050" y="800" fill="#9eff57" font-family="monospace" font-size="16" text-anchor="middle">most of the session spent on the client</text>
+
+  <text x="100" y="850" fill="rgba(240,237,230,0.4)" font-family="monospace" font-size="16">counselling-companions.md · UX Research · 2025</text>
+</svg>

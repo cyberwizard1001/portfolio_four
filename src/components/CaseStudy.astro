@@ -1,0 +1,342 @@
+---
+// Case study template, shared by project pages and build pages. Header, hero window,
+// then the vertical route: TLDR stops, the entry's own sections, then markdown
+// headings, all on one blue line with a sticky "route" window beside it.
+import WindowChrome from './WindowChrome.astro';
+import RouteWindow from './RouteWindow.astro';
+import Device from './Device.astro';
+import ImageLightbox from './ImageLightbox.astro';
+import ProjectGallery from './project-blocks/ProjectGallery.astro';
+import ProjectTextBlock from './project-blocks/ProjectTextBlock.astro';
+import ProjectCallout from './project-blocks/ProjectCallout.astro';
+import ProjectQuote from './project-blocks/ProjectQuote.astro';
+import ProjectMetricsBand from './project-blocks/ProjectMetricsBand.astro';
+import ProjectBeforeAfter from './project-blocks/ProjectBeforeAfter.astro';
+import ProjectLearnings from './project-blocks/ProjectLearnings.astro';
+import ProjectProcessSteps from './project-blocks/ProjectProcessSteps.astro';
+import ProjectFindingsGrid from './project-blocks/ProjectFindingsGrid.astro';
+import ProjectHowMightWe from './project-blocks/ProjectHowMightWe.astro';
+import ProjectDecisionLog from './project-blocks/ProjectDecisionLog.astro';
+import ProjectPersona from './project-blocks/ProjectPersona.astro';
+import ProjectProblemKeyInfo from './project-blocks/ProjectProblemKeyInfo.astro';
+import ProjectTextImage from './project-blocks/ProjectTextImage.astro';
+import ProjectImageGalleryGrid from './project-blocks/ProjectImageGalleryGrid.astro';
+import ProjectImageCarousel from './project-blocks/ProjectImageCarousel.astro';
+import ProjectAccessibilityAudit from './project-blocks/ProjectAccessibilityAudit.astro';
+import { buildStops, type Section } from '../lib/caseStudy';
+import type { DeviceName } from '../data/sprites';
+import '../styles/jargon.css';
+
+interface Props {
+  slug: string;
+  title: string;
+  filename: string;
+  eyebrowLine: string;
+  device?: DeviceName;
+  outcomeValue?: string;
+  outcomeLabel?: string;
+  oneliner?: string;
+  sections: Section[];
+  tldrBody?: string;
+  headings: { depth: number; slug: string; text: string }[];
+  next?: { title: string; href: string; device?: DeviceName };
+  /** Whether the entry has a markdown body, passed as the default slot. */
+  hasBody?: boolean;
+}
+
+const {
+  slug, title, filename, eyebrowLine, device, outcomeValue, outcomeLabel, oneliner,
+  sections, tldrBody, headings, next, hasBody = false,
+} = Astro.props;
+
+const blockComponents: Record<string, any> = {
+  ProjectGallery,
+  ProjectTextBlock,
+  ProjectCallout,
+  ProjectQuote,
+  ProjectMetricsBand,
+  ProjectBeforeAfter,
+  ProjectLearnings,
+  ProjectProcessSteps,
+  ProjectFindingsGrid,
+  ProjectHowMightWe,
+  ProjectDecisionLog,
+  ProjectPersona,
+  ProjectProblemKeyInfo,
+  ProjectTextImage,
+  ProjectImageGalleryGrid,
+  ProjectImageCarousel,
+  ProjectAccessibilityAudit,
+};
+
+const { stops, intro, leadBlocks } = buildStops(tldrBody, sections, headings);
+const summary: string[] = intro?.props?.summary
+  ? Array.isArray(intro.props.summary) ? intro.props.summary : [intro.props.summary]
+  : [];
+
+const blockStops = stops.filter((s) => !s.headingId);
+const mdStops = stops.filter((s) => s.headingId);
+const mdDepth = headings.find((h) => h.slug === mdStops[0]?.headingId)?.depth ?? 2;
+const lastIndex = stops.length - 1;
+---
+
+<main id="main-content" class="page cs" data-visit={slug}>
+  <header class="cs-head">
+    <a href={`${import.meta.env.BASE_URL}#work`} class="t-ui cs-back">← back to all work</a>
+    <div class="cs-eyebrow">
+      {device && <Device name={device} scale={5} project={slug} />}
+      <p class="t-label">{eyebrowLine}</p>
+    </div>
+    <h1 class="cs-title">{title}</h1>
+    {outcomeValue ? (
+      <p class="cs-outcome"><span class="hl cs-value">{outcomeValue}.</span> {outcomeLabel}</p>
+    ) : oneliner && <p class="cs-outcome">{oneliner}</p>}
+    {summary.map((p) => <p class="cs-lead">{p}</p>)}
+  </header>
+
+  <WindowChrome title={filename} class="cs-hero">
+    <div class="dither cs-hero-image">
+      <span class="dither-label">[ hero image, greyscale ]</span>
+    </div>
+  </WindowChrome>
+
+  <div class="cs-layout">
+    {stops.length > 0 && <RouteWindow stops={stops} />}
+
+    <div class="cs-route proj-window-body">
+      <div class="cs-line" aria-hidden="true"></div>
+
+      {leadBlocks.map((section) => {
+        const Component = blockComponents[section.component];
+        return Component && <Component {...(section.props ?? {})} />;
+      })}
+
+      {blockStops.map((stop, i) => (
+        <section id={stop.id} class="stop" aria-labelledby={`${stop.id}-h`}>
+          <span class:list={['stop-dot', { first: i === 0, last: i === lastIndex }]} aria-hidden="true"></span>
+          <p class="t-label stop-label">stop {i + 1}{i === lastIndex && ' · arrived'}</p>
+          <h2 id={`${stop.id}-h`} class="stop-h">{stop.name}</h2>
+          {stop.html && <p class="stop-text" set:html={stop.html} />}
+          {stop.blocks.map(({ section, hideHeading }) => {
+            const Component = blockComponents[section.component];
+            return Component && <Component {...(section.props ?? {})} hideHeading={hideHeading} />;
+          })}
+        </section>
+      ))}
+
+      {hasBody && (
+        <div
+          class:list={['md-stops', `md-depth-${mdDepth}`, { 'md-arrives': mdStops.length > 0 }]}
+          style={`counter-reset: stop ${blockStops.length};`}
+        >
+          <ProjectTextBlock>
+            <slot />
+          </ProjectTextBlock>
+        </div>
+      )}
+    </div>
+  </div>
+
+  {next && (
+    <section class="cs-next" aria-label="Next">
+      <p class="t-label">next stop</p>
+      <a href={next.href} class="cs-next-link">
+        <span>{next.title} →</span>
+        {next.device && <Device name={next.device} scale={4} />}
+      </a>
+    </section>
+  )}
+</main>
+
+<ImageLightbox />
+
+<script>
+  import '../scripts/jargon-tips';
+</script>
+
+<style>
+  .cs-head { padding: 56px 0 48px; }
+
+  .cs-back { display: inline-flex; align-items: center; min-height: 44px; }
+
+  .cs-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 20px 0 14px;
+  }
+
+  .cs-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.75rem, 6.4vw, 6rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    max-width: 1000px;
+    margin-bottom: 20px;
+  }
+
+  .cs-outcome,
+  .cs-lead {
+    font-size: 20px;
+    line-height: 1.6;
+    max-width: 760px;
+  }
+
+  .cs-value { font-weight: 600; }
+
+  .cs-lead { margin-top: 16px; font-size: 19px; color: var(--ink-2); }
+
+  .cs-hero { margin-bottom: 72px; }
+  .cs-hero-image { height: 440px; }
+
+  .cs-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 56px;
+    align-items: flex-start;
+  }
+
+  .cs-route {
+    flex: 999 1 560px;
+    min-width: 0;
+    position: relative;
+    font-size: 19px;
+    line-height: 1.7;
+  }
+
+  /* The route: a 4px blue line down the left of the content. */
+  .cs-line {
+    position: absolute;
+    left: 19px;
+    top: 8px;
+    bottom: 40px;
+    width: 4px;
+    background: var(--blue);
+  }
+
+  .stop {
+    position: relative;
+    padding: 0 0 88px 64px;
+  }
+
+  .stop-dot {
+    position: absolute;
+    left: 11px;
+    top: 4px;
+    width: 20px;
+    height: 20px;
+    background: var(--paper);
+    border: 3px solid var(--blue);
+  }
+
+  .stop-dot.first { background: var(--tangerine); border-color: var(--ink); }
+  .stop-dot.last { background: var(--blue); }
+
+  .stop-h {
+    margin: 6px 0 18px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2rem, 3.2vw, 2.75rem);
+    line-height: 1.08;
+  }
+
+  .stop-text { margin-bottom: 28px; }
+
+  /* Case study images stay greyscale. */
+  .cs-route :global(img) { filter: grayscale(1); }
+
+  /* Blocks inside a stop lose their own side padding; the stop column provides it. */
+  .stop :global(.proj-section),
+  .stop :global(.proj-gallery),
+  .md-stops :global(.proj-section) { padding-left: 0; padding-right: 0; }
+
+  /* Markdown body: its top heading level continues the stop numbering. */
+  .md-stops { position: relative; padding-left: 64px; }
+
+  .md-stops :global(h1) { display: none; }
+
+  .md-depth-2 :global(h2),
+  .md-depth-3 :global(h3) {
+    position: relative;
+    counter-increment: stop;
+    margin: 0 0 18px;
+    padding-top: 56px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2rem, 3.2vw, 2.75rem);
+    line-height: 1.08;
+    color: var(--ink);
+  }
+
+  .md-depth-2 :global(h2::before),
+  .md-depth-3 :global(h3::before) {
+    content: 'stop ' counter(stop);
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--font-machine);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .md-depth-2 :global(h2::after),
+  .md-depth-3 :global(h3::after) {
+    content: '';
+    position: absolute;
+    left: -53px;
+    top: 60px;
+    width: 20px;
+    height: 20px;
+    box-sizing: border-box;
+    background: var(--paper);
+    border: 3px solid var(--blue);
+  }
+
+  .md-arrives.md-depth-2 :global(h2:last-of-type::before),
+  .md-arrives.md-depth-3 :global(h3:last-of-type::before) { content: 'stop ' counter(stop) ' · arrived'; }
+
+  .md-arrives.md-depth-2 :global(h2:last-of-type::after),
+  .md-arrives.md-depth-3 :global(h3:last-of-type::after) { background: var(--blue); }
+
+  .cs-next {
+    border-top: 1px solid var(--ink);
+    margin-top: 64px;
+    padding: 36px 0 72px;
+  }
+
+  .cs-next .px { margin-bottom: 8px; }
+
+  .cs-next-link {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1.15;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .cs-next-link:hover span { text-decoration: underline; color: var(--blue); }
+
+  @media (max-width: 860px) {
+    .cs-head { padding: 32px 0 36px; }
+    .cs-outcome { font-size: 18px; }
+    .cs-hero { margin-bottom: 48px; }
+    .cs-hero-image { height: 240px; }
+    .cs-layout { gap: 40px; }
+    .cs-route { font-size: 17px; }
+    .cs-line { left: 7px; }
+    .stop { padding: 0 0 64px 36px; }
+    .stop-dot { left: 0; width: 18px; height: 18px; }
+    .md-stops { padding-left: 36px; }
+    .md-depth-2 :global(h2::after),
+    .md-depth-3 :global(h3::after) { left: -36px; width: 18px; height: 18px; }
+  }
+</style>

@@ -1,0 +1,113 @@
+---
+import { jargonify } from '../../lib/jargon';
+
+interface HmwItem {
+  question: string;
+  theme?: string;
+}
+
+interface Props {
+  /** Set when a case study stop already shows this heading. */
+  hideHeading?: boolean;
+  items: HmwItem[];
+  title?: string;
+  intro?: string;
+}
+
+const { items, title = 'How might we…', intro, hideHeading } = Astro.props;
+---
+
+<section class="proj-hmw proj-section">
+  <div class="proj-hmw-top">
+    <div>
+      {!hideHeading && <h2 class="proj-hmw-title section-title">{title}</h2>}
+      {intro && <p class="proj-hmw-intro">{intro}</p>}
+    </div>
+    <span class="proj-hmw-count">{items.length} questions</span>
+  </div>
+  <div class="proj-hmw-list">
+    {items.map((item) => (
+      <div class="proj-hmw-row">
+        <p class="proj-hmw-question" set:html={jargonify(item.question)} />
+        {item.theme && <span class="proj-hmw-theme">{item.theme}</span>}
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .proj-hmw-top {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+
+  .proj-hmw-intro {
+    margin-top: 0.5rem;
+    line-height: 1.7;
+  }
+
+  .proj-hmw-count {
+    flex-shrink: 0;
+    font-family: var(--font-machine);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--ink);
+    background: var(--tangerine-tint);
+    border: 1px solid rgba(158,255,87,0.22);
+    border-radius: 999px;
+    padding: 6px 12px;
+  }
+
+  .proj-hmw-list {
+    width: 100%;
+    border-top: 1px solid var(--border-hi);
+    padding-left: 1.5rem;
+  }
+
+  .proj-hmw-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-lo);
+  }
+
+  .proj-hmw-question {
+    flex: 1;
+    min-width: 0;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .proj-hmw-theme {
+    flex-shrink: 0;
+    font-family: var(--font-machine);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--ink);
+    background: var(--tangerine-tint);
+    border-radius: 999px;
+    padding: 4px 10px;
+  }
+
+  @media (max-width: 640px) {
+    .proj-hmw-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .proj-hmw-top { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  }
+
+</style>

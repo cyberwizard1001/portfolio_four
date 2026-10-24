@@ -1,0 +1,70 @@
+---
+import { jargonify } from '../../lib/jargon';
+
+interface FindingItem {
+  title: string;
+  body: string;
+}
+
+interface Props {
+  /** Set when a case study stop already shows this heading. */
+  hideHeading?: boolean;
+  title: string;
+  items: FindingItem[];
+}
+
+const { title, items, hideHeading } = Astro.props;
+---
+
+<section class="proj-findings proj-section">
+  {!hideHeading && <h2 class="proj-findings-title section-title">{title}</h2>}
+  <div class="proj-findings-grid">
+    {items.map((item) => (
+      <div class="proj-findings-card">
+        <h3 class="proj-findings-card-title">{item.title}</h3>
+        <p class="proj-findings-card-body" set:html={jargonify(item.body)} />
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .proj-findings-title {
+    margin-bottom: 1.5rem;
+  }
+
+  .proj-findings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .proj-findings-card {
+    padding: 1.25rem 1.5rem 1.25rem 0;
+    border-top: 1px solid var(--border-hi);
+  }
+
+  .proj-findings-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .proj-findings-card-body {
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.65;
+    max-width: 42ch;
+  }
+
+  @media (max-width: 1100px) {
+    .proj-findings-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .proj-findings-grid { grid-template-columns: 1fr; }
+  }
+
+</style>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M 0 0 H 56 M 0 0 V 56" stroke="rgba(245,244,240,0.08)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="900" fill="#0a0a0a"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+
+  <text x="100" y="140" fill="#f0ede6" font-family="'JetBrains Mono', monospace" font-size="50" font-weight="700" letter-spacing="-1">improving user confidence,</text>
+  <text x="100" y="196" fill="#f0ede6" font-family="'JetBrains Mono', monospace" font-size="50" font-weight="700" letter-spacing="-1">delivering better user outcomes.</text>
+  <text x="100" y="236" fill="rgba(240,237,230,0.55)" font-family="'JetBrains Mono', monospace" font-size="20">redesigning the review page where people committed real money to something they cared about.</text>
+
+  <!-- confidence gauge: anxious red -&gt; uncertain amber -&gt; confident lime, needle settled in the lime zone -->
+  <g>
+    <path d="M580,650 A220,220 0 0 1 658.5,481.5" fill="none" stroke="rgba(255,95,87,0.55)" stroke-width="30" stroke-linecap="round"/>
+    <path d="M658.5,481.5 A220,220 0 0 1 875.2,443.2" fill="none" stroke="rgba(254,188,46,0.55)" stroke-width="30" stroke-linecap="round"/>
+    <path d="M875.2,443.2 A220,220 0 0 1 1020,650" fill="none" stroke="#9eff57" stroke-width="30" stroke-linecap="round"/>
+
+    <line x1="800" y1="650" x2="947" y2="547" stroke="#f0ede6" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="800" cy="650" r="16" fill="#111111" stroke="#f0ede6" stroke-width="3"/>
+
+    <text x="580" y="700" fill="rgba(240,237,230,0.45)" font-family="monospace" font-size="16">anxious</text>
+    <text x="970" y="700" fill="#9eff57" font-family="monospace" font-size="16" text-anchor="end">confident</text>
+    <text x="800" y="760" fill="#f0ede6" font-family="monospace" font-weight="700" font-size="22" text-anchor="middle">confidence</text>
+  </g>
+
+  <!-- terminal-style checklist of what the redesign made clear -->
+  <g transform="translate(1130,470)">
+    <rect width="370" height="190" rx="6" fill="#111111" stroke="rgba(245,244,240,0.18)"/>
+    <rect width="370" height="26" rx="6" fill="#1a1a1a" stroke="rgba(245,244,240,0.18)"/>
+    <circle cx="16" cy="13" r="4" fill="#ff5f57"/>
+    <circle cx="30" cy="13" r="4" fill="#febc2e"/>
+    <circle cx="44" cy="13" r="4" fill="#28c840"/>
+    <text x="20" y="65" fill="#9eff57" font-family="monospace" font-size="18">[x] price is clear</text>
+    <text x="20" y="100" fill="#9eff57" font-family="monospace" font-size="18">[x] cover is clear</text>
+    <text x="20" y="135" fill="#9eff57" font-family="monospace" font-size="18">[x] next step is clear</text>
+    <text x="20" y="170" fill="rgba(240,237,230,0.4)" font-family="monospace" font-size="14">review_details.tsx</text>
+  </g>
+
+  <text x="100" y="850" fill="rgba(240,237,230,0.4)" font-family="monospace" font-size="16">checkout-redesign.md · UI / UX · 2026</text>
+</svg>

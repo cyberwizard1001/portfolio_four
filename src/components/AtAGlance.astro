@@ -1,0 +1,56 @@
+---
+import Device from './Device.astro';
+---
+
+<section class="glance" aria-label="At a glance">
+  <Device name="watch" scale={5} class="spr gut" style="right: -118px; top: -40px;" />
+  <dl class="glance-list">
+    <div class="glance-row">
+      <dt class="t-label">currently</dt>
+      <dd>Product designer at Tedaisy Insurance Group <span class="glance-sub">· volunteer designer at Reach Volunteering</span></dd>
+    </div>
+    <div class="glance-row">
+      <dt class="t-label">focus</dt>
+      <dd>Complex, high-stakes journeys <span class="glance-sub">· in insurance and beyond</span></dd>
+    </div>
+    <div class="glance-row">
+      <dt class="t-label">approach</dt>
+      <dd>Research-led product and service design <span class="glance-sub">· prototyped in code</span></dd>
+    </div>
+    <div class="glance-row">
+      <dt class="t-label">based</dt>
+      <dd>Northumberland, UK <span class="glance-sub">· remote, hybrid or relocating</span></dd>
+    </div>
+  </dl>
+</section>
+
+<style>
+  .glance {
+    position: relative;
+    padding-bottom: 72px;
+  }
+
+  .glance-list {
+    position: relative;
+    z-index: 1;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .glance-row {
+    display: grid;
+    grid-template-columns: 10rem minmax(0, 1fr);
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    line-height: 1.5;
+    border-top: 1px dashed var(--rule);
+  }
+
+  .glance-row:first-child { border-top: 1px solid var(--ink); }
+
+  .glance-sub { color: var(--muted); margin-left: 0.15em; }
+
+  @media (max-width: 480px) {
+    .glance-row { grid-template-columns: 1fr; gap: 0.25rem; }
+  }
+</style>

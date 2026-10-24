@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M 0 0 H 56 M 0 0 V 56" stroke="rgba(245,244,240,0.07)" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#9eff57" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#9eff57" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <linearGradient id="afterLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6fe03f"/>
+      <stop offset="100%" stop-color="#9eff57"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="#0a0a0a"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <ellipse cx="800" cy="720" rx="560" ry="220" fill="url(#glow)"/>
+
+  <g font-family="'JetBrains Mono', monospace">
+    <rect x="140" y="78" width="190" height="34" rx="17" fill="rgba(158,255,87,0.08)" stroke="rgba(158,255,87,0.35)"/>
+    <text x="235" y="100" fill="#9eff57" font-size="14" font-weight="700" letter-spacing="0.08em" text-anchor="middle">ONBOARDING REDESIGN</text>
+
+    <text x="140" y="180" fill="#f0ede6" font-size="52" font-weight="700" letter-spacing="-1">fewer steps,</text>
+    <text x="140" y="236" fill="#f0ede6" font-size="52" font-weight="700" letter-spacing="-1">faster to value.</text>
+    <text x="140" y="276" fill="rgba(240,237,230,0.55)" font-size="20">redesigned the onboarding flow and built it in Flutter, start to finish.</text>
+  </g>
+
+  <!-- before: a long, cluttered path to the home screen -->
+  <g font-family="'JetBrains Mono', monospace">
+    <rect x="140" y="420" width="1320" height="180" rx="14" fill="rgba(245,244,240,0.03)" stroke="rgba(245,244,240,0.12)"/>
+    <text x="170" y="460" fill="rgba(240,237,230,0.45)" font-size="16" letter-spacing="0.06em">BEFORE</text>
+
+    <line x1="210" y1="520" x2="1390" y2="520" stroke="rgba(245,244,240,0.18)" stroke-width="2" stroke-dasharray="3 7"/>
+    <g fill="#161616" stroke="rgba(245,244,240,0.32)" stroke-width="2">
+      <circle cx="210"  cy="520" r="13"/>
+      <circle cx="446"  cy="520" r="13"/>
+      <circle cx="682"  cy="520" r="13"/>
+      <circle cx="918"  cy="520" r="13"/>
+      <circle cx="1154" cy="520" r="13"/>
+      <circle cx="1390" cy="520" r="13"/>
+    </g>
+    <g fill="rgba(240,237,230,0.5)" font-size="13" text-anchor="middle">
+      <text x="210"  y="562">sign up</text>
+      <text x="446"  y="562">verify</text>
+      <text x="682"  y="562">pet info</text>
+      <text x="918"  y="562">plans</text>
+      <text x="1154" y="562">paywall</text>
+      <text x="1390" y="562">home</text>
+    </g>
+  </g>
+
+  <!-- after: a short, direct path to the home screen -->
+  <g font-family="'JetBrains Mono', monospace">
+    <rect x="140" y="640" width="1320" height="190" rx="14" fill="rgba(158,255,87,0.045)" stroke="rgba(158,255,87,0.28)"/>
+    <text x="170" y="680" fill="#9eff57" font-size="16" font-weight="700" letter-spacing="0.06em">AFTER</text>
+
+    <line x1="210" y1="745" x2="1390" y2="745" stroke="url(#afterLine)" stroke-width="4" filter="url(#soft)" opacity="0.6"/>
+    <line x1="210" y1="745" x2="1390" y2="745" stroke="url(#afterLine)" stroke-width="4"/>
+
+    <circle cx="210" cy="745" r="19" fill="#111111" stroke="#9eff57" stroke-width="3"/>
+    <circle cx="800" cy="745" r="19" fill="#111111" stroke="#9eff57" stroke-width="3"/>
+
+    <text x="210" y="795" fill="rgba(240,237,230,0.8)" font-size="14" text-anchor="middle">sign up</text>
+    <text x="800" y="795" fill="rgba(240,237,230,0.8)" font-size="14" text-anchor="middle">pet info</text>
+
+    <!-- home icon, the destination that now arrives sooner -->
+    <g transform="translate(1390,733)">
+      <circle r="42" fill="url(#glow)"/>
+      <circle r="27" fill="#9eff57"/>
+      <path d="M -13,1 L 0,-12 L 13,1 L 9.5,1 L 9.5,12.5 L -9.5,12.5 L -9.5,1 Z" fill="#0a0a0a"/>
+    </g>
+    <text x="1390" y="795" fill="#9eff57" font-weight="700" font-size="14" text-anchor="middle">home</text>
+  </g>
+
+  <text x="140" y="868" fill="rgba(240,237,230,0.4)" font-family="monospace" font-size="16">perro-onboarding.md · UX / Flutter · 2025</text>
+</svg>
