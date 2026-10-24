@@ -344,8 +344,8 @@ sections:
             It wasn't on the page at all, which made things less clear and also wasted a selling point,
             since ours is one of the lowest excesses on the market.
           outcome: >-
-            It now sits next to the cover details, shown off as a feature instead of tucked away in the
-            small print.
+            It now sits beside the cover details, where customers can read it as one of the policy's
+            features.
           outcomeType: positive
           image: /images/pet-insurance/flow/19-decision-excess.jpg
           imageAlt: The £90 excess shown directly under the £4,000 vet fee limit.
@@ -354,9 +354,9 @@ sections:
             As written, the line promises more than the policy can always deliver, and pre-existing
             exclusions are the most common reason a claim gets declined.
           outcome: >-
-            Adding something small like "subject to your pet's health history" keeps the line accurate
-            without changing what it means for most customers. I've raised it with copy and
-            compliance.
+            Adding a short qualifier such as "subject to your pet's health history" keeps the line
+            accurate without changing what it means for most customers. I have raised the wording with
+            the copy and compliance teams.
           outcomeType: tradeoff
           image: /images/pet-insurance/flow/20-decision-lifetime.jpg
           imageAlt: How lifetime cover is introduced on the live site today.

@@ -1,11 +1,20 @@
 ---
 import { jargonify } from '../../lib/jargon';
 
+type NoteType = 'positive' | 'neutral' | 'tradeoff';
+
+interface DecisionNote {
+  type?: NoteType;
+  text: string;
+}
+
 interface DecisionItem {
   decision: string;
   rationale: string;
-  outcome: string;
-  outcomeType?: 'positive' | 'neutral' | 'tradeoff';
+  outcome?: string;
+  outcomeType?: NoteType;
+  /** Extra notes after `outcome`; each gets its own gutter label. */
+  notes?: DecisionNote[];
   image?: string;
   imageAlt?: string;
 }
@@ -21,43 +30,47 @@ interface Props {
 const { decisions, title = 'Decision log', intro, hideHeading } = Astro.props;
 const base = import.meta.env.BASE_URL;
 
-const outcomeLabels: Record<string, string> = {
-  positive: 'Positive result',
+const noteLabels: Record<NoteType, string> = {
+  positive: 'Result',
   neutral:  'Neutral',
   tradeoff: 'Trade-off',
 };
+
+const notesFor = (d: DecisionItem): DecisionNote[] => [
+  ...(d.outcome ? [{ type: d.outcomeType, text: d.outcome }] : []),
+  ...(d.notes ?? []),
+];
 ---
 
 <section class="proj-dlog proj-section">
   {!hideHeading && <h2 class="proj-dlog-title section-title">{title}</h2>}
   {intro && <p class="proj-dlog-intro">{intro}</p>}
   <ol class="proj-dlog-list">
-    {decisions.map((d, i) => {
-      const type = d.outcomeType ?? 'neutral';
-      return (
-        <li class="proj-dlog-item">
-          <span class="proj-dlog-num" aria-hidden="true">{i + 1}</span>
-          <div class:list={['proj-dlog-content', { 'proj-dlog-content-media': d.image }]}>
-            <div class="proj-dlog-text">
-              <h3 class="proj-dlog-decision" set:html={jargonify(d.decision)} />
-              <p class="proj-dlog-rationale">{d.rationale}</p>
-              <div class:list={['proj-dlog-outcome', `proj-dlog-outcome-${type}`]}>
-                <span class="proj-dlog-outcome-label">{outcomeLabels[type]}</span>
-                <p class="proj-dlog-outcome-text">{d.outcome}</p>
+    {decisions.map((d, i) => (
+      <li class="proj-dlog-item">
+        <div class:list={['proj-dlog-content', { 'proj-dlog-content-media': d.image }]}>
+          <div class="proj-dlog-text">
+            <span class="proj-dlog-num" aria-hidden="true">{i + 1}</span>
+            <h3 class="proj-dlog-decision" set:html={jargonify(d.decision)} />
+            <p class="proj-dlog-rationale" set:html={jargonify(d.rationale)} />
+            {notesFor(d).map((n) => (
+              <div class="proj-dlog-note">
+                <span class="proj-dlog-note-label">{noteLabels[n.type ?? 'neutral']}</span>
+                <p class="proj-dlog-note-text" set:html={jargonify(n.text)} />
               </div>
-            </div>
-            {d.image && (
-              <figure class="proj-dlog-media">
-                <div class="proj-dlog-frame">
-                  <img src={`${base}${d.image.replace(/^\//, '')}`} alt={d.imageAlt ?? ''} />
-                </div>
-                {d.imageAlt && <figcaption class="proj-dlog-caption">{d.imageAlt}</figcaption>}
-              </figure>
-            )}
+            ))}
           </div>
-        </li>
-      );
-    })}
+          {d.image && (
+            <figure class="proj-dlog-media">
+              <div class="proj-dlog-frame">
+                <img src={`${base}${d.image.replace(/^\//, '')}`} alt={d.imageAlt ?? ''} />
+              </div>
+              {d.imageAlt && <figcaption class="proj-dlog-caption">{d.imageAlt}</figcaption>}
+            </figure>
+          )}
+        </div>
+      </li>
+    ))}
   </ol>
 </section>
 
@@ -79,9 +92,6 @@ const outcomeLabels: Record<string, string> = {
   }
 
   .proj-dlog-item {
-    display: grid;
-    grid-template-columns: 2.75rem 1fr;
-    gap: 0 0.5rem;
     padding: 2.25rem 0;
     border-bottom: 1px solid var(--border);
   }
@@ -95,29 +105,62 @@ const outcomeLabels: Record<string, string> = {
     padding-bottom: 0;
   }
 
-  .proj-dlog-num {
-    font-family: var(--font-machine);
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--dim);
-    line-height: 1;
-    padding-top: 0.2em;
-    text-align: right;
-    user-select: none;
-  }
-
-  .proj-dlog-content,
-  .proj-dlog-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.625rem;
-  }
-
   .proj-dlog-content-media {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
     column-gap: 3rem;
     align-items: start;
+  }
+
+  /* Gutter (numeral + note labels) | content. Baseline alignment puts each
+     gutter item on the first line of the text beside it. */
+  .proj-dlog-text {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    column-gap: 28px;
+    row-gap: 0.625rem;
+    align-items: baseline;
+  }
+
+  .proj-dlog-num {
+    grid-column: 1;
+    font-family: var(--font-machine);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--muted);
+    line-height: 1;
+    text-align: right;
+    user-select: none;
+  }
+
+  .proj-dlog-decision,
+  .proj-dlog-rationale {
+    grid-column: 2;
+  }
+
+  .proj-dlog-note {
+    display: contents;
+  }
+
+  .proj-dlog-note-label {
+    grid-column: 1;
+    margin-top: 8px;
+    font-family: var(--font-machine);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--muted);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .proj-dlog-note-text {
+    grid-column: 2;
+    margin: 8px 0 0;
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    color: var(--ink);
+    max-width: 62ch;
   }
 
   .proj-dlog-media {
@@ -161,58 +204,42 @@ const outcomeLabels: Record<string, string> = {
     margin: 0;
   }
 
-  .proj-dlog-outcome {
-    margin-top: 0.375rem;
-    padding: 0.75rem 1rem;
-    border-left: 3px solid;
-    border-radius: 0 4px 4px 0;
-  }
-
-  .proj-dlog-outcome-positive {
-    border-left-color: #1e9e61;
-    background: rgba(30, 158, 97, 0.07);
-  }
-
-  .proj-dlog-outcome-neutral {
-    border-left-color: var(--tangerine);
-    background: var(--tangerine-tint);
-  }
-
-  .proj-dlog-outcome-tradeoff {
-    border-left-color: #d97706;
-    background: rgba(217, 119, 6, 0.07);
-  }
-
-  .proj-dlog-outcome-label {
-    display: block;
-    font-family: var(--font-machine);
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 0.35rem;
-  }
-
-  .proj-dlog-outcome-positive .proj-dlog-outcome-label { color: #1e9e61; }
-  .proj-dlog-outcome-neutral  .proj-dlog-outcome-label { color: var(--muted); }
-  .proj-dlog-outcome-tradeoff .proj-dlog-outcome-label { color: #d97706; }
-
-  .proj-dlog-outcome-text {
-    font-size: 0.9375rem;
-    line-height: 1.65;
-    color: var(--text);
-    margin: 0;
-  }
-
   @media (max-width: 860px) {
     .proj-dlog-item {
-      grid-template-columns: 2rem 1fr;
-      gap: 0 0.375rem;
       padding: 1.75rem 0;
+    }
+
+    /* Gutter collapses: numeral sits inline before the heading, and each
+       label stacks above its note. */
+    .proj-dlog-text {
+      grid-template-columns: auto minmax(0, 1fr);
+      column-gap: 0.5rem;
     }
 
     .proj-dlog-num {
       font-size: 1.125rem;
+      text-align: left;
+    }
+
+    .proj-dlog-rationale {
+      grid-column: 1 / -1;
+    }
+
+    .proj-dlog-note {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    .proj-dlog-note-label {
+      margin-top: 0;
+      text-align: left;
+    }
+
+    .proj-dlog-note-text {
+      margin-top: 0;
     }
 
     .proj-dlog-content-media {
