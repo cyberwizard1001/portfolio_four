@@ -18,6 +18,9 @@
     "mimetext": "^3.0.28"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260617.1"
+    "@axe-core/playwright": "^4.14.0",
+    "@cloudflare/workers-types": "^4.20260617.1",
+    "html-validate": "^10.9.0",
+    "playwright": "^1.64.1"
   }
 }

@@ -1,0 +1,996 @@
+{
+  "base": "http://localhost:4322/portfolio_four/",
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21aa",
+    "wcag22aa",
+    "best-practice"
+  ],
+  "scannedAt": "2026-10-24T16:57:19.878Z",
+  "results": [
+    {
+      "page": "/",
+      "viewport": "desktop",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ".hero-hl",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": ".lcd-first > span[data-astro-cid-k5mxwwil=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".lcd-row[data-astro-cid-k5mxwwil=\"\"]:nth-child(3) > span[data-astro-cid-k5mxwwil=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".lcd-row[data-astro-cid-k5mxwwil=\"\"]:nth-child(4) > span[data-astro-cid-k5mxwwil=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".ma-btn.def[href=\"/portfolio_four/ai\"] > kbd",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".ma-btn.def[href$=\"about\"] > kbd",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".window[data-astro-cid-laioyuzd=\"true\"]:nth-child(5) > .win-body > .ma-body[data-astro-cid-laioyuzd=\"\"] > .ma-btn.def.mbtn > kbd",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "/projects/pet-insurance-checkout/",
+      "viewport": "desktop",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ".lcd-first > span[data-astro-cid-k5mxwwil=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".lcd-row[data-astro-cid-k5mxwwil=\"\"]:nth-child(3) > span[data-astro-cid-k5mxwwil=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".lcd-row[data-astro-cid-k5mxwwil=\"\"]:nth-child(4) > span[data-astro-cid-k5mxwwil=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#stop-at-a-glance\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(2) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(3) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href=\"#stop-research-methodology\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(5) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(6) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(7) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(8) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(9) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href=\"#stop-guiding-design-principle\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(11) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(11) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "li:nth-child(12) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(12) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "li:nth-child(13) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(13) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "li:nth-child(14) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(14) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "li:nth-child(15) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(15) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "li:nth-child(16) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(16) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": ".proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(1) > .proj-persona-icon.t-chip[data-astro-cid-ds5363u5=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(2) > .proj-persona-icon.t-chip[data-astro-cid-ds5363u5=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(3) > .proj-persona-icon.t-chip[data-astro-cid-ds5363u5=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(4) > .proj-persona-icon.t-chip[data-astro-cid-ds5363u5=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "/projects/perro-onboarding/",
+      "viewport": "desktop",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": "a[href$=\"#stop-at-a-glance\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(2) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(3) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href=\"#stop-heuristic-evaluation\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#stop-competitor-analysis\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#stop-strategy\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#stop-method\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#stop-problem-framing\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(9) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(10) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(11) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#stop-constraints\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(13) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(13) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(6) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(1) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(6) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(2) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(6) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(3) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(7) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(1) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(7) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(2) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(7) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(3) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(4) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(1) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(2) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(3) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(4) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(5) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "/projects/counselling-companions/",
+      "viewport": "desktop",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": "a[href$=\"#stop-at-a-glance\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#stop-the-aim\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href=\"#stop-how-the-research-ran\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(4) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href=\"#stop-on-the-co-design-format\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(6) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#stop-how-might-we\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(8) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[data-route-target=\"stop-the-core-of-the-dashboard\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(10) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(11) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(12) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(12) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "li:nth-child(13) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(13) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "li:nth-child(14) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(14) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "li:nth-child(15) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(15) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "li:nth-child(16) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(16) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "li:nth-child(17) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(17) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "li:nth-child(18) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(18) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "a[href=\"#stop-the-usability-session\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href=\"#stop-the-usability-session\"] > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "a[href$=\"#stop-what-i-took-away\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#stop-what-i-took-away\"] > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "li:nth-child(21) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(21) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(6) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(1) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(6) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(2) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(6) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(3) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(6) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(4) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(7) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(1) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(7) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(2) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(7) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(3) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(7) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(4) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(1) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(2) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(3) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(4) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "/projects/direct-quote-flow/",
+      "viewport": "desktop",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ".lcd-foot > span[data-astro-cid-k5mxwwil=\"\"]:nth-child(2)",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#stop-at-a-glance\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(2) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href=\"#stop-research-methodology\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(4) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(5) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(6) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(7) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href=\"#stop-guiding-design-principle\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href=\"#stop-revised-question-order\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(10) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(11) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(12) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(12) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "li:nth-child(13) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(13) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "li:nth-child(14) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(14) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "a[data-route-target=\"stop-the-sequential-quote-flow\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[data-route-target=\"stop-the-sequential-quote-flow\"] > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "li:nth-child(16) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(16) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "li:nth-child(17) > .route-row.t-ui > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(17) > .route-row.t-ui > .route-name[data-astro-cid-cpesg2nt=\"\"] > span[data-astro-cid-cpesg2nt=\"\"]",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "/projects/portfolio-meta/",
+      "viewport": "desktop",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": "a[href$=\"#stop-at-a-glance\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#why\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#the-pattern\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#v6---maturity\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#the-flutter-web-rant\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#v7---more-me-more-html\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "li:nth-child(7) > .route-row.t-ui[data-astro-cid-cpesg2nt=\"\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#addendum-accessibility\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "/builds/pawlog/",
+      "viewport": "desktop",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": "a[href$=\"#stop-problem\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href=\"#the-decisions-that-shaped-it\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href$=\"#what-it-does\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": "a[href=\"#where-id-push-back-on-myself\"] > .route-arrow.t-count[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "/about/",
+      "viewport": "desktop",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "page": "/ai/",
+      "viewport": "desktop",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "page": "/contact/",
+      "viewport": "desktop",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "page": "/accessibility/",
+      "viewport": "desktop",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "page": "/colophon/",
+      "viewport": "desktop",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "page": "/tokens/",
+      "viewport": "desktop",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "page": "/",
+      "viewport": "mobile",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ".hero-hl",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": ".lcd-first > span[data-astro-cid-k5mxwwil=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".lcd-row[data-astro-cid-k5mxwwil=\"\"]:nth-child(3) > span[data-astro-cid-k5mxwwil=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".lcd-row[data-astro-cid-k5mxwwil=\"\"]:nth-child(4) > span[data-astro-cid-k5mxwwil=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".lcd-softkeys > span[data-astro-cid-k5mxwwil=\"\"]:nth-child(2)",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": ".ma-btn.def[href=\"/portfolio_four/ai\"] > kbd",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".ma-btn.def[href$=\"about\"] > kbd",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".window[data-astro-cid-laioyuzd=\"true\"]:nth-child(5) > .win-body > .ma-body[data-astro-cid-laioyuzd=\"\"] > .ma-btn.def.mbtn > kbd",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "/projects/pet-insurance-checkout/",
+      "viewport": "mobile",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ".lcd-first > span[data-astro-cid-k5mxwwil=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".lcd-row[data-astro-cid-k5mxwwil=\"\"]:nth-child(3) > span[data-astro-cid-k5mxwwil=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".lcd-row[data-astro-cid-k5mxwwil=\"\"]:nth-child(4) > span[data-astro-cid-k5mxwwil=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(1) > .proj-persona-icon.t-chip[data-astro-cid-ds5363u5=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(2) > .proj-persona-icon.t-chip[data-astro-cid-ds5363u5=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(3) > .proj-persona-icon.t-chip[data-astro-cid-ds5363u5=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(4) > .proj-persona-icon.t-chip[data-astro-cid-ds5363u5=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "/projects/perro-onboarding/",
+      "viewport": "mobile",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ".proj-persona.proj-section:nth-child(6) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(1) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(6) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(2) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(6) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(3) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(7) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(1) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(7) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(2) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(7) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(3) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(4) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(1) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(2) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(3) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(4) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(5) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "/projects/counselling-companions/",
+      "viewport": "mobile",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ".proj-persona.proj-section:nth-child(6) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(1) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(6) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(2) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(6) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(3) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(6) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(4) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(7) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(1) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(7) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(2) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(7) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(3) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-persona.proj-section:nth-child(7) > .proj-persona-card[data-astro-cid-ds5363u5=\"\"] > .proj-persona-lists[data-astro-cid-ds5363u5=\"\"] > .proj-persona-list[data-astro-cid-ds5363u5=\"\"]:nth-child(2) > ul > li:nth-child(4) > .proj-persona-icon.t-chip[aria-hidden=\"true\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(1) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(2) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(3) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            },
+            {
+              "target": ".proj-a11y-row[data-astro-cid-jxneln4u=\"\"]:nth-child(4) > .proj-a11y-fix[data-astro-cid-jxneln4u=\"\"] > .proj-a11y-fix-icon[data-astro-cid-jxneln4u=\"\"]",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "/projects/direct-quote-flow/",
+      "viewport": "mobile",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ".lcd-foot > span[data-astro-cid-k5mxwwil=\"\"]:nth-child(2)",
+              "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "/projects/portfolio-meta/",
+      "viewport": "mobile",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": "dd > a:nth-child(3)",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": ".proj-car:nth-child(21) > .proj-car-textbody > .proj-car-body",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": "p:nth-child(23) > a",
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "/builds/pawlog/",
+      "viewport": "mobile",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "page": "/about/",
+      "viewport": "mobile",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "page": "/ai/",
+      "viewport": "mobile",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "page": "/contact/",
+      "viewport": "mobile",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "page": "/accessibility/",
+      "viewport": "mobile",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "page": "/colophon/",
+      "viewport": "mobile",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "page": "/tokens/",
+      "viewport": "mobile",
+      "violations": [],
+      "incomplete": []
+    }
+  ]
+}
