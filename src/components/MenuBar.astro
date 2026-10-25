@@ -1,10 +1,13 @@
 ---
 // Menu bar. Marks the current page with aria-current (tangerine underline).
 // On case studies it swaps About, AI and CV for a "Work / title" breadcrumb and a next link.
+// Under 860px the links fold behind a Menu button. Without JS the button stays hidden,
+// the links wrap in a row and the bar is not sticky.
 import Device from './Device.astro';
+import type { DeviceName } from '../data/sprites';
 
 interface Props {
-  caseStudy?: { title: string; next?: { title: string; href: string } };
+  caseStudy?: { title: string; next?: { title: string; href: string; device?: DeviceName } };
 }
 
 const { caseStudy } = Astro.props;
@@ -24,7 +27,8 @@ const items = [
       <Device name="pager" scale={2} />
       <span class="t-wordmark">Nirmal Karthikeyan</span>
     </a>
-    <nav aria-label="Main" class="mb-nav t-ui">
+    <button type="button" class="mbtn mb-toggle" aria-expanded="false" aria-controls="main-nav" hidden data-menu-toggle>Menu</button>
+    <nav aria-label="Main" id="main-nav" class="mb-nav t-ui">
       <a href={base} aria-current={caseStudy ? undefined : current('')}>Home</a>
       {caseStudy ? (
         <>
@@ -34,7 +38,13 @@ const items = [
             <span class="mb-here" aria-current="page" title={caseStudy.title}>{caseStudy.title}</span>
           </span>
           {caseStudy.next && (
-            <a href={caseStudy.next.href} class="mb-next">Next: {caseStudy.next.title} →</a>
+            <a href={caseStudy.next.href} class="mb-next" title={caseStudy.next.title}>
+              {caseStudy.next.device && <Device name={caseStudy.next.device} scale={2} class="mb-next-device" />}
+              <span class="mb-next-text">
+                <span class="t-label mb-next-label">next stop<span class="visually-hidden">:</span></span>
+                <span class="mb-next-title">{caseStudy.next.title}<span aria-hidden="true"> →</span></span>
+              </span>
+            </a>
           )}
         </>
       ) : (
@@ -121,15 +131,110 @@ const items = [
     margin-bottom: -8px;
   }
 
+  /* Next stop: its own bordered tab, pushed right, so its title never runs on from the breadcrumb. */
+  .mb-nav a.mb-next {
+    margin-left: 18px;
+    gap: 10px;
+    box-sizing: border-box;
+    min-height: 44px;
+    padding: 2px 12px 2px 8px;
+    align-self: center;
+    border: 1px solid var(--ink);
+    box-shadow: 2px 2px 0 var(--ink);
+    background: var(--paper);
+    color: var(--blue);
+    max-width: 42ch;
+  }
+  .mb-nav a.mb-next:hover { text-decoration: none; color: var(--blue); }
+  .mb-nav a.mb-next:hover .mb-next-title { text-decoration: underline; }
+  .mb-nav a.mb-next:active { box-shadow: none; transform: translate(2px, 2px); }
+  .mb-next-device { flex: none; }
+  @media (max-width: 1240px) {
+    .mb-next-device { display: none; }
+    .mb-nav a.mb-next { max-width: 32ch; padding-left: 12px; }
+  }
+  /* Too tight to share the row: the "next stop" section at the end of the page does this job. */
+  @media (min-width: 861px) and (max-width: 1180px) {
+    .mb-nav a.mb-next { display: none; }
+  }
+  .mb-next-text { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
+  .mb-next-title {
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mb-nav a.mb-next:active { transform: none; }
+  }
+
   .mb-contact { min-height: 34px; padding: 0 14px; }
 
+  /* On the contact page: tangerine "you are here", not the blue "click this" primary. */
+  .mb-contact[aria-current='page'],
+  .mb-contact[aria-current='page']:hover {
+    background: var(--tangerine);
+    color: var(--ink);
+    box-shadow: none;
+    cursor: default;
+  }
+
+  .mb-toggle { display: none; min-height: 44px; padding: 0 14px; }
+
+  @media (max-width: 860px) {
+    /* Without JS the bar scrolls away rather than covering the page. */
+    .menubar { position: static; }
+    .menubar.js-menu { position: sticky; }
+
+    .js-menu .mb-toggle { display: inline-flex; }
+
+    /* Folded: one 48px row. Open: the links stack under it. */
+    .js-menu .mb-nav { display: none; }
+    .js-menu.menu-open .mb-nav {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      flex-basis: 100%;
+      gap: 0;
+      padding-bottom: 12px;
+    }
+    .js-menu.menu-open .mb-crumb { flex-wrap: wrap; }
+    .js-menu.menu-open .mb-here { max-width: none; white-space: normal; }
+    .js-menu.menu-open .mb-contact { margin-top: 8px; }
+    .js-menu.menu-open .mb-next { margin: 8px 0 0; max-width: 100%; }
+  }
+
   @media (max-width: 640px) {
-    .mb-next { display: none !important; }
+    .menubar:not(.menu-open) .mb-next { display: none !important; }
     .mb-here { max-width: 16ch; }
   }
 
   @media (max-width: 480px) {
-    .menubar-inner { padding-block: 4px; }
+    .menubar-inner { padding-block: 2px; }
     .mb-nav { gap: 0 16px; }
   }
 </style>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('.menubar');
+  const toggle = bar?.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  if (bar && toggle) {
+    bar.classList.add('js-menu');
+    toggle.hidden = false;
+    const set = (open: boolean) => {
+      bar.classList.toggle('menu-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    };
+    toggle.addEventListener('click', () => set(toggle.getAttribute('aria-expanded') !== 'true'));
+    bar.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && bar.classList.contains('menu-open')) {
+        set(false);
+        toggle.focus();
+      }
+    });
+    // Following an in-page link closes the menu.
+    bar.querySelector('nav')?.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) set(false);
+    });
+  }
+</script>

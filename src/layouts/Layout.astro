@@ -10,13 +10,14 @@ import '@fontsource/instrument-sans/600.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
 import MenuBar from '../components/MenuBar.astro';
+import type { DeviceName } from '../data/sprites';
 import Footer from '../components/Footer.astro';
 
 interface Props {
   title?: string;
   bodyClass?: string;
   /** Set on case studies: the menu bar shows the breadcrumb and next link instead. */
-  caseStudy?: { title: string; next?: { title: string; href: string } };
+  caseStudy?: { title: string; next?: { title: string; href: string; device?: DeviceName } };
 }
 
 const { title = 'Nirmal — Portfolio', bodyClass, caseStudy } = Astro.props;
