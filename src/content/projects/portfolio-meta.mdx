@@ -21,6 +21,28 @@ statusline:
 order: 4
 device: instant
 hidden: true
+# Summary hero at the top of the case study (see CaseStudyHero.astro). Fields marked
+# "from Nirmal" are placeholders for new copy.
+hero:
+  inShort: "[IN SHORT: from Nirmal]"
+  changed:
+    - "[CHANGED 1: from Nirmal]"
+    - "[CHANGED 2: from Nirmal]"
+    - "[CHANGED 3: from Nirmal]"
+  notWell:
+    - "[DIDN'T GO WELL: from Nirmal]"
+  # From the ProjectHero scope: "Solo designer + dev · Personal project"
+  role: Solo designer + dev
+  # The existing copy mentions Claude as a second reviewer on the accessibility audit. To confirm.
+  workedWith:
+    - "[WORKED WITH: from Nirmal]"
+  # The existing copy gives no timeframe.
+  timeframe: "[TIMEFRAME: from Nirmal]"
+  # Existing text (TLDR Outcome): "V7, the site you're on, is V6 rebuilt from scratch in Astro"
+  status: "[STATUS: from Nirmal]"
+  # No pairs yet: the V1 to V5 screenshots are Astro image imports in
+  # portfolio-meta-assets/, not files under public/, and there is no V7 screenshot.
+  # The hero window shows the existing hero screen until pairs are added.
 sections:
   - component: ProjectHero
     props:

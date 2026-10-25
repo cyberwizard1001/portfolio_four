@@ -10,9 +10,7 @@ import WindowChrome from './WindowChrome.astro';
     </Fragment>
     <div class="lightbox-body">
       <div class="lightbox-frame">
-        <div class="lightbox-stage">
-          <img class="lightbox-img" alt="" draggable="false" />
-        </div>
+        <div class="lightbox-stage"></div>
         <button type="button" class="lightbox-nav lightbox-prev" aria-label="Previous image" hidden>‹</button>
         <button type="button" class="lightbox-nav lightbox-next" aria-label="Next image" hidden>›</button>
       </div>
@@ -101,7 +99,7 @@ import WindowChrome from './WindowChrome.astro';
   .lightbox-stage[data-zoomed] { cursor: grab; }
   .lightbox-stage[data-dragging] { cursor: grabbing; }
 
-  .lightbox-img {
+  .lightbox-stage :global(.lightbox-img) {
     display: block;
     width: auto;
     height: auto;
@@ -114,7 +112,7 @@ import WindowChrome from './WindowChrome.astro';
     -webkit-user-drag: none;
   }
 
-  .lightbox-img.is-animating {
+  .lightbox-stage :global(.lightbox-img.is-animating) {
     transition: transform 0.2s ease-out;
   }
 
@@ -172,7 +170,7 @@ import WindowChrome from './WindowChrome.astro';
 
   @media (prefers-reduced-motion: reduce) {
     .lightbox[open] { animation: none; }
-    .lightbox-img.is-animating { transition: none; }
+    .lightbox-stage :global(.lightbox-img.is-animating) { transition: none; }
   }
 
   :global(html:has(dialog.lightbox[open])) { overflow: hidden; }
@@ -187,11 +185,17 @@ import WindowChrome from './WindowChrome.astro';
 <script>
   (function () {
     const dialog = document.querySelector<HTMLDialogElement>('dialog.lightbox');
-    const root = document.querySelector<HTMLElement>('.proj-window-body');
-    if (!dialog || !root) return;
+    // The route column, plus any block outside it that opts in (the hero viewer).
+    const roots = [...document.querySelectorAll<HTMLElement>('.proj-window-body, [data-lightbox-root]')];
+    if (!dialog || !roots.length) return;
 
-    const img = dialog.querySelector<HTMLImageElement>('.lightbox-img')!;
     const stage = dialog.querySelector<HTMLElement>('.lightbox-stage')!;
+    // Created here rather than in the HTML: an <img> needs a src, and the preview has none until opened.
+    const img = document.createElement('img');
+    img.className = 'lightbox-img';
+    img.alt = '';
+    img.draggable = false;
+    stage.append(img);
     const caption = dialog.querySelector<HTMLElement>('.lightbox-caption')!;
     const status = dialog.querySelector<HTMLElement>('.lightbox-status')!;
     const title = dialog.querySelector<HTMLElement>('.win-title')!;
@@ -209,12 +213,12 @@ import WindowChrome from './WindowChrome.astro';
     let group: HTMLImageElement[] = [];
     let index = 0;
 
-    const eligible = root.querySelectorAll<HTMLImageElement>('img:not(.proj-persona img)');
+    const eligible = roots.flatMap((root) => [...root.querySelectorAll<HTMLImageElement>('img:not(.proj-persona img)')]);
     eligible.forEach((el) => {
       el.dataset.lightbox = '';
-      // Carousel slides stay out of the tab order (off-screen slides would be
-      // focusable); the carousel region opens its active slide on Enter instead.
-      if (el.closest('.proj-carousel')) return;
+      // Images inside a full-size link are reached through the link. Carousel
+      // slides are too: only the active slide's link is in the tab order.
+      if (el.closest('.proj-img-link, .proj-carousel')) return;
       el.tabIndex = 0;
       el.setAttribute('role', 'button');
       el.setAttribute('aria-label', `Enlarge image${el.alt ? `: ${el.alt}` : ''}`);
@@ -422,19 +426,30 @@ import WindowChrome from './WindowChrome.astro';
     prevBtn.addEventListener('click', () => step(-1));
     nextBtn.addEventListener('click', () => step(1));
 
-    const open = (source: HTMLImageElement, returnTo: HTMLElement) => {
-      const section = source.closest('section') ?? root;
-      group = [...section.querySelectorAll<HTMLImageElement>('img[data-lightbox]')];
+    const open = (source: HTMLImageElement, returnTo: HTMLElement, root: HTMLElement) => {
+      // A [data-lightbox-group] previews only what it is showing, not the shots it has hidden.
+      const own = source.closest<HTMLElement>('[data-lightbox-group]');
+      const section = own ?? source.closest('section') ?? root;
+      group = [...section.querySelectorAll<HTMLImageElement>('img[data-lightbox]')].filter(
+        (el) => !own || !el.closest('[data-off]')
+      );
       trigger = returnTo;
       dialog.showModal();
       show(Math.max(0, group.indexOf(source)));
       closeBtn.focus();
     };
 
+    roots.forEach((root) => {
     root.addEventListener('click', (event) => {
-      const target = (event.target as HTMLElement).closest<HTMLImageElement>('img[data-lightbox]');
+      const el = event.target as HTMLElement;
+      const link = el.closest<HTMLAnchorElement>('.proj-img-link');
+      const target = link
+        ? link.querySelector<HTMLImageElement>('img[data-lightbox]')
+        : el.closest<HTMLImageElement>('img[data-lightbox]');
       if (!target) return;
-      open(target, target.closest('.proj-carousel') ?? target);
+      // The link is the no-JS fallback to the full-size file; with JS the preview opens instead.
+      event.preventDefault();
+      open(target, link ?? target.closest<HTMLElement>('.proj-carousel') ?? target, root);
     });
 
     root.addEventListener('keydown', (event) => {
@@ -442,13 +457,14 @@ import WindowChrome from './WindowChrome.astro';
       const target = event.target as HTMLElement;
       if (target.matches('img[data-lightbox]')) {
         event.preventDefault();
-        open(target as HTMLImageElement, target);
+        open(target as HTMLImageElement, target, root);
       } else if (target.matches('.proj-carousel')) {
         const active = target.querySelector<HTMLImageElement>('.proj-carousel-slide[data-active] img');
         if (!active) return;
         event.preventDefault();
-        open(active, target);
+        open(active, target, root);
       }
+    });
     });
 
     const PAN_STEP = 60;

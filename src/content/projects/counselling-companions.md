@@ -19,6 +19,77 @@ statusline:
   - label: co-design · RRI · trust
 order: 4
 device: walkie
+# Summary hero at the top of the case study (see CaseStudyHero.astro). Fields marked
+# "from Nirmal" are placeholders for new copy.
+hero:
+  inShort: "[IN SHORT: from Nirmal]"
+  changed:
+    - "[CHANGED 1: from Nirmal]"
+    - "[CHANGED 2: from Nirmal]"
+    - "[CHANGED 3: from Nirmal]"
+  notWell:
+    - "[DIDN'T GO WELL: from Nirmal]"
+  # From the ProjectHero scope: "Solo researcher · MSc dissertation · 0→1 concept tool".
+  # The brief's "My role" item says: "Sole researcher and designer — discovery, co-design,
+  # prototyping, evaluation, ethics".
+  role: Solo researcher
+  # The existing copy names seven practitioners as participants, not collaborators. To confirm.
+  workedWith:
+    - "[WORKED WITH: from Nirmal]"
+  # The existing copy gives no overall timeframe (the co-design workshop ran for a week).
+  timeframe: "[TIMEFRAME: from Nirmal]"
+  # Existing text (TLDR Outcome): "It's a small sample and not a shipped product; the next
+  # step would be an MVP on real Google Workspace and Microsoft 365 data."
+  status: "[STATUS: from Nirmal]"
+  # Proposed pairs, to confirm. There are no before screenshots, so these are all
+  # after-only. Labels are the dashboard section names from "The core of the dashboard".
+  # Alt text and captions are the existing ones.
+  pairs:
+    - label: Home
+      after:
+        src: /images/counselling/home.jpg
+        alt: >-
+          Home dashboard — the day's sessions, the next client's details, the task list, and the
+          inbox on a single screen
+        caption: >-
+          Home dashboard — the day's sessions, the next client's details, the task list, and the
+          inbox on a single screen
+    - label: Schedule
+      after:
+        src: /images/counselling/schedule-week.jpg
+        alt: >-
+          Week view — every session laid out against the working day, with cards that open into
+          reschedule, contact the client, or notes from last time
+        caption: >-
+          Week view — every session laid out against the working day, with cards that open into
+          reschedule, contact the client, or notes from last time
+    - label: People
+      after:
+        src: /images/counselling/people.jpg
+        alt: >-
+          Client profile — session history, shared resources, consent storage, and a per-client toggle
+          that keeps AI off until the practitioner turns it on
+        caption: >-
+          Client profile — session history, shared resources, consent storage, and a per-client toggle
+          that keeps AI off until the practitioner turns it on
+    - label: Notes
+      after:
+        src: /images/counselling/session-notes.jpg
+        alt: >-
+          Session notes — typed templates or scanned handwriting, tagged and searchable, with an AI
+          summary you ask for rather than one that happens to you
+        caption: >-
+          Session notes — typed templates or scanned handwriting, tagged and searchable, with an AI
+          summary you ask for rather than one that happens to you
+    - label: Library
+      after:
+        src: /images/counselling/resources.jpg
+        alt: >-
+          Library — worksheets, articles, and media in one place, filterable by type and readable inside
+          the tool
+        caption: >-
+          Library — worksheets, articles, and media in one place, filterable by type and readable inside
+          the tool
 sections:
   - component: ProjectHero
     props:

@@ -20,6 +20,74 @@ statusline:
   - label: qual research
 order: 3
 device: flip
+# Summary hero at the top of the case study (see CaseStudyHero.astro). Fields marked
+# "from Nirmal" are placeholders for new copy.
+hero:
+  inShort: "[IN SHORT: from Nirmal]"
+  changed:
+    - "[CHANGED 1: from Nirmal]"
+    - "[CHANGED 2: from Nirmal]"
+    - "[CHANGED 3: from Nirmal]"
+  notWell:
+    - "[DIDN'T GO WELL: from Nirmal]"
+  # From the ProjectHero scope: "Solo designer + dev · 2 weeks · App onboarding redesign"
+  role: Solo designer + dev
+  # The existing copy names no collaborators. It mentions working part-time as the sole
+  # front-end developer. To confirm.
+  workedWith:
+    - "[WORKED WITH: from Nirmal]"
+  # Existing text (TLDR Constraints): "Two weeks, part-time."
+  timeframe: "[TIMEFRAME: from Nirmal]"
+  # Existing text (TLDR Outcome): "When the company was acquired, the UX was named as one
+  # of the product's strengths."
+  status: "[STATUS: from Nirmal]"
+  # Moved word for word from the ProjectBeforeAfter section, which has been removed.
+  beforeText: >-
+    The original flow ran to five screens and sixteen questions, with a mandatory photo
+    upload, abrupt system permission prompts, and no explanation anywhere of what Perro
+    offered.
+  afterText: >-
+    The redesigned flow has four screens and eleven questions, with default avatars in place
+    of the mandatory photo, a feature carousel that presents the value up front, a
+    notifications explainer, and a subscription step that carries the same story through to
+    the end.
+  # Proposed pairs, to confirm. The first is the onboarding diagram split in two
+  # (perro_before_after in tools/graphics.py); its label, alt text and captions are new
+  # copy. The rest are after-only, with the existing alt text and captions.
+  pairs:
+    - label: "[PAIR LABEL: from Nirmal]"
+      before:
+        src: /images/perro/flow-before.svg
+        alt: "[ALT: from Nirmal]"
+        caption: "[CAPTION: from Nirmal]"
+      after:
+        src: /images/perro/flow-after.svg
+        alt: "[ALT: from Nirmal]"
+        caption: "[CAPTION: from Nirmal]"
+    - label: Feature carousel
+      after:
+        src: /images/perro/solution-feature-carousel.jpg
+        alt: >-
+          The four feature carousel slides: Perro&You training guides, on-demand vet access,
+          Woof Rewards, and smart activity tracking with Apple Health and Google Fit
+        caption: >-
+          The four feature carousel slides: Perro&You training guides, on-demand vet access,
+          Woof Rewards, and smart activity tracking with Apple Health and Google Fit
+    - label: Avatar system
+      after:
+        src: /images/perro/decision-avatars.jpg
+        alt: The dog and owner avatar pickers that replaced the mandatory photo upload.
+        caption: The dog and owner avatar pickers that replaced the mandatory photo upload.
+    - label: Notifications explainer
+      after:
+        src: /images/perro/decision-permissions.jpg
+        alt: The notifications explainer, listing what the user gets before the OS prompt appears.
+        caption: The notifications explainer, listing what the user gets before the OS prompt appears.
+    - label: "[PAIR LABEL: from Nirmal]"
+      after:
+        src: /images/perro/decision-paywall.jpg
+        alt: The Introducing Perro benefits screen, followed by the plan choice with the three-day trial on the yearly plan.
+        caption: The Introducing Perro benefits screen, followed by the plan choice with the three-day trial on the yearly plan.
 sections:
   - component: ProjectHero
     props:
@@ -347,19 +415,6 @@ sections:
             How might we cut the number of questions without losing the ones that matter for
             the first session?
           theme: Progressive disclosure
-  - component: ProjectBeforeAfter
-    props:
-      beforeTitle: Before
-      beforeBody: >-
-        The original flow ran to five screens and sixteen questions, with a mandatory photo
-        upload, abrupt system permission prompts, and no explanation anywhere of what Perro
-        offered.
-      afterTitle: After
-      afterBody: >-
-        The redesigned flow has four screens and eleven questions, with default avatars in place
-        of the mandatory photo, a feature carousel that presents the value up front, a
-        notifications explainer, and a subscription step that carries the same story through to
-        the end.
   - component: ProjectGallery
     props:
       image: /images/perro/before-after-screens.svg

@@ -31,6 +31,75 @@ statusline:
   - label: Lyssna · co-design
 order: 2
 device: pager
+# Summary hero at the top of the case study (see CaseStudyHero.astro). Fields marked
+# "from Nirmal" are placeholders for new copy.
+hero:
+  inShort: "[IN SHORT: from Nirmal]"
+  changed:
+    - "[CHANGED 1: from Nirmal]"
+    - "[CHANGED 2: from Nirmal]"
+    - "[CHANGED 3: from Nirmal]"
+  notWell:
+    - "[DIDN'T GO WELL: from Nirmal]"
+  # From the ProjectHero scope: "Lead designer · Two brands · Product, engineering,
+  # underwriting, pricing and compliance"
+  role: Lead designer
+  # The existing copy names: the Head of Product, engineering, underwriting, pricing,
+  # compliance and the aggregator team (ProjectProblemKeyInfo contextBody). To confirm.
+  workedWith:
+    - "[WORKED WITH: from Nirmal]"
+  # The existing copy gives no timeframe.
+  timeframe: "[TIMEFRAME: from Nirmal]"
+  # Existing text (TLDR Outcome): "the revised flow is scheduled for the next sprint"
+  status: "[STATUS: from Nirmal]"
+  # Moved word for word from the ProjectBeforeAfter section, which has been removed.
+  beforeText: >-
+    All of the pet questions appeared on one long page, and before the quote they included
+    pre-existing conditions, microchipping, vaccinations, aggression, previously refused insurance
+    and third-party incidents. Adding a second pet repeated each of these questions in full. A
+    second page then asked for the owner's title, name, date of birth, email address, phone number
+    and address, and the customer saw a price only after completing both pages.
+  afterText: >-
+    Before the quote, the flow asks only for the pet's basic details, the owner's email address,
+    date of birth and address, the preferred start date and the cover preferences that determine
+    which policies are shown. Each question appears once the previous one has been answered. The
+    health and warranty questions and the remaining personal details are asked after the quote,
+    and questions that apply to the whole household are asked once for all pets.
+  # Proposed pairs, to confirm. The afters are still placeholder.svg, as in the
+  # sequential quote flow carousel. Alt text and captions are the existing ones.
+  pairs:
+    - label: Pet Details
+      before:
+        src: /images/direct-quote/original/01-pet-details.jpg
+        alt: The original Pet Details page under a "Welcome hooman" banner, with pet information and a long block of health and behaviour questions on one scrolling page
+        caption: The original Pet Details page under a "Welcome hooman" banner, with pet information and a long block of health and behaviour questions on one scrolling page
+      after:
+        src: /images/placeholder.svg
+        alt: The opening question of the sequential Pet Details step
+        caption: The opening question of the sequential Pet Details step
+    - label: Your Details
+      before:
+        src: /images/direct-quote/original/02-your-details.jpg
+        alt: The original Your Details page asking for title, names, date of birth, email, phone and address, followed by the first cover option question
+        caption: The original Your Details page asking for title, names, date of birth, email, phone and address, followed by the first cover option question
+      after:
+        src: /images/placeholder.svg
+        alt: Your Details and the plain-English cover options, with a summary of the policies that will be shown
+        caption: Your Details and the plain-English cover options, with a summary of the policies that will be shown
+    - label: "[PAIR LABEL: from Nirmal]"
+      before:
+        src: /images/direct-quote/original/03-pet-details-multi-pet.jpg
+        alt: The original Pet Details page with a second pet added, repeating the full set of pet, health and behaviour questions for each pet
+        caption: The original Pet Details page with a second pet added, repeating the full set of pet, health and behaviour questions for each pet
+      after:
+        src: /images/placeholder.svg
+        alt: A second pet's details, with the first pet collapsed into a summary card
+        caption: A second pet's details, with the first pet collapsed into a summary card
+    - label: Pet checks
+      after:
+        src: /images/placeholder.svg
+        alt: The post-quote Pet checks step for both pets
+        caption: The post-quote Pet checks step for both pets
 sections:
   - component: ProjectHero
     props:
@@ -79,22 +148,6 @@ sections:
         once per household, and ended the repetition of every health question for each additional pet.
         The result is a shorter route to the quote and a form that asks its more demanding questions at
         a point where customers are prepared to answer them.
-  - component: ProjectBeforeAfter
-    props:
-      beforeTitle: Before
-      beforeBody: >-
-        All of the pet questions appeared on one long page, and before the quote they included
-        pre-existing conditions, microchipping, vaccinations, aggression, previously refused insurance
-        and third-party incidents. Adding a second pet repeated each of these questions in full. A
-        second page then asked for the owner's title, name, date of birth, email address, phone number
-        and address, and the customer saw a price only after completing both pages.
-      afterTitle: After
-      afterBody: >-
-        Before the quote, the flow asks only for the pet's basic details, the owner's email address,
-        date of birth and address, the preferred start date and the cover preferences that determine
-        which policies are shown. Each question appears once the previous one has been answered. The
-        health and warranty questions and the remaining personal details are asked after the quote,
-        and questions that apply to the whole household are asked once for all pets.
   - component: ProjectMetricsBand
     props:
       items:
@@ -204,7 +257,7 @@ sections:
         progress when a session is interrupted, and "Go on then" for confidence at the quotes stage.
         The map also allowed me to show stakeholders that each theme was supported by several
         independent sources.
-      image: /images/direct-quote/research/evidence-map.jpg
+      image: /images/direct-quote/research/evidence-map.svg
       imageAlt: >-
         A map linking eight research streams, including the heuristic audits, workshop, call and
         contact analysis and the question audit, to four themes that feed the co-design workshop.

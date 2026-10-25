@@ -1,0 +1,339 @@
+---
+// The top of a case study, down to where the route begins: the whole project on about
+// one screen. Title and outcome, then the before/after viewer beside a summary panel,
+// then the route strip (the TLDR as four legs), the facts bar and a link to stop 1.
+import WindowChrome from './WindowChrome.astro';
+import Device from './Device.astro';
+import ProjectScreen from './ProjectScreen.astro';
+import HeroBeforeAfter from './HeroBeforeAfter.astro';
+import { heroLegs, type Hero } from '../lib/caseStudy';
+import { jargonify } from '../lib/jargon';
+import type { DeviceName } from '../data/sprites';
+
+interface Props {
+  slug: string;
+  title: string;
+  filename: string;
+  eyebrowLine: string;
+  device?: DeviceName;
+  outcomeValue?: string;
+  outcomeLabel?: string;
+  oneliner?: string;
+  hero?: Hero;
+  tldrBody?: string;
+  stopCount: number;
+  firstStopId?: string;
+}
+
+const {
+  slug, title, filename, eyebrowLine, device, outcomeValue, outcomeLabel, oneliner,
+  hero = {}, tldrBody, stopCount, firstStopId,
+} = Astro.props;
+
+const legs = heroLegs(tldrBody, hero.legs);
+const pairs = hero.pairs ?? [];
+
+const facts = [
+  { label: 'my role', value: hero.role },
+  { label: 'worked with', value: hero.workedWith?.join(', ') },
+  { label: 'timeframe', value: hero.timeframe },
+  { label: 'status', value: hero.status },
+].filter((f): f is { label: string; value: string } => Boolean(f.value));
+---
+
+<header class="csh">
+  <a href={`${import.meta.env.BASE_URL}#work`} class="t-ui csh-back">← back to all work</a>
+  <div class="csh-eyebrow">
+    {device && <Device name={device} scale={5} project={slug} />}
+    <p class="t-label">{eyebrowLine}</p>
+  </div>
+  <h1 class="csh-title">{title}</h1>
+  {outcomeValue ? (
+    <p class="csh-outcome"><span class="hl csh-value">{outcomeValue}.</span> {outcomeLabel}</p>
+  ) : oneliner && <p class="csh-outcome">{oneliner}</p>}
+
+  <div class="csh-grid">
+    <div class="csh-viewer">
+      {pairs.length > 0 ? (
+        <HeroBeforeAfter pairs={pairs} beforeText={hero.beforeText} afterText={hero.afterText} />
+      ) : (
+        <WindowChrome title={filename}>
+          <div class="dither csh-screen">
+            <ProjectScreen slug={slug} label="[ hero image, greyscale ]" />
+          </div>
+        </WindowChrome>
+      )}
+    </div>
+
+    <div class="csh-panel">
+      {hero.inShort && (
+        <section class="csh-short" aria-labelledby="csh-short-h">
+          <h2 id="csh-short-h" class="t-label">in short</h2>
+          <p class="csh-short-body" set:html={jargonify(hero.inShort)} />
+        </section>
+      )}
+      {hero.changed?.length ? (
+        <section class="csh-changed" aria-labelledby="csh-changed-h">
+          <h2 id="csh-changed-h" class="t-label">what it changed</h2>
+          <ul class="csh-list">
+            {hero.changed.map((line) => (
+              <li><span class="t-count csh-glyph" aria-hidden="true">+</span><span set:html={jargonify(line)} /></li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+      {hero.notWell?.length ? (
+        <section class="csh-notwell" aria-labelledby="csh-notwell-h">
+          <h2 id="csh-notwell-h" class="t-label">what didn't go well</h2>
+          <ul class="csh-list">
+            {hero.notWell.map((line) => (
+              <li><span class="t-count csh-glyph" aria-hidden="true">−</span><span set:html={jargonify(line)} /></li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+    </div>
+  </div>
+
+  {legs.length > 0 && (
+    <div class="csh-trip">
+      {/* A miniature of the route below: the same markers, one leg per TLDR part. */}
+      <ol class="csh-legs" style={`--legs: ${legs.length};`}>
+        {legs.map((leg) => (
+          <li class:list={['csh-leg', `leg-${leg.name}`]}>
+            <p class="t-label">{leg.name}</p>
+            <p class="csh-leg-body">{leg.short}</p>
+          </li>
+        ))}
+      </ol>
+      <details class="csh-whole">
+        <summary class="t-ui csh-whole-summary">read the whole trip</summary>
+        <div class="csh-whole-grid">
+          {legs.map((leg) => (
+            <div class="csh-whole-part">
+              <h3 class="t-label">{leg.name}</h3>
+              <p set:html={leg.html} />
+            </div>
+          ))}
+        </div>
+      </details>
+    </div>
+  )}
+
+  {facts.length > 0 && (
+    <dl class="csh-facts">
+      {facts.map((fact) => (
+        <div class="csh-fact">
+          <dt class="t-label">{fact.label}</dt>
+          <dd>{fact.value}</dd>
+        </div>
+      ))}
+    </dl>
+  )}
+
+  {firstStopId && (
+    <p class="t-ui csh-go">
+      <a href={`#${firstStopId}`} class="t-action action-link">read the full trip ↓</a>
+      <span class="csh-go-count"> · {stopCount} stops</span>
+    </p>
+  )}
+</header>
+
+<style>
+  .csh { padding: 56px 0 0; margin-bottom: 72px; }
+
+  .csh-back { display: inline-flex; align-items: center; min-height: 44px; }
+
+  .csh-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 20px 0 14px;
+  }
+
+  .csh-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--fs-h1);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 1000px;
+    margin-bottom: 20px;
+    text-wrap: balance;
+  }
+
+  .csh-outcome {
+    font-size: var(--fs-lead);
+    line-height: 1.6;
+    max-width: 62ch;
+  }
+
+  .csh-value { font-weight: 600; }
+
+  /* Viewer and summary panel. Stacked by default, in reading order: in short, viewer,
+     what it changed, what didn't go well. Side by side from 860px. */
+  .csh-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
+  .csh-viewer { min-width: 0; order: 2; }
+
+  .csh-panel { display: contents; }
+  .csh-short { order: 1; }
+  .csh-changed { order: 3; }
+  .csh-notwell { order: 4; }
+
+  @media (min-width: 860px) {
+    .csh-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 1fr);
+      gap: 40px;
+      align-items: start;
+    }
+    .csh-viewer { order: 0; }
+    .csh-panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      /* Sticks only while it is shorter than the viewer; otherwise its row is its own height. */
+      position: sticky;
+      top: 72px;
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .csh-grid { grid-template-columns: minmax(0, 7fr) minmax(300px, 5fr); }
+  }
+
+  .csh-panel h2 { margin-bottom: var(--space-1); }
+
+  .csh-short-body {
+    font-size: var(--fs-lead);
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: var(--measure);
+  }
+
+  .csh-list { list-style: none; margin: 0; padding: 0; }
+
+  .csh-list li {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 12px;
+    align-items: baseline;
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    max-width: var(--measure);
+  }
+
+  .csh-list li + li { margin-top: var(--space-1); }
+
+  .csh-glyph {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--panel);
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .csh-screen { height: 440px; padding: 0 28px; }
+  .csh-screen :global(.lcd) { font-size: 22px; }
+
+  /* Route strip: four legs marked like the route line. Start is tangerine like the first
+     stop, roadworks dashed; route and arrived are solid ink, as the line ends in ink. */
+  .csh-trip { margin-top: var(--space-5); }
+
+  .csh-legs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 480px) {
+    .csh-legs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 860px) {
+    .csh-legs { grid-template-columns: repeat(var(--legs, 4), minmax(0, 1fr)); }
+  }
+
+  .csh-leg { padding-left: 12px; border-left: 4px solid var(--ink); }
+  .csh-leg.leg-start { border-left-color: var(--tangerine); }
+  .csh-leg.leg-roadworks { border-left-style: dashed; }
+
+  .csh-leg .t-label { margin-bottom: 4px; }
+
+  .csh-leg-body { font-size: var(--fs-small); line-height: 1.5; color: var(--ink); }
+
+  .csh-whole { margin-top: var(--space-3); }
+
+  .csh-whole-summary {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--blue);
+  }
+
+  .csh-whole-summary:hover { color: var(--blue-hover); text-decoration: underline; }
+
+  .csh-whole-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-3) var(--space-4);
+    padding-top: var(--space-2);
+  }
+
+  @media (min-width: 860px) {
+    .csh-whole-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  .csh-whole-part .t-label { margin-bottom: var(--space-1); }
+
+  .csh-whole-part p {
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    max-width: var(--measure);
+  }
+
+  /* Facts bar, ruled like the home page's "At a glance" list. */
+  .csh-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2) var(--space-3);
+    margin: var(--space-4) 0 0;
+    padding: var(--space-2) 0;
+    border-top: 1px dashed var(--grey-light);
+    border-bottom: 1px dashed var(--grey-light);
+  }
+
+  @media (min-width: 860px) {
+    .csh-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  .csh-fact dt { margin-bottom: 4px; }
+
+  .csh-fact dd { margin: 0; font-size: var(--fs-small); line-height: 1.5; }
+
+  .csh-go { margin-top: var(--space-2); }
+
+  .csh-go a { display: inline-flex; align-items: center; min-height: 44px; }
+
+  .csh-go-count { color: var(--muted); }
+
+  @media (max-width: 860px) {
+    .csh { padding-top: 32px; margin-bottom: 48px; }
+    .csh-screen { height: 240px; }
+    .csh-screen :global(.lcd) { font-size: 15px; }
+  }
+</style>

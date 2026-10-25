@@ -301,3 +301,19 @@ export function spritePaths(name: DeviceName): SpritePaths {
   });
   return out;
 }
+
+/** The device as a standalone SVG data URI, drawn awake, for use as a CSS background
+ *  (the case study screen-frame title bar). Colours match the tokens in tokens.css:
+ *  --grey-light, --grey-mid, --screen-on, --screen-text, --tangerine and --grey-dark. */
+export function spriteDataUri(name: DeviceName): { uri: string; width: number; height: number } {
+  const p = spritePaths(name);
+  const layers: [string, string][] = [
+    [p.light, '#D6D6D6'], [p.body, '#8C8C8C'], [p.screen, '#EDEDED'],
+    [p.text, '#1A1A1A'], [p.led, '#FF7A1A'], [p.dark, '#1A1A1A'],
+  ];
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${p.width} ${p.height}" width="${p.width}" height="${p.height}" shape-rendering="crispEdges">` +
+    layers.filter(([d]) => d).map(([d, fill]) => `<path fill="${fill}" d="${d}"/>`).join('') +
+    `</svg>`;
+  return { uri: `url("data:image/svg+xml,${encodeURIComponent(svg)}")`, width: p.width, height: p.height };
+}

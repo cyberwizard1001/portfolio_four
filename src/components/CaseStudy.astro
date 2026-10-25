@@ -1,10 +1,10 @@
 ---
-// Case study template, shared by project pages and build pages. Header, hero window,
-// then the vertical route: TLDR stops, the entry's own sections, then markdown
-// headings, all on one blue line with a sticky "route" window beside it.
-import WindowChrome from './WindowChrome.astro';
+// Case study template, shared by project pages and build pages. The summary hero
+// (which carries the TLDR), then the vertical route: the entry's own sections, then
+// markdown headings, all on one dotted line with a sticky "route" window beside it.
 import RouteWindow from './RouteWindow.astro';
 import Device from './Device.astro';
+import CaseStudyHero from './CaseStudyHero.astro';
 import ImageLightbox from './ImageLightbox.astro';
 import ProjectGallery from './project-blocks/ProjectGallery.astro';
 import ProjectTextBlock from './project-blocks/ProjectTextBlock.astro';
@@ -23,8 +23,8 @@ import ProjectTextImage from './project-blocks/ProjectTextImage.astro';
 import ProjectImageGalleryGrid from './project-blocks/ProjectImageGalleryGrid.astro';
 import ProjectImageCarousel from './project-blocks/ProjectImageCarousel.astro';
 import ProjectAccessibilityAudit from './project-blocks/ProjectAccessibilityAudit.astro';
-import { buildStops, type Section } from '../lib/caseStudy';
-import type { DeviceName } from '../data/sprites';
+import { buildStops, type Hero, type Section } from '../lib/caseStudy';
+import { spriteDataUri, type DeviceName } from '../data/sprites';
 import '../styles/jargon.css';
 
 interface Props {
@@ -37,6 +37,7 @@ interface Props {
   outcomeLabel?: string;
   oneliner?: string;
   sections: Section[];
+  hero?: Hero;
   tldrBody?: string;
   headings: { depth: number; slug: string; text: string }[];
   next?: { title: string; href: string; device?: DeviceName };
@@ -46,7 +47,7 @@ interface Props {
 
 const {
   slug, title, filename, eyebrowLine, device, outcomeValue, outcomeLabel, oneliner,
-  sections, tldrBody, headings, next, hasBody = false,
+  sections, hero, tldrBody, headings, next, hasBody = false,
 } = Astro.props;
 
 const blockComponents: Record<string, any> = {
@@ -69,39 +70,38 @@ const blockComponents: Record<string, any> = {
   ProjectAccessibilityAudit,
 };
 
-const { stops, intro, leadBlocks } = buildStops(tldrBody, sections, headings);
-const summary: string[] = intro?.props?.summary
-  ? Array.isArray(intro.props.summary) ? intro.props.summary : [intro.props.summary]
-  : [];
+const { stops, leadBlocks } = buildStops(sections, headings);
 
 const blockStops = stops.filter((s) => !s.headingId);
 const mdStops = stops.filter((s) => s.headingId);
 const mdDepth = headings.find((h) => h.slug === mdStops[0]?.headingId)?.depth ?? 2;
 const lastIndex = stops.length - 1;
+
+// The project's device as a small icon in every screenshot frame's title bar (see .screen-frame).
+const icon = device ? spriteDataUri(device) : undefined;
+const frameIconStyle = icon
+  ? `--frame-icon: ${icon.uri}; --frame-icon-w: ${icon.width}px; --frame-icon-h: ${icon.height}px;`
+  : undefined;
 ---
 
-<main id="main-content" class="page cs" data-visit={slug}>
-  <header class="cs-head">
-    <a href={`${import.meta.env.BASE_URL}#work`} class="t-ui cs-back">← back to all work</a>
-    <div class="cs-eyebrow">
-      {device && <Device name={device} scale={5} project={slug} />}
-      <p class="t-label">{eyebrowLine}</p>
-    </div>
-    <h1 class="cs-title">{title}</h1>
-    {outcomeValue ? (
-      <p class="cs-outcome"><span class="hl cs-value">{outcomeValue}.</span> {outcomeLabel}</p>
-    ) : oneliner && <p class="cs-outcome">{oneliner}</p>}
-    {summary.map((p) => <p class="cs-lead">{p}</p>)}
-  </header>
-
-  <WindowChrome title={filename} class="cs-hero">
-    <div class="dither cs-hero-image">
-      <span class="dither-label">[ hero image, greyscale ]</span>
-    </div>
-  </WindowChrome>
+<main id="main-content" class="page cs" data-visit={slug} style={frameIconStyle}>
+  <CaseStudyHero
+    slug={slug}
+    title={title}
+    filename={filename}
+    eyebrowLine={eyebrowLine}
+    device={device}
+    outcomeValue={outcomeValue}
+    outcomeLabel={outcomeLabel}
+    oneliner={oneliner}
+    hero={hero}
+    tldrBody={tldrBody}
+    stopCount={stops.length}
+    firstStopId={stops[0]?.id}
+  />
 
   <div class="cs-layout">
-    {stops.length > 0 && <RouteWindow stops={stops} />}
+    {stops.length > 0 && <RouteWindow stops={stops} device={device} />}
 
     <div class="cs-route proj-window-body">
       <div class="cs-line" aria-hidden="true"></div>
@@ -116,10 +116,14 @@ const lastIndex = stops.length - 1;
           <span class:list={['stop-dot', { first: i === 0, last: i === lastIndex }]} aria-hidden="true"></span>
           <p class="t-label stop-label">stop {i + 1}{i === lastIndex && ' · arrived'}</p>
           <h2 id={`${stop.id}-h`} class="stop-h">{stop.name}</h2>
-          {stop.html && <p class="stop-text" set:html={stop.html} />}
-          {stop.blocks.map(({ section, hideHeading }) => {
+          {stop.blocks.map(({ section, hideHeading, sub }) => {
             const Component = blockComponents[section.component];
-            return Component && <Component {...(section.props ?? {})} hideHeading={hideHeading} />;
+            return Component && (
+              <>
+                {sub && <h3 id={sub.id} class="stop-sub">{sub.name}</h3>}
+                <Component {...(section.props ?? {})} hideHeading={hideHeading} />
+              </>
+            );
           })}
         </section>
       ))}
@@ -155,41 +159,6 @@ const lastIndex = stops.length - 1;
 </script>
 
 <style>
-  .cs-head { padding: 56px 0 48px; }
-
-  .cs-back { display: inline-flex; align-items: center; min-height: 44px; }
-
-  .cs-eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin: 20px 0 14px;
-  }
-
-  .cs-title {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(2.75rem, 6.4vw, 6rem);
-    line-height: 1;
-    letter-spacing: -0.02em;
-    max-width: 1000px;
-    margin-bottom: 20px;
-  }
-
-  .cs-outcome,
-  .cs-lead {
-    font-size: 20px;
-    line-height: 1.6;
-    max-width: 760px;
-  }
-
-  .cs-value { font-weight: 600; }
-
-  .cs-lead { margin-top: 16px; font-size: 19px; color: var(--ink-2); }
-
-  .cs-hero { margin-bottom: 72px; }
-  .cs-hero-image { height: 440px; }
-
   .cs-layout {
     display: flex;
     flex-wrap: wrap;
@@ -201,50 +170,68 @@ const lastIndex = stops.length - 1;
     flex: 999 1 560px;
     min-width: 0;
     position: relative;
-    font-size: 19px;
-    line-height: 1.7;
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
   }
 
-  /* The route: a 4px blue line down the left of the content. */
+  /* One measure for every run of text on the route, including inside cards. */
+  .cs-route :global(:is(p, li, figcaption, dd)) { max-width: var(--measure); }
+
+  /* The route: the home page's dotted leader rule, stood on end. */
   .cs-line {
     position: absolute;
-    left: 19px;
+    left: 20px;
     top: 8px;
     bottom: 40px;
-    width: 4px;
-    background: var(--blue);
+    width: 0;
+    border-left: 2px dotted var(--ink);
   }
 
+  /* Blocks respond to the width a stop gives them, not the viewport. */
   .stop {
     position: relative;
-    padding: 0 0 88px 64px;
+    padding: 0 0 var(--space-6) 64px;
+    container-type: inline-size;
   }
 
+  /* Each stop is marked with a bevelled box from the window title bar.
+     The first is tangerine ("look here"), the last is filled ink. */
   .stop-dot {
     position: absolute;
-    left: 11px;
+    left: 14px;
     top: 4px;
-    width: 20px;
-    height: 20px;
-    background: var(--paper);
-    border: 3px solid var(--blue);
+    width: 14px;
+    height: 14px;
+    background: var(--chrome-hi);
+    border: 1px solid var(--ink);
+    box-shadow: inset 1px 1px 0 var(--paper), inset -1px -1px 0 var(--bevel-lo);
   }
 
-  .stop-dot.first { background: var(--tangerine); border-color: var(--ink); }
-  .stop-dot.last { background: var(--blue); }
+  .stop-dot.first { background: var(--tangerine); box-shadow: none; }
+  .stop-dot.last { background: var(--ink); box-shadow: none; }
+
+  .stop-label { margin-bottom: var(--space-1); }
 
   .stop-h {
-    margin: 6px 0 18px;
+    margin: 0 0 var(--space-3);
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(2rem, 3.2vw, 2.75rem);
-    line-height: 1.08;
+    font-size: var(--fs-h2);
+    line-height: var(--lh-tight);
   }
 
-  .stop-text { margin-bottom: 28px; }
+  /* Sub-section of a chapter stop: no dot, no number. */
+  .stop-sub {
+    margin: var(--space-5) 0 var(--space-2);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--fs-h3);
+    line-height: var(--lh-tight);
+  }
 
-  /* Case study images stay greyscale. */
-  .cs-route :global(img) { filter: grayscale(1); }
+  .stop-sub:first-of-type { margin-top: var(--space-4); }
+
+  /* Case study images keep their own colour. */
 
   /* Blocks inside a stop lose their own side padding; the stop column provides it. */
   .stop :global(.proj-section),
@@ -252,54 +239,72 @@ const lastIndex = stops.length - 1;
   .md-stops :global(.proj-section) { padding-left: 0; padding-right: 0; }
 
   /* Markdown body: its top heading level continues the stop numbering. */
-  .md-stops { position: relative; padding-left: 64px; }
+  .md-stops { position: relative; padding-left: 64px; container-type: inline-size; }
 
   .md-stops :global(h1) { display: none; }
 
-  .md-depth-2 :global(h2),
-  .md-depth-3 :global(h3) {
+  .md-depth-2 :global(.proj-text-col > h2),
+  .md-depth-3 :global(.proj-text-col > h3) {
     position: relative;
     counter-increment: stop;
-    margin: 0 0 18px;
-    padding-top: 56px;
+    margin: 0 0 var(--space-3);
+    padding-top: var(--space-5);
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(2rem, 3.2vw, 2.75rem);
-    line-height: 1.08;
+    font-size: var(--fs-h2);
+    line-height: var(--lh-tight);
     color: var(--ink);
   }
 
-  .md-depth-2 :global(h2::before),
-  .md-depth-3 :global(h3::before) {
+  .md-depth-2 :global(.proj-text-col > h2::before),
+  .md-depth-3 :global(.proj-text-col > h3::before) {
     content: 'stop ' counter(stop);
     display: block;
     margin-bottom: 6px;
     font-family: var(--font-machine);
-    font-size: 12px;
+    font-size: var(--machine-label);
     letter-spacing: 0.08em;
     text-transform: uppercase;
     font-weight: 400;
     color: var(--muted);
   }
 
-  .md-depth-2 :global(h2::after),
-  .md-depth-3 :global(h3::after) {
+  .md-depth-2 :global(.proj-text-col > h2::after),
+  .md-depth-3 :global(.proj-text-col > h3::after) {
     content: '';
     position: absolute;
-    left: -53px;
-    top: 60px;
-    width: 20px;
-    height: 20px;
+    left: -50px;
+    top: 68px;
+    width: 14px;
+    height: 14px;
     box-sizing: border-box;
-    background: var(--paper);
-    border: 3px solid var(--blue);
+    background: var(--chrome-hi);
+    border: 1px solid var(--ink);
+    box-shadow: inset 1px 1px 0 var(--paper), inset -1px -1px 0 var(--bevel-lo);
   }
 
-  .md-arrives.md-depth-2 :global(h2:last-of-type::before),
-  .md-arrives.md-depth-3 :global(h3:last-of-type::before) { content: 'stop ' counter(stop) ' · arrived'; }
+  .md-arrives.md-depth-2 :global(.proj-text-col > h2:last-of-type::before),
+  .md-arrives.md-depth-3 :global(.proj-text-col > h3:last-of-type::before) { content: 'stop ' counter(stop) ' · arrived'; }
 
-  .md-arrives.md-depth-2 :global(h2:last-of-type::after),
-  .md-arrives.md-depth-3 :global(h3:last-of-type::after) { background: var(--blue); }
+  .md-arrives.md-depth-2 :global(.proj-text-col > h2:last-of-type::after),
+  .md-arrives.md-depth-3 :global(.proj-text-col > h3:last-of-type::after) { background: var(--ink); box-shadow: none; }
+
+  /* Forced colours drop the fills, so the markers use system colours instead:
+     first is Highlight, last is solid text colour, the rest stay hollow. */
+  @media (forced-colors: active) {
+    .stop-dot,
+    .md-depth-2 :global(.proj-text-col > h2::after),
+    .md-depth-3 :global(.proj-text-col > h3::after) {
+      forced-color-adjust: none;
+      background: Canvas;
+      border-color: CanvasText;
+      box-shadow: none;
+    }
+    .stop-dot.first { background: Highlight; }
+    .stop-dot.last,
+    .md-arrives.md-depth-2 :global(.proj-text-col > h2:last-of-type::after),
+    .md-arrives.md-depth-3 :global(.proj-text-col > h3:last-of-type::after) { background: CanvasText; }
+  }
 
   .cs-next {
     border-top: 1px solid var(--ink);
@@ -317,8 +322,8 @@ const lastIndex = stops.length - 1;
     gap: 24px;
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(1.8rem, 3vw, 2.6rem);
-    line-height: 1.15;
+    font-size: var(--fs-h2);
+    line-height: var(--lh-tight);
     color: var(--ink);
     text-decoration: none;
   }
@@ -326,17 +331,12 @@ const lastIndex = stops.length - 1;
   .cs-next-link:hover span { text-decoration: underline; color: var(--blue); }
 
   @media (max-width: 860px) {
-    .cs-head { padding: 32px 0 36px; }
-    .cs-outcome { font-size: 18px; }
-    .cs-hero { margin-bottom: 48px; }
-    .cs-hero-image { height: 240px; }
     .cs-layout { gap: 40px; }
-    .cs-route { font-size: 17px; }
-    .cs-line { left: 7px; }
-    .stop { padding: 0 0 64px 36px; }
-    .stop-dot { left: 0; width: 18px; height: 18px; }
+    .cs-line { left: 6px; }
+    .stop { padding: 0 0 var(--space-5) 36px; }
+    .stop-dot { left: 0; }
     .md-stops { padding-left: 36px; }
-    .md-depth-2 :global(h2::after),
-    .md-depth-3 :global(h3::after) { left: -36px; width: 18px; height: 18px; }
+    .md-depth-2 :global(.proj-text-col > h2::after),
+    .md-depth-3 :global(.proj-text-col > h3::after) { left: -36px; }
   }
 </style>

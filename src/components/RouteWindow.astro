@@ -1,30 +1,53 @@
 ---
 import WindowChrome from './WindowChrome.astro';
+import Device from './Device.astro';
 import { arrowFor, type Stop } from '../lib/caseStudy';
+import type { DeviceName } from '../data/sprites';
 
 interface Props {
   stops: Stop[];
+  /** The project's device. Its LCD-style readout does the job of "you are here". */
+  device?: DeviceName;
 }
 
-const { stops } = Astro.props;
+const { stops, device } = Astro.props;
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 
 <aside class="route" aria-label="Route">
   <WindowChrome title="route">
-    <div class="route-head">
-      <span class="t-label">{stops.length} stops</span>
-      <span class="t-label route-here">you are here: <span class="hl" data-route-here>1</span></span>
-    </div>
-    <ol class="route-list" data-route-list>
-      {stops.map((stop, i) => (
-        <li>
-          <a href={`#${stop.id}`} class="route-row t-ui" data-route-target={stop.id} aria-current={i === 0 ? 'location' : undefined}>
-            <span class="route-arrow t-count" aria-hidden="true">{arrowFor(i, stops.length)}</span>
-            <span>{stop.name}</span>
-          </a>
-        </li>
-      ))}
-    </ol>
+    {/* Open in the HTML so the list shows without JS. Under 860px the script closes it. */}
+    <details class="route-details" open data-route-details>
+      <summary class="route-summary t-ui">route · {stops.length} stops</summary>
+      <div class="route-head">
+        {device && <Device name={device} scale={3} class="route-device" />}
+        <p class="route-lcd">
+          <span class="route-lcd-bar">you are here</span>
+          <span class="route-lcd-count">
+            <span data-route-here>{pad(1)}</span><span class="visually-hidden"> of </span><span class="route-lcd-total" aria-hidden="true">/</span><span class="route-lcd-total">{pad(stops.length)}</span>
+          </span>
+        </p>
+      </div>
+      <ol class="route-list" data-route-list>
+        {stops.map((stop, i) => (
+          <li>
+            <a
+              href={`#${stop.id}`}
+              class="route-row t-ui"
+              data-route-target={stop.id}
+              data-route-subs={stop.subs.length ? stop.subs.map((sub) => sub.id).join(' ') : undefined}
+              aria-current={i === 0 ? 'location' : undefined}
+            >
+              <span class="route-arrow t-count" aria-hidden="true">{arrowFor(i, stops.length)}</span>
+              <span class="route-name">
+                <span>{stop.name}</span>
+                {stop.subs.length > 0 && <span class="route-sub" data-route-sub hidden></span>}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </details>
   </WindowChrome>
 </aside>
 
@@ -36,15 +59,65 @@ const { stops } = Astro.props;
     top: calc(var(--bar-h) + 24px);
   }
 
+  /* The project's device beside an LCD readout of the current stop. The device is
+     the same on every case study's route window; only the sprite changes. */
   .route-head {
-    padding: 14px 16px 6px;
+    padding: 14px 16px;
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 12px;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--ink);
   }
 
-  .route-here { color: var(--ink); }
+  .route-device { flex: none; }
+
+  /* One-off LCD green, shared with ProjectScreen's illustrations. */
+  .route-lcd {
+    --lcd: #DADFD2;
+    flex: 1;
+    min-width: 0;
+    background: var(--lcd);
+    border: 2px solid var(--grey-dark);
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: var(--font-machine);
+    font-weight: 400;
+    color: var(--grey-dark);
+  }
+
+  .route-lcd-bar {
+    display: block;
+    padding: 2px 8px;
+    background: var(--grey-dark);
+    color: var(--lcd);
+    font-size: var(--machine-label);
+    line-height: 1.4;
+  }
+
+  .route-lcd-count {
+    display: block;
+    padding: 6px 8px 4px;
+    font-size: var(--machine-lcd);
+    line-height: 1;
+  }
+
+  .route-lcd-total {
+    font-size: var(--machine-count);
+    color: #5A6050;
+  }
+
+  .route-list li:first-child .route-row { border-top: none; }
+
+  /* The summary is the closed state under 860px; on wider screens the list is always open. */
+  .route-summary { display: none; }
+
+  .route-name { display: flex; flex-direction: column; min-width: 0; }
+
+  .route-sub {
+    font-size: var(--fs-caption);
+    font-weight: 400;
+    color: var(--muted);
+  }
 
   .route-list {
     list-style: none;
@@ -68,6 +141,12 @@ const { stops } = Astro.props;
   .route-row:focus-visible { outline-offset: -3px; }
   .route-row[aria-current] { background: var(--tangerine-tint); }
 
+  /* Forced colours drop the tint: mark the current row with a Highlight bar instead. */
+  @media (forced-colors: active) {
+    .route-row[aria-current] { box-shadow: inset 4px 0 0 Highlight; forced-color-adjust: none; color: CanvasText; background: Canvas; }
+    .route-lcd-bar { forced-color-adjust: none; background: CanvasText; color: Canvas; }
+  }
+
   .route-arrow {
     width: 22px;
     flex: none;
@@ -75,32 +154,63 @@ const { stops } = Astro.props;
     color: var(--blue);
   }
 
-  /* Under 860px: a plain contents box above the first stop. */
+  /* Under 860px: a closed contents box above the first stop. */
   @media (max-width: 860px) {
     .route { position: static; max-width: none; flex-basis: 100%; }
     .route-list { max-height: none; }
+    .route-summary {
+      display: flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 0 16px;
+      cursor: pointer;
+      color: var(--ink);
+    }
+    .route-head { border-top: 1px dashed var(--rule); }
+    .route-list li:first-child .route-row { border-top: none; }
   }
 </style>
 
 <script>
-  // Updates "you are here" and the highlighted row as the reader passes each stop.
+  // Updates "you are here", the highlighted row and the current sub-section as
+  // the reader passes each stop. Under 860px the route starts closed.
+  const details = document.querySelector<HTMLDetailsElement>('[data-route-details]');
+  const narrow = window.matchMedia('(max-width: 860px)');
+  if (details) {
+    const sync = () => { details.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener('change', sync);
+  }
+
   const list = document.querySelector<HTMLElement>('[data-route-list]');
   const here = document.querySelector<HTMLElement>('[data-route-here]');
   if (list && here && 'IntersectionObserver' in window) {
     const rows = Array.from(list.querySelectorAll<HTMLAnchorElement>('[data-route-target]'));
     const targets = rows.map((r) => document.getElementById(r.dataset.routeTarget!));
+    const subs = rows.map((r) =>
+      (r.dataset.routeSubs ?? '').split(' ').filter(Boolean).map((id) => document.getElementById(id))
+    );
     let current = 0;
 
     const update = () => {
       const line = window.innerHeight * 0.4;
+      const passed = (el: HTMLElement | null) => Boolean(el && el.getBoundingClientRect().top <= line);
       let next = 0;
-      targets.forEach((t, i) => {
-        if (t && t.getBoundingClientRect().top <= line) next = i;
+      targets.forEach((t, i) => { if (passed(t)) next = i; });
+
+      // Name the sub-section the reader is in under its chapter's row.
+      rows.forEach((row, i) => {
+        const label = row.querySelector<HTMLElement>('[data-route-sub]');
+        if (!label) return;
+        const sub = i === next ? subs[i].filter(passed).pop() : undefined;
+        label.textContent = sub?.textContent ?? '';
+        label.hidden = !sub;
       });
+
       if (next === current) return;
       rows[current]?.removeAttribute('aria-current');
       rows[next].setAttribute('aria-current', 'location');
-      here.textContent = String(next + 1);
+      here.textContent = String(next + 1).padStart(2, '0');
       current = next;
       // Keep the current row visible inside the list without moving the page.
       const row = rows[next];
@@ -113,6 +223,6 @@ const { stops } = Astro.props;
     };
 
     const io = new IntersectionObserver(update, { rootMargin: '0px 0px -60% 0px' });
-    targets.forEach((t) => t && io.observe(t));
+    [...targets, ...subs.flat()].forEach((t) => t && io.observe(t));
   }
 </script>

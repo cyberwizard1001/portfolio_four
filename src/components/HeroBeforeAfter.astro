@@ -1,0 +1,299 @@
+---
+// Before and after viewer for the case study hero. Without JS every pair shows as a
+// figure, before above after, in one scrolling column. The script collapses that into
+// one frame with a before/after toggle and arrows that step through the pairs. A pair's
+// before and after share one grid cell, so the toggle never changes the frame's height.
+// Each pair sizes the frame to itself, so a short diagram isn't letterboxed to the
+// height of a phone screenshot; the controls sit above it and never move.
+import WindowChrome from './WindowChrome.astro';
+import type { HeroPair } from '../lib/caseStudy';
+
+interface Props {
+  pairs: HeroPair[];
+  beforeText?: string;
+  afterText?: string;
+}
+
+const { pairs, beforeText, afterText } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const srcFor = (src: string) => (/^(https?:)?\/\//.test(src) ? src : `${base}${src.replace(/^\//, '')}`);
+
+const hasBefores = pairs.some((p) => p.before);
+const title = hasBefores ? 'before-after' : 'screens';
+// The toggle only swaps the text when there is a before to swap to.
+const texts = [
+  beforeText && { state: 'before', text: beforeText },
+  afterText && { state: 'after', text: afterText },
+].filter(Boolean) as { state: 'before' | 'after'; text: string }[];
+---
+
+<div class="hba" data-hba data-lightbox-root data-lightbox-group data-has-befores={hasBefores ? '' : undefined}>
+  <WindowChrome title={title} class="hba-window">
+    {(hasBefores || pairs.length > 1) && <div class="hba-controls" data-hba-controls hidden>
+      {hasBefores && (
+        <div class="hba-seg" data-hba-seg>
+          <button type="button" class="hba-seg-btn" data-hba-set="before" aria-pressed="false">before</button>
+          <button type="button" class="hba-seg-btn" data-hba-set="after" aria-pressed="true">after</button>
+        </div>
+      )}
+      {pairs.length > 1 && (
+        <div class="hba-nav">
+          <button type="button" class="hba-arrow" data-hba-step="-1" aria-label="Previous screen">‹</button>
+          <span class="t-label hba-count" aria-hidden="true"><span data-hba-index>1</span> / {pairs.length}</span>
+          <button type="button" class="hba-arrow" data-hba-step="1" aria-label="Next screen">›</button>
+        </div>
+      )}
+    </div>}
+
+    <div class="hba-stage" data-hba-stage tabindex="0" role="region" aria-label={title}>
+      {pairs.map((pair, i) => (
+        <div class="hba-pair" data-hba-pair={i} data-label={pair.label} data-has-before={pair.before ? '' : undefined}>
+          {(['before', 'after'] as const).map((state) => {
+            const shot = pair[state];
+            return shot && (
+              <figure class="hba-shot" data-hba-shot={state}>
+                <p class="t-label hba-state">{state}</p>
+                <div class="hba-img">
+                  <img src={srcFor(shot.src)} alt={shot.alt} loading={i === 0 ? 'eager' : 'lazy'} />
+                </div>
+                <figcaption class="hba-cap">{shot.caption ?? pair.label}</figcaption>
+              </figure>
+            );
+          })}
+        </div>
+      ))}
+    </div>
+  </WindowChrome>
+
+  {texts.length > 0 && (
+    <div class="hba-texts" data-hba-texts>
+      {texts.map(({ state, text }) => (
+        <div class="hba-text" data-hba-text={state}>
+          <p class="t-label">{state}</p>
+          <p class="hba-text-body">{text}</p>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <p class="visually-hidden" aria-live="polite" data-hba-live></p>
+</div>
+
+<style>
+  .hba { min-width: 0; }
+
+  .hba-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-1);
+    padding: var(--space-1) 12px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .hba-controls[hidden] { display: none; }
+
+  /* Segmented control: two bevelled Mac buttons joined, the pressed one sunk. */
+  .hba-seg { display: inline-flex; }
+
+  .hba-seg-btn,
+  .hba-arrow {
+    min-height: 44px;
+    border: 1px solid var(--ink);
+    background: #EEEEEE;
+    color: var(--ink);
+    font-family: var(--font-text);
+    font-size: var(--fs-ui);
+    font-weight: 600;
+    line-height: 1.2;
+    cursor: pointer;
+    box-shadow: inset 1px 1px 0 var(--paper), inset -2px -2px 0 var(--rule);
+  }
+
+  .hba-seg-btn { padding: 0 18px; }
+  .hba-seg-btn + .hba-seg-btn { border-left: none; }
+  .hba-seg-btn:first-child { border-radius: var(--radius-md) 0 0 var(--radius-md); }
+  .hba-seg-btn:last-child { border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+
+  .hba-seg-btn:hover,
+  .hba-arrow:hover { background: #DDDDDD; }
+
+  .hba-seg-btn[aria-pressed='true'] {
+    background: var(--grey-light);
+    box-shadow: inset 2px 2px 0 var(--rule), inset -1px -1px 0 var(--paper);
+  }
+
+  /* Hidden for a pair with no before, but kept in place so the arrows don't shift. */
+  .hba-seg[data-off] { visibility: hidden; }
+
+  .hba-nav { display: inline-flex; align-items: center; gap: var(--space-1); margin-left: auto; }
+
+  .hba-arrow {
+    width: 44px;
+    padding: 0;
+    border-radius: var(--radius-md);
+    font-size: 22px;
+  }
+
+  .hba-count { min-width: 5ch; text-align: center; margin: 0; }
+
+  /* Without JS: every pair in one scrolling column. */
+  .hba-stage {
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  .hba-pair + .hba-pair { border-top: 1px solid var(--ink); }
+
+  .hba-shot {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 12px;
+  }
+
+  .hba-shot + .hba-shot { border-top: 1px dashed var(--rule); }
+
+  .hba-state { margin-bottom: var(--space-1); }
+
+  .hba-img {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--panel);
+  }
+
+  .hba-img img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+    cursor: zoom-in;
+  }
+
+  .hba-cap {
+    margin-top: var(--space-1);
+    font-size: var(--fs-caption);
+    line-height: 1.5;
+    color: var(--ink-2);
+    max-width: var(--measure);
+  }
+
+  .hba-texts { margin-top: var(--space-3); }
+
+  .hba-text + .hba-text { margin-top: var(--space-2); }
+
+  .hba-text .t-label { margin-bottom: var(--space-1); }
+
+  .hba-text-body {
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    max-width: var(--measure);
+  }
+
+  /* With JS: one frame showing the current pair. Its before and after sit in the same
+     grid cell and only one is visible, so toggling keeps the height. */
+  .hba[data-live] .hba-stage { max-height: none; overflow: visible; }
+
+  .hba[data-live] .hba-pair { display: grid; border-top: none; }
+
+  .hba[data-live] .hba-pair[data-off-pair] { display: none; }
+
+  .hba[data-live] .hba-shot { grid-area: 1 / 1; }
+
+  .hba[data-live] .hba-shot + .hba-shot { border-top: none; }
+
+  .hba[data-live] .hba-state { display: none; }
+
+  .hba[data-live] [data-off] { visibility: hidden; }
+
+  .hba[data-live][data-has-befores] .hba-texts { display: grid; }
+  .hba[data-live][data-has-befores] .hba-text { grid-area: 1 / 1; margin: 0; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-hba]').forEach((root) => {
+    const stage = root.querySelector<HTMLElement>('[data-hba-stage]')!;
+    const pairs = [...root.querySelectorAll<HTMLElement>('[data-hba-pair]')];
+    if (!pairs.length) return;
+    const controls = root.querySelector<HTMLElement>('[data-hba-controls]');
+    const seg = root.querySelector<HTMLElement>('[data-hba-seg]');
+    const setButtons = [...root.querySelectorAll<HTMLButtonElement>('[data-hba-set]')];
+    const indexEl = root.querySelector<HTMLElement>('[data-hba-index]');
+    const texts = [...root.querySelectorAll<HTMLElement>('[data-hba-text]')];
+    const live = root.querySelector<HTMLElement>('[data-hba-live]')!;
+    const hasBefores = root.hasAttribute('data-has-befores');
+
+    let index = 0;
+    let state: 'before' | 'after' = 'after';
+
+    const render = (announce: boolean) => {
+      const pair = pairs[index];
+      const canBefore = pair.hasAttribute('data-has-before');
+      if (!canBefore) state = 'after';
+
+      pairs.forEach((p, i) => {
+        p.toggleAttribute('data-off-pair', i !== index);
+        p.querySelectorAll<HTMLElement>('[data-hba-shot]').forEach((shot) => {
+          shot.toggleAttribute('data-off', !(i === index && shot.dataset.hbaShot === state));
+        });
+      });
+
+      seg?.toggleAttribute('data-off', !canBefore);
+      // A hidden toggle can't keep focus, so it moves to the next-screen arrow.
+      if (!canBefore && seg?.contains(document.activeElement)) {
+        root.querySelector<HTMLButtonElement>('[data-hba-step="1"]')?.focus();
+      }
+      setButtons.forEach((btn) => btn.setAttribute('aria-pressed', String(btn.dataset.hbaSet === state)));
+      if (indexEl) indexEl.textContent = String(index + 1);
+      // With a toggle, the text under the window follows it. With no before text,
+      // the after text stays put.
+      if (hasBefores && texts.some((t) => t.dataset.hbaText === 'before')) {
+        texts.forEach((t) => t.toggleAttribute('data-off', t.dataset.hbaText !== state));
+      }
+
+      if (announce) live.textContent = `${pair.dataset.label}, ${state}, ${index + 1} of ${pairs.length}`;
+    };
+
+    const step = (dir: number) => {
+      index = (index + dir + pairs.length) % pairs.length;
+      render(true);
+    };
+
+    const set = (next: 'before' | 'after') => {
+      if (next === state || (next === 'before' && !pairs[index].hasAttribute('data-has-before'))) return;
+      state = next;
+      render(true);
+    };
+
+    root.querySelectorAll<HTMLButtonElement>('[data-hba-step]').forEach((btn) =>
+      btn.addEventListener('click', () => step(Number(btn.dataset.hbaStep)))
+    );
+    setButtons.forEach((btn) => btn.addEventListener('click', () => set(btn.dataset.hbaSet as 'before' | 'after')));
+
+    // Keys only while focus is inside the viewer.
+    root.addEventListener('keydown', (event) => {
+      if (event.altKey || event.ctrlKey || event.metaKey) return;
+      const key = event.key.toLowerCase();
+      if (key === 'arrowleft' || key === 'arrowright') {
+        if (pairs.length < 2) return;
+        event.preventDefault();
+        step(key === 'arrowleft' ? -1 : 1);
+      } else if (hasBefores && (key === 'b' || key === 'a')) {
+        event.preventDefault();
+        set(key === 'b' ? 'before' : 'after');
+      }
+    });
+
+    // The frame no longer scrolls, so the stage leaves the tab order.
+    stage.removeAttribute('tabindex');
+    stage.removeAttribute('role');
+    stage.removeAttribute('aria-label');
+    controls?.removeAttribute('hidden');
+    root.setAttribute('data-live', '');
+    render(false);
+  });
+</script>

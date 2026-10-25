@@ -30,6 +30,56 @@ const sectionComponent = z.enum([
   'MoreProjects',
 ]);
 
+// One block on a case study. Sections that share a `chapter` are grouped under one stop.
+const section = z.object({
+  component: sectionComponent,
+  chapter: z.string().optional(),
+  props: z.record(z.any()).optional(),
+});
+
+// The summary hero at the top of a case study. Everything is optional so a page builds
+// before its copy is written.
+const heroImage = z.object({
+  src: z.string(),
+  alt: z.string(),
+  caption: z.string().optional(),
+});
+
+const hero = z.object({
+  /** Two sentences: what the project was and what changed. */
+  inShort: z.string().optional(),
+  /** Two to four short benefits. */
+  changed: z.array(z.string()).optional(),
+  /** One to three honest lines on what didn't go well. */
+  notWell: z.array(z.string()).optional(),
+  role: z.string().optional(),
+  workedWith: z.array(z.string()).optional(),
+  timeframe: z.string().optional(),
+  status: z.string().optional(),
+  /** Short overrides for the route strip. If missing, the first sentence of the TLDR part is used. */
+  legs: z
+    .object({
+      start: z.string().optional(),
+      route: z.string().optional(),
+      roadworks: z.string().optional(),
+      arrived: z.string().optional(),
+    })
+    .optional(),
+  /** The overall before and after text, shown under the viewer and swapped by the toggle. */
+  beforeText: z.string().optional(),
+  afterText: z.string().optional(),
+  /** Matched screens. A pair with only `after` is allowed. */
+  pairs: z
+    .array(
+      z.object({
+        label: z.string(),
+        before: heroImage.optional(),
+        after: heroImage,
+      })
+    )
+    .optional(),
+});
+
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
   schema: z.object({
@@ -55,8 +105,9 @@ const projects = defineCollection({
     ),
     order: z.number(),
     device: device.optional(),
+    hero: hero.optional(),
     sections: z
-      .array(z.object({ component: sectionComponent, props: z.record(z.any()).optional() }))
+      .array(section)
       .optional(),
   }),
 });
@@ -85,8 +136,9 @@ const buildPages = defineCollection({
     ),
     order: z.number(),
     device: device.optional(),
+    hero: hero.optional(),
     sections: z
-      .array(z.object({ component: sectionComponent, props: z.record(z.any()).optional() }))
+      .array(section)
       .optional(),
   }),
 });

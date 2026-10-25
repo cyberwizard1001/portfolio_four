@@ -20,6 +20,85 @@ statusline:
   - label: Hotjar · heuristics
 order: 1
 device: calc
+# Summary hero at the top of the case study (see CaseStudyHero.astro). Fields marked
+# "from Nirmal" are placeholders for new copy.
+hero:
+  inShort: "[IN SHORT: from Nirmal]"
+  changed:
+    - "[CHANGED 1: from Nirmal]"
+    - "[CHANGED 2: from Nirmal]"
+    - "[CHANGED 3: from Nirmal]"
+  notWell:
+    - "[DIDN'T GO WELL: from Nirmal]"
+  # From the ProjectHero scope: "Solo designer · Internal stakeholders · Checkout redesign"
+  role: Solo designer
+  # The existing copy names: technical BAs, the Head of Product, someone from Compliance,
+  # a developer (ProjectProblemKeyInfo contextBody). To confirm.
+  workedWith:
+    - "[WORKED WITH: from Nirmal]"
+  # Existing text (TLDR Constraints): "One two-week sprint."
+  timeframe: "[TIMEFRAME: from Nirmal]"
+  # Existing text (TLDR Outcome, Reflection): "The redesign is live now"
+  status: "[STATUS: from Nirmal]"
+  # Moved word for word from the ProjectBeforeAfter section, which has been removed.
+  beforeText: >-
+    Everything sat on one long scrolling page: marketing preferences, assumptions and declarations,
+    cover details and the payment step, all stacked as paragraphs of text. The information
+    was there, but you had to read every word of it, and nothing on the page gave you much
+    reason to trust the brand before it asked for your card details.
+  afterText: >-
+    I split the review page into a two-page flow. The first page leads with price and trust
+    signals, then moves through cover details, warranty questions, and personal information.
+    The second page handles the assumptions and declarations, including an explicit call-out
+    of the pre-existing conditions rules, before reaching payment. All of the FCA-mandated
+    language stays exactly where compliance needs it. It's just no longer crowding the page.
+  # Proposed pairs, to confirm. Alt text and captions are the existing ones.
+  pairs:
+    - label: Review page
+      before:
+        src: /images/pet-insurance/original/01-original-cover.jpg
+        alt: The original review page, with a one-line quote price above a cover section written as paragraphs, with the benefits and excess behind click here links
+        caption: The original review page, with a one-line quote price above a cover section written as paragraphs, with the benefits and excess behind click here links
+      after:
+        src: /images/pet-insurance/flow/06-review-price-trust.jpg
+        alt: Top of the review page with the monthly price, annual price and IPT note in a dark panel above a Trustpilot rating, followed by the pet's cover card
+        caption: Top of the review page with the monthly price, annual price and IPT note in a dark panel above a Trustpilot rating, followed by the pet's cover card
+    - label: "[PAIR LABEL: from Nirmal]"
+      before:
+        src: /images/pet-insurance/original/02-original-policy-modal.jpg
+        alt: The original Elite Extra Plus details pop-up, a single dense paragraph of policy wording describing reinstatement cover
+        caption: The original Elite Extra Plus details pop-up, a single dense paragraph of policy wording describing reinstatement cover
+      after:
+        src: /images/pet-insurance/flow/12-lifetime-cover-modal.jpg
+        alt: >-
+          From the About this policy dialog: what lifetime cover includes, and a claim worked
+          through using the chosen £4,000 limit and £90 excess.
+        caption: >-
+          From the About this policy dialog: what lifetime cover includes, and a claim worked
+          through using the chosen £4,000 limit and £90 excess.
+    - label: "[PAIR LABEL: from Nirmal]"
+      after:
+        src: /images/pet-insurance/flow/15-declarations-preexisting.jpg
+        alt: A dedicated pre-existing conditions section defining signs as any change from the pet's normal healthy state, followed by excess and waiting period notes
+        caption: A dedicated pre-existing conditions section defining signs as any change from the pet's normal healthy state, followed by excess and waiting period notes
+    - label: "[PAIR LABEL: from Nirmal]"
+      after:
+        src: /images/pet-insurance/flow/13-copayment-modal.jpg
+        alt: >-
+          From the co-payment dialog: a £3,000 example claim with the excess and the 15%
+          co-payment taken off, down to what gets paid out.
+        caption: >-
+          From the co-payment dialog: a £3,000 example claim with the excess and the 15%
+          co-payment taken off, down to what gets paid out.
+    - label: "[PAIR LABEL: from Nirmal]"
+      after:
+        src: /images/pet-insurance/flow/18-review-mobile.jpg
+        alt: >-
+          The review page on a phone. The price and Trustpilot rating collapse into a sticky
+          header, so they stay visible all the way down to the payment choice.
+        caption: >-
+          The review page on a phone. The price and Trustpilot rating collapse into a sticky
+          header, so they stay visible all the way down to the payment choice.
 sections:
   - component: ProjectHero
     props:
@@ -40,21 +119,6 @@ sections:
         - label: "2026"
         - label: MudBlazor · FCA
         - label: Hotjar · heuristics
-  - component: ProjectBeforeAfter
-    props:
-      beforeTitle: Before
-      beforeBody: >-
-        Everything sat on one long scrolling page: marketing preferences, assumptions and declarations,
-        cover details and the payment step, all stacked as paragraphs of text. The information
-        was there, but you had to read every word of it, and nothing on the page gave you much
-        reason to trust the brand before it asked for your card details.
-      afterTitle: After
-      afterBody: >-
-        I split the review page into a two-page flow. The first page leads with price and trust
-        signals, then moves through cover details, warranty questions, and personal information.
-        The second page handles the assumptions and declarations, including an explicit call-out
-        of the pre-existing conditions rules, before reaching payment. All of the FCA-mandated
-        language stays exactly where compliance needs it. It's just no longer crowding the page.
   - component: ProjectIntro
     props:
       eyebrow: Perfect Pet Insurance — Case study 01
