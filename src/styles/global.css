@@ -317,6 +317,10 @@ a:hover { color: var(--blue-hover); }
 ═══════════════════════════════════════════════ */
 .doc { padding-bottom: var(--space-6); }
 
+/* Single-window reading pages: narrow the column to the window so header and
+   window sit centred together instead of leaving an empty right gutter. */
+.doc:has(> .doc-window) { max-width: calc(880px + 2 * var(--page-pad)); }
+
 .doc-head { padding: 56px 0 var(--space-4); }
 
 .doc-back { display: inline-flex; align-items: center; min-height: 44px; margin-bottom: 20px; }
@@ -333,8 +337,8 @@ a:hover { color: var(--blue-hover); }
 .doc-lead {
   font-size: var(--fs-lead);
   line-height: 1.6;
+  max-width: 90ch;
   color: var(--ink-2);
-  max-width: 62ch;
 }
 
 .doc-window { max-width: 880px; }
@@ -369,6 +373,8 @@ a:hover { color: var(--blue-hover); }
 }
 
 .prose h2:first-child { margin-top: 0; }
+
+.doc-window .prose h2 { margin-top: var(--space-4); }
 
 .prose h3 {
   font-family: var(--font-display);

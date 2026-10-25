@@ -104,10 +104,14 @@ const frameIconStyle = icon
     <div class="cs-route proj-window-body">
       <div class="cs-line" aria-hidden="true"></div>
 
-      {leadBlocks.map((section) => {
-        const Component = blockComponents[section.component];
-        return Component && <Component {...(section.props ?? {})} />;
-      })}
+      {leadBlocks.length > 0 && (
+        <div class="stop-lead">
+          {leadBlocks.map((section) => {
+            const Component = blockComponents[section.component];
+            return Component && <Component {...(section.props ?? {})} />;
+          })}
+        </div>
+      )}
 
       {blockStops.map((stop, i) => (
         <section id={stop.id} class="stop" aria-labelledby={`${stop.id}-h`}>
@@ -185,6 +189,12 @@ const frameIconStyle = icon
     border-left: 2px dotted var(--ink);
   }
 
+  /* Untitled blocks before stop 1 sit in the same column as the stops. */
+  .stop-lead {
+    padding: 0 0 var(--space-6) 64px;
+    container-type: inline-size;
+  }
+
   /* Blocks respond to the width a stop gives them, not the viewport. */
   .stop {
     position: relative;
@@ -234,6 +244,8 @@ const frameIconStyle = icon
   /* Blocks inside a stop lose their own side padding; the stop column provides it. */
   .stop :global(.proj-section),
   .stop :global(.proj-gallery),
+  .stop-lead :global(.proj-section),
+  .stop-lead :global(.proj-gallery),
   .md-stops :global(.proj-section) { padding-left: 0; padding-right: 0; }
 
   /* Markdown body: its top heading level continues the stop numbering. */
@@ -332,6 +344,7 @@ const frameIconStyle = icon
     .cs-layout { gap: 40px; }
     .cs-line { left: 6px; }
     .stop { padding: 0 0 var(--space-5) 36px; }
+    .stop-lead { padding: 0 0 var(--space-5) 36px; }
     .stop-dot { left: 0; }
     .md-stops { padding-left: 36px; }
     .md-depth-2 :global(.proj-text-col > h2::after),
