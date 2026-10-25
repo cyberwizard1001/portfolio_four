@@ -1,4 +1,4 @@
-// Pages in scope for the accessibility checks. scratch/ is out of scope.
+// Pages in scope for the accessibility checks.
 export const PAGES = [
   '',
   'projects/pet-insurance-checkout/',

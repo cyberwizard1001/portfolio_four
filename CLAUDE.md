@@ -137,8 +137,4 @@ The case study diagrams are generated SVGs: `perro/drop-off-funnel.svg`, `perro/
 - Reading text is at least 17px at the SVG's own width (1000 or 1200), so it stays legible when the stop column scales it down; the lightbox shows it full size.
 - Persona avatars are 16×16 pixel sprites drawn in the device palette, matching the square avatar tile.
 - Respect the publishing rules in the case study notes: the evidence map carries no contact or call counts.
-- The hero SVGs (`*/hero.svg`) and `img_0*.svg` are still terminal-era but aren't shown anywhere (the hero window uses `ProjectScreen`), so they were left alone.
-
-### Scratch pages
-
-`src/pages/scratch/` holds throwaway experiments (`/scratch/devices/` compares five ways of using a project's device; `/scratch/graphics/` previews the generated diagrams). Nothing links to them, but they build. Delete the folder before deploying.
+- The hero SVGs (`*/hero.svg`) are still terminal-era but aren't shown anywhere (the hero window uses `ProjectScreen`). Content still points at them, so they were left alone.
