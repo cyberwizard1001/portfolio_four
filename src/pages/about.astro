@@ -1,13 +1,19 @@
 ---
+// About page, ported to the v8 system. Built from parts used elsewhere on the site:
+// a case-study style header with the headshot in a screen frame, the home page's
+// "at a glance" ruled list, the case study route for the career timeline (with each
+// project's device linking to its case study), open prose and the Mac buttons.
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import WindowChrome from '../components/WindowChrome.astro';
-import BackToHome from '../components/BackToHome.astro';
+import Device from '../components/Device.astro';
 import { timeline } from '../data/timeline.ts';
 
 const base = import.meta.env.BASE_URL;
+const projects = await getCollection('projects');
+const titleFor = (slug?: string) => projects.find((p) => p.id === slug)?.data.title;
 
 const lookingFor = [
-  { label: 'Role', value: 'Product Designer / UX Designer — research-led, comfortable building' },
+  { label: 'Role', value: 'Product Designer / UX Designer, research-led, comfortable building' },
   { label: 'Level', value: 'Mid-level, looking to learn and grow' },
   { label: 'Domains', value: 'Fintech & insurance, health-adjacent products, anything with real constraints and real-world impact for users' },
   { label: 'Ways of working', value: 'Remote/hybrid-friendly, UK-based. Happy embedded in a product team or owning research and UX end-to-end.' },
@@ -16,354 +22,245 @@ const lookingFor = [
 ---
 
 <Layout title="About — Nirmal">
+  <main id="main-content" class="page ab">
+    <header class="ab-head">
+      <div class="ab-intro">
+        <a href={base} class="t-ui ab-back">← back to home</a>
+        <h1 class="ab-title">Nirmal Karthikeyan</h1>
+        <p class="ab-lead">
+          I'm a product designer with a penchant for what's new, but with the attention to detail to still ensure that
+          every scenario gets accounted for. You'll find me urgently scribbling down ideas for new features while I'm running
+          usability sessions evaluating forms. My processes are constantly evolving as I learn more about the world of UX, but
+          my decisions are always backed by good research within the constraints of what's possible. I can design detailed components
+          and complete design systems and prototype new features in code for testing. Good design, to me, is about being honest
+          with users and always keeping in mind that I'm not the end-user.
+        </p>
+      </div>
+      <figure class="screen-frame ab-photo">
+        <img src={`${base}images/about/pfp.svg`} alt="Pixel-art portrait of Nirmal" width="256" height="320" class="ab-photo-img" />
+      </figure>
+    </header>
 
-  <main id="main-content">
-  <section class="about-hero">
-    <div class="back-home-row"><BackToHome /></div>
-    <div class="about-photo" aria-hidden="true">
-      <span class="about-photo-todo">TODO: headshot</span>
-    </div>
-    <div class="about-intro">
-      <h1 class="about-h1">Nirmal Karthikeyan</h1>
-      <p class="about-lede">
-      I'm a product designer with a penchant for what's new, but with the attention to detail to still ensure that 
-      every scenario gets accounted for. You'll find me urgently scribbling down ideas for new features while I'm running 
-      usability sessions evaluating forms. My processes are constantly evolving as I learn more about the world of UX, but 
-      my decisions are always backed by good research within the constraints of what's possible. I can design detailed components
-      and complete design systems and prototype new features in code for testing. Good design, to me, is about being honest 
-      with users and always keeping in mind that I'm not the end-user. 
-      </p>
-    </div>
-  </section>
-
-  <section class="looking-for">
-    <WindowChrome title="~/about — looking_for.json">
-      <dl class="lf-panel">
+    <section class="ab-section" aria-labelledby="looking-h">
+      <h2 id="looking-h" class="t-label ab-label">looking for</h2>
+      <dl class="ab-glance">
         {lookingFor.map((item) => (
-          <div class="lf-row">
-            <dt class="lf-label">{item.label}</dt>
-            <dd class="lf-value">{item.value}</dd>
+          <div class="ab-glance-row">
+            <dt class="t-label">{item.label}</dt>
+            <dd>{item.value}</dd>
           </div>
         ))}
       </dl>
-    </WindowChrome>
-  </section>
+    </section>
 
-  <section class="timeline-section">
-    <WindowChrome title="~/about — career_timeline.json">
-      <div class="tl-panel">
-        <h2 class="section-h2">Career timeline</h2>
-        <ol class="timeline">
-          {timeline.map((entry) => (
+    <section class="ab-section" aria-labelledby="timeline-h">
+      <h2 id="timeline-h" class="section-title ab-h2">Career timeline</h2>
+      <ol class="tl">
+        {timeline.map((entry, i) => {
+          const title = titleFor(entry.project);
+          return (
             <li class="tl-entry">
-              <div class="tl-dot" aria-hidden="true"></div>
+              <span class:list={['tl-dot', { first: i === 0, last: i === timeline.length - 1 }]} aria-hidden="true"></span>
               <div class="tl-content">
-                <div class="tl-headline">
-                  <span class="tl-org">{entry.org}</span>
-                  <span class="tl-title">{entry.title}</span>
-                  <span class="tl-dates">{entry.dates}</span>
-                </div>
+                <h3 class="tl-org">{entry.org}</h3>
+                <p class="tl-meta">
+                  <span class="tl-role">{entry.title}</span>
+                  <span class="t-label tl-dates">{entry.dates}</span>
+                </p>
                 <p class="tl-body">{entry.body}</p>
+                {entry.project && title && (
+                  <a href={`${base}projects/${entry.project}/`} class="tl-case">
+                    {entry.device && <Device name={entry.device} scale={3} project={entry.project} />}
+                    <span class="t-action action-link">open case study ↗<span class="visually-hidden">: {title}</span></span>
+                  </a>
+                )}
               </div>
             </li>
-          ))}
-        </ol>
-      </div>
-    </WindowChrome>
-  </section>
+          );
+        })}
+      </ol>
+    </section>
 
-  <section class="beyond-work">
-    <WindowChrome title="~/about — beyond_work.md">
-      <div class="beyond-panel">
-        <h2 class="section-h2">Beyond the work</h2>
-        <p class="beyond-body">
-          When I'm not designing, I read, I write about product and UX and computers on
-          <a href="https://medium.com/@nirmalkarthikeyan" target="_blank" rel="noopener">Medium</a>,
-          I build small things for fun, mostly so I don't forget my CS roots, and explore the changing world of technology.
-        </p>
-      </div>
-    </WindowChrome>
-  </section>
+    <section class="ab-section" aria-labelledby="beyond-h">
+      <h2 id="beyond-h" class="section-title ab-h2">Beyond the work</h2>
+      <p class="ab-prose">
+        When I'm not designing, I read, I write about product and UX and computers on
+        <a href="https://medium.com/@nirmalkarthikeyan" target="_blank" rel="noopener">Medium</a>,
+        I build small things for fun, mostly so I don't forget my CS roots, and explore the changing world of technology.
+      </p>
+    </section>
 
-  <section class="about-cta">
-    <span class="cta-text">Open for collaboration.</span>
-    <a href={`${base}contact`} class="cta-link">Get in touch</a>
-    <span class="cta-sep">·</span>
-    <a href={`${base}Resume.pdf`} target="_blank" rel="noopener" class="cta-link">View CV</a>
-  </section>
+    <section class="ab-cta" aria-label="Get in touch">
+      <p class="ab-cta-text">Open for collaboration.</p>
+      <div class="ab-cta-buttons">
+        <a href={`${base}contact`} class="mbtn go def">Get in touch</a>
+        <a href={`${base}Resume.pdf`} target="_blank" rel="noopener" class="mbtn">View CV</a>
+      </div>
+    </section>
   </main>
 </Layout>
 
 <style>
-  .about-hero {
-    padding: 4rem 3rem 3rem;
+  .ab { padding-bottom: var(--space-6); }
+
+  /* Header: set like a case study's, with the headshot as the one framed artefact. */
+  .ab-head {
     display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 2.5rem;
-    align-items: start;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: var(--space-5);
+    align-items: end;
+    padding: 56px 0 var(--space-5);
   }
 
-  .back-home-row {
-    grid-column: 1 / -1;
-    margin-bottom: -0.5rem;
-  }
+  .ab-back { display: inline-flex; align-items: center; min-height: 44px; margin-bottom: 20px; }
 
-  .about-photo {
-    width: 220px;
-    height: 220px;
-    border-radius: var(--radius-md);
-    border: 1px dashed var(--border-hi);
-    background: var(--bg1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .about-photo-todo {
-    font-family: var(--font-machine);
-    font-size: 11px;
-    color: var(--dim);
-    text-align: center;
-    padding: 0 1rem;
-  }
-
-  .about-h1 {
+  .ab-title {
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 600;
-    letter-spacing: -0.04em;
-    line-height: 1;
-    color: var(--ink);
-    margin-bottom: 1.25rem;
+    font-size: var(--fs-h1);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-3);
   }
 
-  .about-lede {
-    font-size: 1.0625rem;
-    color: var(--sub);
-    line-height: 1.7;
+  .ab-lead {
+    font-size: var(--fs-lead);
+    line-height: 1.6;
+    color: var(--ink-2);
     max-width: 62ch;
   }
 
-  .looking-for {
-    padding: 0 3rem 3rem;
-  }
+  .ab-photo { margin: 0; }
+  /* Pixel art: keep edges crisp at any size. */
+  .ab-photo-img { display: block; width: 100%; height: auto; image-rendering: pixelated; }
 
-  .lf-panel {
-    background: var(--bg1);
-    padding: 1.75rem 2rem;
-    display: flex;
-    flex-direction: column;
-  }
+  /* Sections share the case study rhythm and measure. */
+  .ab-section { padding-bottom: var(--space-6); }
 
-  .lf-row {
+  .ab-label { display: block; margin-bottom: var(--space-2); }
+
+  .ab-h2 { margin-bottom: var(--space-4); }
+
+  /* The home page's "at a glance" list: open rows, solid rule at each end. */
+  .ab-glance { border-bottom: 1px solid var(--ink); }
+
+  .ab-glance-row {
     display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 1.5rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--border);
+    grid-template-columns: 10rem minmax(0, 1fr);
+    align-items: baseline;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
+    border-top: 1px dashed var(--rule);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
   }
 
-  .lf-row:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
+  .ab-glance-row:first-child { border-top: 1px solid var(--ink); }
+  .ab-glance-row dd { max-width: var(--measure); }
 
-  .lf-row:first-child {
-    padding-top: 0;
-  }
+  /* Career timeline: the case study route. Dotted ink line, bevelled title-bar
+     boxes as markers; the current role is tangerine, the earliest filled ink. */
+  .tl { list-style: none; position: relative; }
 
-  .lf-label {
-    font-family: var(--font-machine);
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--lime);
-  }
-
-  .lf-value {
-    font-size: 0.9375rem;
-    color: var(--text);
-    line-height: 1.6;
-  }
-
-  .section-h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--text);
-    margin-bottom: 1.5rem;
-  }
-
-  .timeline-section {
-    padding: 0 3rem 3rem;
-  }
-
-  .tl-panel {
-    background: var(--bg1);
-    padding: 1.75rem 2rem;
-  }
-
-  .timeline {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    position: relative;
-  }
-
-  .tl-entry {
-    display: grid;
-    grid-template-columns: 20px 1fr;
-    gap: 1.5rem;
-    padding-bottom: 2rem;
-    position: relative;
-  }
-
-  .tl-entry::before {
+  .tl::before {
     content: '';
     position: absolute;
-    left: 9px;
-    top: 22px;
-    bottom: -4px;
-    width: 1px;
-    background: var(--border);
+    left: 20px;
+    top: 8px;
+    bottom: 40px;
+    border-left: 2px dotted var(--ink);
   }
 
-  .tl-entry:last-child::before {
-    display: none;
-  }
+  .tl-entry { position: relative; padding: 0 0 var(--space-5) 64px; }
+  .tl-entry:last-child { padding-bottom: 0; }
 
   .tl-dot {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 1px solid var(--lime);
-    background: var(--lime-dim);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: absolute;
+    left: 14px;
+    top: 8px;
+    width: 14px;
+    height: 14px;
+    background: var(--chrome-hi);
+    border: 1px solid var(--ink);
+    box-shadow: inset 1px 1px 0 var(--paper), inset -1px -1px 0 var(--bevel-lo);
   }
 
-  .tl-dot::after {
-    content: '';
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--lime);
+  .tl-dot.first { background: var(--tangerine); box-shadow: none; }
+  .tl-dot.last { background: var(--ink); box-shadow: none; }
+
+  .tl-org {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--fs-h3);
+    line-height: var(--lh-tight);
   }
 
-  .tl-headline {
+  .tl-meta {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.6rem;
-    margin-bottom: 0.5rem;
+    gap: 4px var(--space-2);
+    margin: 6px 0 var(--space-2);
   }
 
-  .tl-org {
-    font-size: 1.0625rem;
-    font-weight: 700;
-    color: var(--text);
-  }
-
-  .tl-title {
-    font-size: 0.9375rem;
-    color: var(--lime);
-    font-family: var(--font-machine);
-  }
-
-  .tl-dates {
-    font-size: 0.8125rem;
-    color: var(--dim);
-    font-family: var(--font-machine);
-    margin-left: auto;
-  }
+  .tl-role { font-size: var(--fs-body); color: var(--ink); font-weight: 500; }
 
   .tl-body {
-    font-size: 0.9375rem;
-    color: var(--sub);
-    line-height: 1.65;
-    max-width: 62ch;
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    color: var(--ink-2);
+    max-width: var(--measure);
   }
 
-  .tl-note {
-    font-family: var(--font-machine);
-    font-size: 12px;
-    color: var(--dim);
-  }
-
-  .beyond-work {
-    padding: 0 3rem 3rem;
-  }
-
-  .beyond-panel {
-    background: var(--bg1);
-    padding: 1.75rem 2rem;
-  }
-
-  .beyond-body {
-    font-size: 0.9375rem;
-    color: var(--sub);
-    line-height: 1.7;
-    max-width: 62ch;
-  }
-
-  .beyond-body a {
-    color: var(--lime);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(158,255,87,0.35);
-  }
-
-  .beyond-body a:hover {
-    border-bottom-color: var(--lime);
-  }
-
-  .about-cta {
-    padding: 0 3rem 4rem;
-    display: flex;
+  /* The project's device sits inside its link, as on the home cards. */
+  .tl-case {
+    display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    font-family: var(--font-machine);
-    font-size: 0.9375rem;
-  }
-
-  .cta-text {
-    color: var(--sub);
-  }
-
-  .cta-link {
-    color: var(--lime);
+    gap: var(--space-2);
+    margin-top: var(--space-2);
     text-decoration: none;
-    border-bottom: 1px solid rgba(158,255,87,0.35);
   }
 
-  .cta-link:hover {
-    border-bottom-color: var(--lime);
+  .tl-case:hover .action-link { text-decoration: underline; }
+
+  .ab-prose {
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    color: var(--ink-2);
+    max-width: var(--measure);
   }
 
-  .cta-sep {
-    color: var(--dim);
+  .ab-prose a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
+
+  /* Close like the home page: a ruled line, then the Mac buttons. */
+  .ab-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--ink);
   }
+
+  .ab-cta-text {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--fs-h3);
+  }
+
+  .ab-cta-buttons { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 
   @media (max-width: 860px) {
-    .about-hero { padding: 2.5rem 1.25rem 2rem; grid-template-columns: 1fr; }
-    .about-photo { width: 140px; height: 140px; }
-    .looking-for { padding: 0 1.25rem 2rem; }
-    .timeline-section { padding: 0 1.25rem 2rem; }
-    .beyond-work { padding: 0 1.25rem 2rem; }
-    .about-cta { padding: 0 1.25rem 3rem; flex-wrap: wrap; }
+    .ab-head { grid-template-columns: 1fr; gap: var(--space-4); padding-top: 32px; }
+    .ab-photo { max-width: 220px; }
+    .ab-section { padding-bottom: var(--space-5); }
+    .tl::before { left: 6px; }
+    .tl-entry { padding-left: 36px; }
+    .tl-dot { left: 0; }
   }
 
   @media (max-width: 480px) {
-    .about-hero { padding: 1.75rem 0.75rem 1.5rem; }
-    .looking-for { padding: 0 0.75rem 1.5rem; }
-    .lf-row { grid-template-columns: 1fr; gap: 0.4rem; }
-    .timeline-section { padding: 0 0.75rem 1.5rem; }
-    .tl-panel { padding: 1.25rem 1rem; }
-    .tl-dates { margin-left: 0; }
-    .beyond-work { padding: 0 0.75rem 1.5rem; }
-    .beyond-panel { padding: 1.25rem 1rem; }
-    .about-cta { padding: 0 0.75rem 2rem; }
+    .ab-glance-row { grid-template-columns: 1fr; gap: 4px; }
   }
 </style>
