@@ -85,23 +85,3 @@
 @media (max-width: 860px) {
   :root { --page-pad: 16px; }
 }
-
-/* ── Legacy aliases ──
-   Remove once the ai, accessibility, colophon, contact and tokens pages are
-   fully ported to the tokens above. They let the old terminal-era styles
-   render in the new palette. */
-:root {
-  --bg0:         var(--paper);
-  --bg1:         var(--paper);
-  --bg2:         var(--panel);
-  --border:      var(--grey-light);
-  --border-hi:   var(--ink);
-  --text:        var(--ink);
-  --sub:         var(--ink-2);
-  --dim:         var(--muted);
-  --lime:        var(--blue);
-  --lime-dim:    var(--tangerine-tint);
-  --lime-contrast: var(--paper);
-  --term-bg:      var(--panel);
-  --term-hover:   var(--panel);
-}

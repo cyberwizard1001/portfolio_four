@@ -308,3 +308,113 @@ a:hover { color: var(--blue-hover); }
 }
 
 .screen-frame img { display: block; width: 100%; }
+
+/* ═══════════════════════════════════════════════
+   READING PAGES
+   AI, accessibility, colophon, contact and tokens. A header set like the
+   About page's (DocHeader.astro), then the text in a document window at
+   the reading measure, in the case study's sizes and rhythm.
+═══════════════════════════════════════════════ */
+.doc { padding-bottom: var(--space-6); }
+
+.doc-head { padding: 56px 0 var(--space-4); }
+
+.doc-back { display: inline-flex; align-items: center; min-height: 44px; margin-bottom: 20px; }
+
+.doc-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-h1);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-3);
+}
+
+.doc-lead {
+  font-size: var(--fs-lead);
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 62ch;
+}
+
+.doc-window { max-width: 880px; }
+
+.doc-window .win-body { padding: var(--space-4); }
+
+@media (max-width: 860px) {
+  .doc-head { padding-top: 32px; }
+  .doc-window .win-body { padding: var(--space-3) 20px; }
+}
+
+/* Running text inside a reading page. */
+.prose {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+
+.prose :is(p, ul, ol) { max-width: var(--measure); }
+
+.prose p + p,
+.prose p + :is(ul, ol),
+.prose :is(ul, ol) + p { margin-top: var(--space-2); }
+
+.prose h2 {
+  margin: var(--space-5) 0 var(--space-2);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-tight);
+  color: var(--ink);
+}
+
+.prose h2:first-child { margin-top: 0; }
+
+.prose h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-tight);
+  color: var(--ink);
+  margin-bottom: var(--space-1);
+}
+
+.prose :is(strong, b) { color: var(--ink); font-weight: 600; }
+
+.prose code {
+  font-family: var(--font-machine);
+  font-size: var(--machine-chip);
+  color: var(--ink);
+  background: var(--panel);
+  padding: 0 0.3em;
+}
+
+/* Lists: a small ink square for each item, like a pixel bullet. */
+.prose ul { list-style: none; }
+
+.prose ul > li { position: relative; padding-left: var(--space-3); }
+
+.prose ul > li + li { margin-top: var(--space-1); }
+
+.prose ul > li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 0.7em;
+  width: 6px;
+  height: 6px;
+  background: var(--ink);
+}
+
+/* A ruled list of titled items, like the home page's glance list. */
+.prose .ruled { border-bottom: 1px solid var(--ink); }
+
+.prose .ruled > li { padding: var(--space-2) 0; border-top: 1px dashed var(--rule); }
+
+.prose .ruled > li:first-child { border-top: 1px solid var(--ink); }
+
+.prose .ruled > li + li { margin-top: 0; }
+
+.prose .ruled > li::before { content: none; }
+
+.prose .ruled p { margin: 0; }

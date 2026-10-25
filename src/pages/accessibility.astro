@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import BackToHome from '../components/BackToHome.astro';
+import DocHeader from '../components/DocHeader.astro';
 import WindowChrome from '../components/WindowChrome.astro';
 
 const base = import.meta.env.BASE_URL;
@@ -64,203 +64,44 @@ const ongoing = [
 ---
 
 <Layout title="Accessibility — Nirmal">
-
-  <main id="main-content">
-  <article class="colo-page">
-    <div class="colo-inner">
-      <header class="colo-header">
-        <div class="back-home-row"><BackToHome /></div>
-        <h1 class="colo-h1">Accessibility</h1>
-        <p class="colo-sub">
+  <main id="main-content" class="page doc">
+    <DocHeader title="Accessibility">
+      <p class="doc-lead">
           What I checked, what I fixed, and what's still on the list. Last reviewed {lastUpdated}.
         </p>
-      </header>
+    </DocHeader>
 
-      <div class="colo-window">
-        <WindowChrome title="accessibility.md" activeTitle="[+]" icon="UTF-8">
-          <div class="colo-window-body">
-            <div class="colo-body">
-              <h2>How this gets checked</h2>
-              <p>
-                This site is read by a screen reader and walked through by keyboard, not just clicked through in a
-                browser. The audit covers landmarks and skip navigation, keyboard access on every interactive control,
-                visible focus states, motion preferences, colour contrast across all five workspaces, and whether
-                decorative content is hidden from assistive tech rather than read aloud as noise.
-              </p>
+    <WindowChrome title="accessibility.md" as="article" class="doc-window">
+      <div class="prose">
+        <h2>How this gets checked</h2>
+        <p>
+          This site is read by a screen reader and walked through by keyboard, not just clicked through in a
+          browser. The audit covers landmarks and skip navigation, keyboard access on every interactive control,
+          visible focus states, motion preferences, colour contrast across all five workspaces, and whether
+          decorative content is hidden from assistive tech rather than read aloud as noise.
+        </p>
 
-              <h2>Fixed in the last pass</h2>
-              <ul class="audit-list">
-                {fixed.map((item) => (
-                  <li class="audit-item">
-                    <h3 class="audit-item-title">{item.title}</h3>
-                    <p>{item.body}</p>
-                  </li>
-                ))}
-              </ul>
+        <h2>Fixed in the last pass</h2>
+        <ul class="ruled">
+          {fixed.map((item) => (
+            <li>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </li>
+          ))}
+        </ul>
 
-              <h2>Still on the list</h2>
-              <ul class="colo-list">
-                {ongoing.map((line) => <li>{line}</li>)}
-              </ul>
+        <h2>Still on the list</h2>
+        <ul>
+          {ongoing.map((line) => <li>{line}</li>)}
+        </ul>
 
-              <h2>Found something?</h2>
-              <p>
-                If something doesn't work with a keyboard, screen reader, or any assistive tech, that's a bug —
-                <a href={`${base}contact`}>tell me about it</a> and I'll fix it.
-              </p>
-            </div>
-          </div>
-        </WindowChrome>
+        <h2>Found something?</h2>
+        <p>
+          If something doesn't work with a keyboard, screen reader, or any assistive tech, that's a bug —
+          <a href={`${base}contact`}>tell me about it</a> and I'll fix it.
+        </p>
       </div>
-    </div>
-  </article>
+    </WindowChrome>
   </main>
 </Layout>
-
-<style>
-  .colo-page {
-    padding: 4rem 3rem;
-  }
-
-  .colo-inner {
-    max-width: 880px;
-    margin: 0 auto;
-  }
-
-  .colo-header {
-    margin-bottom: 2.5rem;
-  }
-
-  .back-home-row {
-    margin-bottom: 1.5rem;
-  }
-
-  .colo-h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    line-height: 1;
-    color: var(--ink);
-    margin-bottom: 1rem;
-  }
-
-  .colo-sub {
-    font-size: 0.9375rem;
-    color: var(--sub);
-    line-height: 1.6;
-    max-width: 56ch;
-  }
-
-  .colo-window {
-    padding-bottom: 3rem;
-  }
-
-  .colo-window :global(.window) {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .colo-window-body {
-    background: var(--bg1);
-    padding: 2rem 1.75rem;
-    flex: 1;
-    min-height: 0;
-  }
-
-  .colo-body {
-    font-size: 0.9375rem;
-    color: var(--sub);
-    line-height: 1.75;
-    animation: colo-fade-in 0.18s ease-out;
-  }
-
-  @keyframes colo-fade-in {
-    from { opacity: 0; transform: translateY(4px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .colo-body { animation: none; }
-  }
-
-  .colo-body h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--text);
-    margin: 2.5rem 0 1.25rem;
-  }
-
-  .colo-body h2:first-child {
-    margin-top: 0;
-  }
-
-  .colo-body p {
-    margin-bottom: 1.25rem;
-    max-width: 68ch;
-  }
-
-  .colo-body a {
-    color: var(--lime);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(158,255,87,0.35);
-  }
-
-  .colo-body a:hover {
-    border-bottom-color: var(--lime);
-  }
-
-  .colo-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    margin-bottom: 1.25rem;
-    max-width: 68ch;
-  }
-
-  .colo-list li {
-    padding-left: 1.25rem;
-    position: relative;
-  }
-
-  .colo-list li::before {
-    content: '›';
-    position: absolute;
-    left: 0;
-    color: var(--lime);
-  }
-
-  .audit-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    max-width: 68ch;
-    margin-bottom: 1.25rem;
-  }
-
-  .audit-item-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 0.4rem;
-  }
-
-  .audit-item p {
-    margin-bottom: 0;
-  }
-
-  @media (max-width: 860px) {
-    .colo-page { padding: 2.5rem 1.25rem; }
-    .colo-window { height: auto !important; }
-    .colo-window :global(.window) { height: auto; position: static; }
-    .colo-window-body { overflow-y: visible; flex: none; }
-  }
-
-  @media (max-width: 480px) {
-    .colo-page { padding: 1.75rem 0.75rem; }
-  }
-</style>
-

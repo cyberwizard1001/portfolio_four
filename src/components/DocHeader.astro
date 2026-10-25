@@ -1,0 +1,17 @@
+---
+// Header for the reading pages (AI, accessibility, colophon, contact, tokens), set like
+// the About page's: back link, Playfair title, then whatever the page puts in the slot,
+// usually a `.doc-lead` paragraph or a `.doc-meta` line.
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<header class="doc-head">
+  <a href={base} class="t-ui doc-back">← back to home</a>
+  <h1 class="doc-title">{title}</h1>
+  <slot />
+</header>

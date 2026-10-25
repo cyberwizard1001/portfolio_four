@@ -1,221 +1,63 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WindowChrome from '../components/WindowChrome.astro';
-import BackToHome from '../components/BackToHome.astro';
+import DocHeader from '../components/DocHeader.astro';
 
 const base = import.meta.env.BASE_URL;
 const tokenReferenceUrl = `${base}tokens`;
 ---
 
 <Layout title="Colophon — Nirmal">
+  <main id="main-content" class="page doc">
+    <DocHeader title="Colophon">
+      <p class="doc-lead">How this site is put together — the stack, the system, and the lines I drew.</p>
+    </DocHeader>
 
-  <main id="main-content">
-  <article class="colo-page">
-    <div class="colo-inner">
-      <header class="colo-header">
-        <div class="back-home-row"><BackToHome /></div>
-        <h1 class="colo-h1">Colophon</h1>
-        <p class="colo-sub">How this site is put together — the stack, the system, and the lines I drew.</p>
-      </header>
+    <WindowChrome title="colophon.md" as="article" class="doc-window">
+      <div class="prose">
+        <h2>Stack &amp; why</h2>
+        <p>
+          This site runs on <strong>Astro and TypeScript</strong>. I chose it on purpose (and a bit of habit - I despise using React
+          where it's not needed, this is mostly a static site and I shouldn't be using a reactive framework for mere buttons and dropdowns). 
+          Astro ships static HTML by default and only sends JavaScript where needed, so the pages
+          stay fast and the interactive bits, like the jargon tooltips, load as small
+          islands rather than dragging a whole framework along with them. For a portfolio, where most of the
+          job is reading.
+        </p>
+        <p>
+          It's deployed on Cloudflare Workers, with a GitHub Pages build path kept alongside it for me to stage changes.
+        </p>
 
-      <div class="colo-window">
-        <WindowChrome title="colophon.md" activeTitle="[+]" icon="UTF-8">
-          <div class="colo-window-body">
-            <div class="colo-body">
-              <h2>Stack &amp; why</h2>
-              <p>
-                This site runs on <strong>Astro and TypeScript</strong>. I chose it on purpose (and a bit of habit - I despise using React
-                where it's not needed, this is mostly a static site and I shouldn't be using a reactive framework for mere buttons and dropdowns). 
-                Astro ships static HTML by default and only sends JavaScript where needed, so the pages
-                stay fast and the interactive bits, like the jargon tooltips, load as small
-                islands rather than dragging a whole framework along with them. For a portfolio, where most of the
-                job is reading.
-              </p>
-              <p>
-                It's deployed on Cloudflare Workers, with a GitHub Pages build path kept alongside it for me to stage changes.
-              </p>
+        <h2>Design tokens</h2>
+        <p>
+          Colour, type scale, spacing, and component styles all read from one set of design tokens in
+          <code>tokens.css</code>, so a single change propagates everywhere and nothing drifts out of sync.
+          It is the same discipline I bring to product work: decide the system once, then let the screens
+          inherit it.
+          <a href={tokenReferenceUrl}>See the full token reference →</a>
+        </p>
 
-              <h2>Design tokens</h2>
-              <p>
-                Colour, type scale, spacing, and component styles all read from one set of design tokens in
-                <code>tokens.css</code>, so a single change propagates everywhere and nothing drifts out of sync.
-                It is the same discipline I bring to product work: decide the system once, then let the screens
-                inherit it.
-                <a href={tokenReferenceUrl}>See the full token reference →</a>
-              </p>
+        <h2>Performance &amp; accessibility budget</h2>
+        <p>A few constraints I set before building, and kept:</p>
+        <ul>
+          <li>Semantic HTML first, JavaScript only where it earns its place.</li>
+          <li>Every interactive element works by keyboard, not just mouse.</li>
+          <li>Motion respects <code>prefers-reduced-motion</code>. </li>
+          <li>Every text colour passes WCAG AA contrast against every background it sits on.</li>
+        </ul>
+        <p>
+          A portfolio that writes mentions accessibility extensively should pass its own test. This site is meant to be the 
+          proof of the proverbial pudding and there's an (AI-generated) accessibility test report linked in the footer.
+        </p>
 
-              <h2>Performance &amp; accessibility budget</h2>
-              <p>A few constraints I set before building, and kept:</p>
-              <ul class="colo-list">
-                <li>Semantic HTML first, JavaScript only where it earns its place.</li>
-                <li>Every interactive element works by keyboard, not just mouse.</li>
-                <li>Motion respects <code>prefers-reduced-motion</code>. </li>
-                <li>Every text colour passes WCAG AA contrast against every background it sits on.</li>
-              </ul>
-              <p>
-                A portfolio that writes mentions accessibility extensively should pass its own test. This site is meant to be the 
-                proof of the proverbial pudding and there's an (AI-generated) accessibility test report linked in the footer.
-              </p>
-
-              <h2>What I chose not to build</h2>
-              <p>
-              There's no analytics, nobody's being watched as they scroll. While I'd love to hear from you, that has to be a voluntary decision 
-              and this is not a product which I'm trying to optimise. With Claude Code being available, the tougher call has been choosing not to build,
-              to not include a full desktop environment, or a calculator, or a mini browser where you can google things. All genuine ideas I thought of while 
-              working on this site. I like to think that I bring this instinct to everything I design: not designing for the sake of it.
-              </p>
-            </div>
-          </div>
-        </WindowChrome>
+        <h2>What I chose not to build</h2>
+        <p>
+        There's no analytics, nobody's being watched as they scroll. While I'd love to hear from you, that has to be a voluntary decision 
+        and this is not a product which I'm trying to optimise. With Claude Code being available, the tougher call has been choosing not to build,
+        to not include a full desktop environment, or a calculator, or a mini browser where you can google things. All genuine ideas I thought of while 
+        working on this site. I like to think that I bring this instinct to everything I design: not designing for the sake of it.
+        </p>
       </div>
-    </div>
-  </article>
+    </WindowChrome>
   </main>
 </Layout>
-
-<style>
-  .colo-page {
-    padding: 4rem 3rem;
-  }
-
-  .colo-inner {
-    max-width: 880px;
-    margin: 0 auto;
-  }
-
-  .colo-header {
-    margin-bottom: 2.5rem;
-  }
-
-  .back-home-row {
-    margin-bottom: 1.5rem;
-  }
-
-  .colo-h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    line-height: 1;
-    color: var(--ink);
-    margin-bottom: 1rem;
-  }
-
-  .colo-sub {
-    font-size: 0.9375rem;
-    color: var(--sub);
-    line-height: 1.6;
-    max-width: 56ch;
-  }
-
-  .colo-window {
-    padding-bottom: 3rem;
-  }
-
-  .colo-window :global(.window) {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .colo-window-body {
-    background: var(--bg1);
-    padding: 2rem 1.75rem;
-    flex: 1;
-    min-height: 0;
-  }
-
-  .colo-body {
-    font-size: 0.9375rem;
-    color: var(--sub);
-    line-height: 1.75;
-    animation: colo-fade-in 0.18s ease-out;
-  }
-
-  @keyframes colo-fade-in {
-    from { opacity: 0; transform: translateY(4px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .colo-body { animation: none; }
-  }
-
-  .colo-body h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--text);
-    margin: 2.5rem 0 1.25rem;
-  }
-
-  .colo-body h2:first-child {
-    margin-top: 0;
-  }
-
-  .colo-body p {
-    margin-bottom: 1.25rem;
-    max-width: 68ch;
-  }
-
-  .colo-body strong {
-    color: var(--text);
-  }
-
-  .colo-body code {
-    font-family: var(--font-machine);
-    font-size: 0.85em;
-    color: var(--lime);
-    background: var(--lime-dim);
-    padding: 0.1em 0.4em;
-    border-radius: 3px;
-  }
-
-  .colo-body a {
-    color: var(--lime);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(158,255,87,0.35);
-  }
-
-  .colo-body a:hover {
-    border-bottom-color: var(--lime);
-  }
-
-  .colo-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    margin-bottom: 1.25rem;
-    max-width: 68ch;
-  }
-
-  .colo-list li {
-    padding-left: 1.25rem;
-    position: relative;
-  }
-
-  .colo-list li::before {
-    content: '›';
-    position: absolute;
-    left: 0;
-    color: var(--lime);
-  }
-
-  .colo-todo {
-    font-family: var(--font-machine);
-    font-size: 12px;
-    color: var(--dim);
-  }
-
-  @media (max-width: 860px) {
-    .colo-page { padding: 2.5rem 1.25rem; }
-    .colo-window { height: auto !important; }
-    .colo-window :global(.window) { height: auto; position: static; }
-    .colo-window-body { overflow-y: visible; flex: none; }
-  }
-
-  @media (max-width: 480px) {
-    .colo-page { padding: 1.75rem 0.75rem; }
-  }
-</style>
-

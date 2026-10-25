@@ -31,12 +31,11 @@ Rules from the brief:
   - `--blue` means "you can click this": links, primary buttons, the strike line.
   - `--tangerine` means "look here": the `.hl` highlight, outcome values, NEW badges, active chips, "you are here".
   - Don't use blue for decoration or tangerine for links. Text on tangerine is `--ink` and text on blue is `--paper`.
-- **Legacy aliases.** The bottom of `tokens.css` maps the old terminal tokens (`--bg0–2`, `--border*`, `--text`, `--sub`, `--dim`, `--lime*`, `--term-*`) onto the new palette. This is so the un-ported pages (ai, accessibility, colophon, contact, tokens) still render (the About page is now ported). Don't use the aliases in new code. Remove the block once those pages are ported.
 - **Type.** Three self-hosted families (`@fontsource`, imported in `Layout.astro`), one job each:
   - `--font-display` (Playfair Display): Nirmal's voice raised. Used for headings, the name, quotes and the sign-off. Quotes (`ProjectQuote`, the persona quote, markdown blockquotes) are set upright in the display face, never italic; italic is only for `<em>` emphasis.
   - `--font-text` (Instrument Sans): everything people read or click. Used for body, nav, buttons, links and form controls.
   - `--font-machine` (Pixelify Sans): the computer. Used for window chrome, labels, metadata, counters and tags.
-  - Pixel type sizes come from the `--machine-label` (14px), `--machine-chip` (15px), `--machine-title` (16px), `--machine-count` (17px) and `--machine-lcd` (32px, the big digits on the route window's LCD readout) tokens in `tokens.css`. Never hard-code a px size on `--font-machine` text. The un-ported pages (see "Not yet ported") and the LCD screens (`BuildsSection` `.mp3`, `ProjectScreen`) still hard-code sizes; switch the pages to the tokens when porting them.
+  - Pixel type sizes come from the `--machine-label` (14px), `--machine-chip` (15px), `--machine-title` (16px), `--machine-count` (17px) and `--machine-lcd` (32px, the big digits on the route window's LCD readout) tokens in `tokens.css`. Never hard-code a px size on `--font-machine` text. The LCD screens (`BuildsSection` `.mp3`, `ProjectScreen`) are the exception: they still hard-code sizes.
   - Never put pixel type on clickable text. The `↵` keycap and the route arrows are the exceptions, because they are glyphs inside a control. Never set more than about five words in pixel type. Pixel weights are only 400 and 600.
   - Use the role classes rather than hand-set families: `.t-label` (12px uppercase, 0.08em, `--muted`; `.eyebrow` is an alias), `.t-wintitle`, `.t-chip`, `.t-count`, `.t-body`, `.t-ui` (15/500), `.t-action` (15/600), `.t-display` and `.t-wordmark` (19px header, 24px footer).
 - **Other utilities:**
@@ -107,9 +106,11 @@ The page runs in this order:
 - **Adding a block type:** create it in `src/components/project-blocks/`, add it to `blockComponents` in `CaseStudy.astro` and to the `component` enum in `config.ts`, and give it a `hideHeading?: boolean` prop if it renders its own title.
 - **Images and lightbox:** case study images keep their own colour (Nirmal asked for no greyscale on case study assets). `ImageLightbox` targets `.proj-window-body` (the route column) and any `[data-lightbox-root]` (the hero viewer). A `[data-lightbox-group]` previews only its visible image.
 
-### Not yet ported
+### Reading pages (`ai`, `accessibility`, `colophon`, `contact`, `tokens`)
 
-AI, accessibility, colophon, contact and tokens keep their content and old markup inside the new layout, and run on the legacy aliases. Port them to the new system (windows, `.t-*` type roles, `--machine-*` size tokens instead of hard-coded pixel sizes, no `--lime`), then delete the alias block.
+Set like the About page: `DocHeader.astro` (back link, Playfair h1, then a `.doc-lead` or `.t-label` line from the slot), then the text in a `WindowChrome` with a file-style title and `class="doc-window"` (880px wide). Running text goes in `.prose` (global.css): case study sizes and measure, Playfair h2/h3, ink square bullets, and `.ruled` for a glance-style list of titled items. Contact pairs its window with a ruled spec list and the QR code in a `.screen-frame`; link labels sit outside the links so no pixel type is clickable. The token reference reads its colours and fonts from `tokens.css` at build time.
+
+The accessibility page's "Fixed in the last pass" list and parts of the colophon still describe the terminal-era site. That's copy, so it's Nirmal's to update.
 
 ### Project-block layout gotchas (eyebrow/title/image grids)
 
