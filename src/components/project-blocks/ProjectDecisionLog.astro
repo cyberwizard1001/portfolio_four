@@ -48,24 +48,22 @@ const notesFor = (d: DecisionItem): DecisionNote[] => [
   <ol class="proj-dlog-list">
     {decisions.map((d, i) => (
       <li class="proj-dlog-item">
-        <div class:list={['proj-dlog-content', { 'proj-dlog-content-media': d.image }]}>
-          <div class="proj-dlog-text">
-            <span class="proj-dlog-num" aria-hidden="true">{i + 1}</span>
-            <h3 class="proj-dlog-decision" set:html={jargonify(d.decision)} />
-            <p class="proj-dlog-rationale" set:html={jargonify(d.rationale)} />
-            {notesFor(d).map((n) => (
-              <div class="proj-dlog-note">
-                <span class="proj-dlog-note-label">{noteLabels[n.type ?? 'neutral']}</span>
-                <p class="proj-dlog-note-text" set:html={jargonify(n.text)} />
-              </div>
-            ))}
-          </div>
+        <span class="proj-dlog-num t-count" aria-hidden="true">{i + 1}</span>
+        <div class="proj-dlog-content">
+          <h3 class="proj-dlog-decision" set:html={jargonify(d.decision)} />
+          <p class="proj-dlog-rationale" set:html={jargonify(d.rationale)} />
+          {notesFor(d).map((n) => (
+            <div class="proj-dlog-note">
+              <span class="proj-dlog-note-label t-label">{noteLabels[n.type ?? 'neutral']}</span>
+              <p class="proj-dlog-note-text" set:html={jargonify(n.text)} />
+            </div>
+          ))}
           {d.image && (
             <figure class="proj-dlog-media">
-              <div class="proj-dlog-frame">
+              <a class="proj-img-link screen-frame proj-dlog-frame" href={`${base}${d.image.replace(/^\//, '')}`}>
                 <img src={`${base}${d.image.replace(/^\//, '')}`} alt={d.imageAlt ?? ''} />
-              </div>
-              {d.imageAlt && <figcaption class="proj-dlog-caption">{d.imageAlt}</figcaption>}
+              </a>
+              {d.imageAlt && <figcaption class="proj-caption">{d.imageAlt}</figcaption>}
             </figure>
           )}
         </div>
@@ -75,180 +73,66 @@ const notesFor = (d: DecisionItem): DecisionNote[] => [
 </section>
 
 <style>
-  .proj-dlog-title {
-    margin-bottom: 0.5rem;
-  }
-
   .proj-dlog-intro {
-    margin-bottom: 1.5rem;
-    max-width: 720px;
+    margin-bottom: var(--space-3);
   }
 
   .proj-dlog-list {
     list-style: none;
-    margin: 0;
-    padding: 0;
-    margin-top: 1.5rem;
   }
 
+  /* Number in a fixed gutter, everything else in one column at full measure. */
   .proj-dlog-item {
-    padding: 2.25rem 0;
-    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    align-items: baseline;
+    padding: var(--space-5) 0;
+    border-top: 1px dashed var(--rule);
   }
 
   .proj-dlog-item:first-child {
     padding-top: 0;
+    border-top: none;
   }
 
   .proj-dlog-item:last-child {
-    border-bottom: none;
     padding-bottom: 0;
   }
 
-  .proj-dlog-content-media {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
-    column-gap: 3rem;
-    align-items: start;
-  }
-
-  /* Gutter (numeral + note labels) | content. Baseline alignment puts each
-     gutter item on the first line of the text beside it. */
-  .proj-dlog-text {
-    display: grid;
-    grid-template-columns: 96px minmax(0, 1fr);
-    column-gap: 28px;
-    row-gap: 0.625rem;
-    align-items: baseline;
-  }
-
   .proj-dlog-num {
-    grid-column: 1;
-    font-family: var(--font-machine);
-    font-size: 17px;
-    font-weight: 600;
     color: var(--muted);
     line-height: 1;
-    text-align: right;
     user-select: none;
   }
 
-  .proj-dlog-decision,
+  .proj-dlog-decision {
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    font-weight: 600;
+    line-height: var(--lh-tight);
+    margin-bottom: var(--space-2);
+  }
+
   .proj-dlog-rationale {
-    grid-column: 2;
+    color: var(--ink-2);
   }
 
   .proj-dlog-note {
-    display: contents;
+    margin-top: var(--space-3);
   }
 
   .proj-dlog-note-label {
-    grid-column: 1;
-    margin-top: 8px;
-    font-family: var(--font-machine);
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1;
-    color: var(--muted);
-    text-align: right;
-    white-space: nowrap;
-  }
-
-  .proj-dlog-note-text {
-    grid-column: 2;
-    margin: 8px 0 0;
-    font-size: 0.9375rem;
-    line-height: 1.75;
-    color: var(--ink);
-    max-width: 62ch;
+    display: block;
+    margin-bottom: var(--space-1);
   }
 
   .proj-dlog-media {
-    margin: 0;
-    padding: 0.625rem;
-    background: var(--bg0);
-    border: 1px solid var(--border-hi);
-    border-radius: 10px;
+    margin-top: var(--space-3);
   }
 
-  .proj-dlog-frame {
-    border-radius: var(--radius-md);
-    overflow: hidden;
-  }
+  .proj-dlog-media .proj-caption { margin-top: var(--space-2); }
 
-  .proj-dlog-frame img {
-    display: block;
-    width: 100%;
-  }
-
-  .proj-dlog-caption {
-    margin: 0.5rem 0.125rem 0;
-    font-size: 0.6875rem;
-    line-height: 1.4;
-    color: var(--sub);
-    opacity: 0.75;
-  }
-
-  .proj-dlog-decision {
-    font-size: 1.125rem;
-    font-weight: 700;
-    line-height: 1.4;
-    letter-spacing: -0.01em;
-  }
-
-  .proj-dlog-rationale {
-    font-size: 0.9375rem;
-    line-height: 1.75;
-    color: var(--sub);
-    max-width: 62ch;
-    margin: 0;
-  }
-
-  @media (max-width: 860px) {
-    .proj-dlog-item {
-      padding: 1.75rem 0;
-    }
-
-    /* Gutter collapses: numeral sits inline before the heading, and each
-       label stacks above its note. */
-    .proj-dlog-text {
-      grid-template-columns: auto minmax(0, 1fr);
-      column-gap: 0.5rem;
-    }
-
-    .proj-dlog-num {
-      font-size: 1.125rem;
-      text-align: left;
-    }
-
-    .proj-dlog-rationale {
-      grid-column: 1 / -1;
-    }
-
-    .proj-dlog-note {
-      grid-column: 1 / -1;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      margin-top: 8px;
-    }
-
-    .proj-dlog-note-label {
-      margin-top: 0;
-      text-align: left;
-    }
-
-    .proj-dlog-note-text {
-      margin-top: 0;
-    }
-
-    .proj-dlog-content-media {
-      grid-template-columns: 1fr;
-      row-gap: 1.25rem;
-    }
-
-    .proj-dlog-media {
-      max-width: 24rem;
-    }
+  @container (max-width: 420px) {
+    .proj-dlog-item { grid-template-columns: 32px minmax(0, 1fr); }
   }
 </style>

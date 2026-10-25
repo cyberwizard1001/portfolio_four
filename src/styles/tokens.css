@@ -42,6 +42,38 @@
   --font-text:    'Instrument Sans', system-ui, sans-serif;
   --font-machine: 'Pixelify Sans', ui-monospace, monospace;
 
+  /* Pixel type sizes. Pixelify reads small, so these sit a step above
+     what the same role would get in a normal face. Always use these. */
+  --machine-label: 14px;  /* uppercase labels, eyebrows, metadata */
+  --machine-chip:  15px;  /* chips, tags, keycap, badges */
+  --machine-title: 16px;  /* window titles */
+  --machine-count: 17px;  /* counters, step numbers */
+  --machine-lcd:   32px;  /* the big digits on an LCD readout (route window) */
+
+  /* Reading scale for case studies. Nothing on a case study page sits
+     outside these, and nothing is smaller than --fs-caption. Pixel type
+     keeps the --machine-* sizes above. */
+  --fs-caption: 14px;   /* captions, metadata, small print */
+  --fs-label:   var(--machine-label);
+  --fs-ui:      15px;   /* nav, route rows, buttons */
+  --fs-small:   16px;   /* secondary text inside cards and panels */
+  --fs-body:    18px;   /* all running text */
+  --fs-lead:    20px;   /* the intro paragraph and the outcome line */
+  --fs-h3:      22px;   /* card, step and decision titles, persona name */
+  --fs-h2:      clamp(28px, 2.6vw, 36px);  /* chapter stops */
+  --fs-h1:      clamp(44px, 5.5vw, 72px);  /* the case study title */
+  --lh-body:  1.65;
+  --lh-tight: 1.2;
+  --measure:  68ch;
+
+  /* One vertical rhythm between blocks. */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --space-5: 64px;
+  --space-6: 96px;
+
   --page-max: 1240px;
   --page-pad: 32px;
   --bar-h:    49px;

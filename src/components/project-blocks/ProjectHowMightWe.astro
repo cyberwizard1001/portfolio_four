@@ -23,13 +23,13 @@ const { items, title = 'How might we…', intro, hideHeading } = Astro.props;
       {!hideHeading && <h2 class="proj-hmw-title section-title">{title}</h2>}
       {intro && <p class="proj-hmw-intro">{intro}</p>}
     </div>
-    <span class="proj-hmw-count">{items.length} questions</span>
+    <span class="proj-hmw-count t-label">{items.length} questions</span>
   </div>
   <div class="proj-hmw-list">
     {items.map((item) => (
       <div class="proj-hmw-row">
         <p class="proj-hmw-question" set:html={jargonify(item.question)} />
-        {item.theme && <span class="proj-hmw-theme">{item.theme}</span>}
+        {item.theme && <span class="proj-hmw-theme t-label">{item.theme}</span>}
       </div>
     ))}
   </div>
@@ -40,74 +40,43 @@ const { items, title = 'How might we…', intro, hideHeading } = Astro.props;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
   }
-
 
   .proj-hmw-intro {
-    margin-top: 0.5rem;
-    line-height: 1.7;
+    margin-top: var(--space-1);
   }
 
-  .proj-hmw-count {
+  .proj-hmw-count,
+  .proj-hmw-theme {
     flex-shrink: 0;
-    font-family: var(--font-machine);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 400;
-    color: var(--ink);
-    background: var(--tangerine-tint);
-    border: 1px solid rgba(158,255,87,0.22);
-    border-radius: 999px;
-    padding: 6px 12px;
+    white-space: nowrap;
   }
 
   .proj-hmw-list {
-    width: 100%;
-    border-top: 1px solid var(--border-hi);
-    padding-left: 1.5rem;
+    border-top: 1px solid var(--ink);
   }
 
+  /* Fixed chip column so the questions line up. */
   .proj-hmw-row {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--border-lo);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 11rem;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
+    border-bottom: 1px dashed var(--rule);
   }
+
+  .proj-hmw-theme { justify-self: start; }
 
   .proj-hmw-question {
-    flex: 1;
-    min-width: 0;
-    font-size: 1.05rem;
-    line-height: 1.65;
-    margin: 0;
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
   }
 
-  .proj-hmw-theme {
-    flex-shrink: 0;
-    font-family: var(--font-machine);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 400;
-    color: var(--ink);
-    background: var(--tangerine-tint);
-    border-radius: 999px;
-    padding: 4px 10px;
+  @container (max-width: 560px) {
+    .proj-hmw-row { grid-template-columns: 1fr; gap: var(--space-1); }
+    .proj-hmw-top { flex-direction: column; align-items: flex-start; gap: var(--space-1); }
   }
-
-  @media (max-width: 640px) {
-    .proj-hmw-row {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.5rem;
-    }
-    .proj-hmw-top { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
-  }
-
 </style>

@@ -12,59 +12,36 @@ const { body, label, variant = 'insight', hideHeading } = Astro.props;
 
 <section class="proj-callout proj-section">
   <div class:list={['proj-callout-card', `proj-callout-${variant}`]}>
-    <div class="proj-callout-strip"></div>
     <div class="proj-callout-content">
-      {!hideHeading && label && <span class="proj-callout-label">{label}</span>}
+      {!hideHeading && label && <span class="proj-callout-label t-label">{label}</span>}
       <p class="proj-callout-body">{body}</p>
     </div>
   </div>
 </section>
 
 <style>
+  /* Open on the page: a rule above and the body a step up from running text,
+     so it reads as the point of the stop without being boxed. */
   .proj-callout-card {
-    display: flex;
-    border-radius: var(--radius-md);
-    border: 1px solid rgba(158,255,87,0.20);
-    background: var(--tangerine-tint);
-    overflow: hidden;
-  }
-
-  .proj-callout-strip {
-    width: 4px;
-    background: var(--tangerine);
-    flex-shrink: 0;
-  }
-
-  .proj-callout-content {
-    padding: 1.25rem 1.5rem;
+    max-width: var(--measure);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--ink);
   }
 
   .proj-callout-label {
     display: block;
-    font-family: var(--font-machine);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 400;
-    color: var(--muted);
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-2);
   }
 
-  .proj-callout-principle {
-    background: var(--tangerine-tint);
+  .proj-callout-body {
+    font-size: var(--fs-lead);
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--ink);
+    text-wrap: pretty;
   }
 
-  .proj-callout-warning {
-    background: rgba(217,119,6,0.08);
-    border-color: rgba(217,119,6,0.20);
+  @container (max-width: 480px) {
+    .proj-callout-body { font-size: var(--fs-body); }
   }
-
-  .proj-callout-warning .proj-callout-strip {
-    background: #d97706;
-  }
-
-  .proj-callout-warning .proj-callout-label {
-    color: #d97706;
-  }
-
 </style>

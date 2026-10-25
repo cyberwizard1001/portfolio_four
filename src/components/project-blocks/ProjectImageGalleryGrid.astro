@@ -20,40 +20,37 @@ const base = import.meta.env.BASE_URL;
   {!hideHeading && title && <h2 class="proj-gallery-grid-title section-title">{title}</h2>}
   <div class="proj-gallery-grid-images">
     {images.map((img) => (
-      <div class="proj-gallery-grid-item">
+      <a class="proj-img-link screen-frame proj-gallery-grid-item" href={raw ? img.src : `${base}${img.src.replace(/^\//, '')}`}>
         <img src={raw ? img.src : `${base}${img.src.replace(/^\//, '')}`} alt={img.alt} />
-      </div>
+      </a>
     ))}
   </div>
 </section>
 
 <style>
   .proj-gallery-grid-title {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-3);
   }
 
   .proj-gallery-grid-images {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-3);
   }
 
   .proj-gallery-grid-item {
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    border: 1px solid var(--border-hi);
+    display: flex;
+    flex-direction: column;
     aspect-ratio: 1.8;
+    overflow: hidden;
   }
 
   .proj-gallery-grid-item img {
+    flex: 1;
+    min-height: 0;
     width: 100%;
-    height: 100%;
     object-fit: cover;
     object-position: top;
     display: block;
-  }
-
-  @media (max-width: 860px) {
-    .proj-gallery-grid-images { grid-template-columns: 1fr; }
   }
 </style>

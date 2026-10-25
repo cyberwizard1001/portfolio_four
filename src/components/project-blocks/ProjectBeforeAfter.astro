@@ -11,60 +11,33 @@ const { beforeTitle, beforeBody, afterTitle, afterBody } = Astro.props;
 
 <section class="proj-ba proj-section">
   <div class="proj-ba-panel">
-    <span class="proj-ba-label">Before</span>
-    <h3 class="proj-ba-title">{beforeTitle}</h3>
+    <h3 class="proj-ba-title t-label">{beforeTitle}</h3>
     <p class="proj-ba-body">{beforeBody}</p>
   </div>
   <div class="proj-ba-panel">
-    <span class="proj-ba-label lime">After</span>
-    <h3 class="proj-ba-title">{afterTitle}</h3>
+    <h3 class="proj-ba-title t-label">{afterTitle}</h3>
     <p class="proj-ba-body">{afterBody}</p>
   </div>
 </section>
 
 <style>
+  /* Two open columns under one rule, side by side while each keeps about 320px. */
   .proj-ba {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    column-gap: var(--space-4);
   }
 
   .proj-ba-panel {
-    border: 1px solid var(--border-hi);
-    border-radius: var(--radius-md);
-    padding: 1.5rem;
-    background: var(--bg1);
-  }
-
-  .proj-ba-label {
-    display: block;
-    font-family: var(--font-machine);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 400;
-    color: var(--dim);
-    margin-bottom: 0.75rem;
-  }
-
-  .proj-ba-label.lime {
-    color: var(--muted);
+    padding: var(--space-3) 0;
+    border-top: 1px solid var(--ink);
   }
 
   .proj-ba-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-1);
   }
 
   .proj-ba-body {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--sub);
-    line-height: 1.6;
-  }
-
-  @media (max-width: 860px) {
-    .proj-ba { grid-template-columns: 1fr; gap: 0.75rem; }
+    color: var(--ink-2);
   }
 </style>

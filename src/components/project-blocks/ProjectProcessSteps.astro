@@ -19,7 +19,7 @@ const { title, steps, hideHeading } = Astro.props;
   <div class="proj-steps-list">
     {steps.map((step, i) => (
       <div class="proj-steps-card">
-        <span class="proj-steps-num">{i + 1}</span>
+        <span class="proj-steps-num t-count">{i + 1}</span>
         <div class="proj-steps-body">
           <h3 class="proj-steps-step-title">{step.title}</h3>
           <p class="proj-steps-step-body">{step.body}</p>
@@ -31,53 +31,46 @@ const { title, steps, hideHeading } = Astro.props;
 
 <style>
   .proj-steps-title {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-3);
   }
 
+  /* Cards drop to one column before they get narrow. */
   .proj-steps-list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    column-gap: var(--space-4);
     align-items: start;
   }
 
   .proj-steps-card {
     display: flex;
-    gap: 1.25rem;
-    border-top: 1px solid var(--border-hi);
-    padding: 1.5rem 0;
+    gap: var(--space-2);
+    border-top: 1px solid var(--ink);
+    padding: var(--space-3) 0;
   }
 
   .proj-steps-num {
     flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: var(--tangerine-tint);
-    color: var(--ink);
-    font-family: var(--font-machine);
-    font-weight: 600;
-    font-size: 17px;
+    width: 2ch;
+    color: var(--muted);
+    line-height: var(--lh-tight);
   }
 
   .proj-steps-step-title {
-    font-size: 1.0625rem;
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
     font-weight: 600;
-    letter-spacing: -0.01em;
-    color: var(--fg0);
-    margin-bottom: 0.625rem;
+    line-height: var(--lh-tight);
+    margin-bottom: var(--space-1);
   }
 
   .proj-steps-step-body {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--fg2);
+    color: var(--ink-2);
   }
 
-  @media (max-width: 860px) {
-    .proj-steps-list { grid-template-columns: 1fr; column-gap: 0; }
+  /* Narrow stops: the number sits above the text so the text keeps the width. */
+  @container (max-width: 400px) {
+    .proj-steps-list { grid-template-columns: 1fr; }
+    .proj-steps-card { flex-direction: column; gap: var(--space-1); }
   }
 </style>

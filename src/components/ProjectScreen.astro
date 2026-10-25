@@ -1,0 +1,144 @@
+---
+// LCD screen illustrations for project images, one per project, from
+// reference/project-screens.html. Sized in em so the case study hero can scale
+// the whole screen by changing font-size. Unknown slugs fall back to the label.
+interface Props {
+  slug: string;
+  label?: string;
+  class?: string;
+}
+
+const { slug, label = '[ case study image, greyscale ]', class: className } = Astro.props;
+---
+
+{slug === 'pet-insurance-checkout' ? (
+  <div class:list={['lcd', 'lcd-calc', className]} aria-hidden="true">
+    <div class="lcd-bar"><span>Review</span><span class="lcd-small">1/1</span></div>
+    <div class="lcd-row lcd-first">Vet fees cover<span>✓</span></div>
+    <div class="lcd-row">Excess<span>✓</span></div>
+    <div class="lcd-row">What's not covered<span>✓</span></div>
+    <div class="lcd-total"><span>Pay</span><span>›</span></div>
+  </div>
+) : slug === 'direct-quote-flow' ? (
+  <div class:list={['lcd', 'lcd-pager', className]} aria-hidden="true">
+    <div class="lcd-bar"><span>Msg 01</span><span class="lcd-small">1 new</span></div>
+    <div class="lcd-msg">Your quote is ready.<br />Pet checks next.</div>
+    <div class="lcd-rule"></div>
+    <div class="lcd-foot lcd-small"><span>Pet 1 · Pet 2</span><span>▼</span></div>
+  </div>
+) : slug === 'perro-onboarding' ? (
+  <div class:list={['lcd', 'lcd-flip', className]} aria-hidden="true">
+    <div class="lcd-status lcd-small"><span class="lcd-bars"><i></i><i></i><i></i><i></i></span><span>Perro</span><span class="lcd-batt"></span></div>
+    <div class="lcd-rule"></div>
+    <div class="lcd-prompt">Add a photo of<br />your dog?</div>
+    <div class="lcd-softkeys"><span>Later</span><span>Add</span></div>
+  </div>
+) : slug === 'counselling-companions' ? (
+  <div class:list={['lcd', 'lcd-walkie', className]} aria-hidden="true">
+    <div class="lcd-ch"><span class="lcd-small">CH</span><b>04</b><span class="lcd-bars"><i></i><i></i><i></i><i></i></span></div>
+    <div class="lcd-rule"></div>
+    <div class="lcd-row lcd-ask">Send reminder?</div>
+    <div class="lcd-choices"><span class="on">Approve</span><span>Not yet</span></div>
+  </div>
+) : slug === 'pawlog' ? (
+  <div class:list={['lcd', className]} aria-hidden="true">
+    <div class="lcd-bar">Pawlog</div>
+    <div class="lcd-sel">Product copy<span>›</span></div>
+    <div class="lcd-row">History<span>›</span></div>
+    <div class="lcd-row lcd-last">Commits<span>›</span></div>
+  </div>
+) : (
+  <span class:list={['dither-label', className]} aria-hidden="true">{label}</span>
+)}
+
+<style>
+  /* One-off LCD green, part of the illustration rather than the palette (as the Pawlog MP3 menu). */
+  .lcd {
+    --lcd: #DADFD2;
+    width: 100%;
+    max-width: 18.667em;
+    background: var(--lcd);
+    border: 2px solid var(--grey-dark);
+    border-radius: 6px;
+    font-family: var(--font-machine);
+    font-size: 15px;
+    color: var(--grey-dark);
+    overflow: hidden;
+  }
+
+  .lcd-bar {
+    background: var(--grey-dark);
+    color: var(--lcd);
+    padding: 0.267em 0.667em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .lcd-row { padding: 0.4em 1.067em; display: flex; justify-content: space-between; gap: 0.8em; }
+  .lcd-sel {
+    background: var(--grey-dark);
+    color: var(--lcd);
+    margin: 0.4em 0.4em 0;
+    padding: 0.4em 0.667em;
+    display: flex;
+    justify-content: space-between;
+  }
+  .lcd-last { padding-bottom: 0.667em; }
+  .lcd-small { font-size: 0.8em; letter-spacing: 0.03em; }
+  .lcd-rule { border-top: 2px dotted var(--grey-dark); margin: 2px 0.667em; }
+
+  /* Pixel glyphs built from boxes so they stay crisp. */
+  .lcd-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 10px; }
+  .lcd-bars i { display: block; width: 3px; background: currentColor; }
+  .lcd-bars i:nth-child(1) { height: 4px; }
+  .lcd-bars i:nth-child(2) { height: 6px; }
+  .lcd-bars i:nth-child(3) { height: 8px; }
+  .lcd-bars i:nth-child(4) { height: 10px; }
+
+  .lcd-batt {
+    display: inline-block;
+    width: 16px;
+    height: 8px;
+    border: 2px solid currentColor;
+    position: relative;
+    box-sizing: content-box;
+  }
+  .lcd-batt::before { content: ""; position: absolute; left: 1px; top: 1px; bottom: 1px; width: 10px; background: currentColor; }
+  .lcd-batt::after { content: ""; position: absolute; right: -5px; top: 2px; width: 2px; height: 4px; background: currentColor; }
+
+  /* Calculator: a total row like the "=" key. */
+  .lcd-calc .lcd-row { padding: 0.333em 0.933em; }
+  .lcd-calc .lcd-first { padding-top: 0.533em; }
+  .lcd-total {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4em 0.667em;
+    margin: 0.267em 0.4em 0.4em;
+    background: var(--grey-dark);
+    color: var(--lcd);
+  }
+
+  /* Pager: message, rule, scroll hint. */
+  .lcd-msg { padding: 0.533em 0.8em 0.267em; line-height: 1.35; }
+  .lcd-foot { display: flex; justify-content: space-between; padding: 0.15em 1em 0.667em; }
+
+  /* Flip phone: status bar, centred prompt, soft keys. */
+  .lcd-status { display: flex; justify-content: space-between; align-items: center; padding: 0.417em 0.833em 0.25em; }
+  .lcd-prompt { text-align: center; padding: 0.667em 0.8em; line-height: 1.35; }
+  .lcd-softkeys {
+    display: flex;
+    justify-content: space-between;
+    background: var(--grey-dark);
+    color: var(--lcd);
+    padding: 0.267em 0.667em;
+  }
+
+  /* Walkie-talkie: big channel readout, then the approval prompt. */
+  .lcd-ch { display: flex; align-items: baseline; justify-content: space-between; padding: 0.4em 0.8em 0.133em; }
+  .lcd-ch b { font-weight: 600; font-size: 2em; line-height: 1; }
+  .lcd-ask { padding: 0.4em 0.8em; }
+  .lcd-choices { display: flex; gap: 0.4em; padding: 0.4em; }
+  .lcd-choices span { flex: 1; text-align: center; padding: 0.333em 0; border: 2px solid var(--grey-dark); }
+  .lcd-choices span.on { background: var(--grey-dark); color: var(--lcd); }
+</style>

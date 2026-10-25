@@ -9,7 +9,7 @@ const { quote, attribution } = Astro.props;
 
 <section class="proj-quote proj-section">
   <p class="proj-quote-text">"{quote}"</p>
-  {attribution && <span class="proj-quote-attribution eyebrow">{attribution}</span>}
+  {attribution && <span class="proj-quote-attribution">{attribution}</span>}
 </section>
 
 <style>
@@ -20,16 +20,20 @@ const { quote, attribution } = Astro.props;
   /* Quotes are a voice, so they take the display face. */
   .proj-quote-text {
     font-family: var(--font-display);
-    font-size: clamp(1.375rem, 2.4vw, 1.5rem);
+    font-size: var(--fs-h3);
     font-weight: 500;
-    font-style: italic;
+    font-style: normal;
     letter-spacing: -0.01em;
     line-height: 1.35;
     color: var(--text);
   }
 
+  /* A full sentence, so the text face rather than pixel type. */
   .proj-quote-attribution {
     display: block;
-    margin-top: 1rem;
+    margin-top: var(--space-2);
+    font-size: var(--fs-caption);
+    color: var(--muted);
+    text-transform: none;
   }
 </style>

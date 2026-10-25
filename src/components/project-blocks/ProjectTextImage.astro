@@ -8,128 +8,62 @@ interface Props {
   body: string;
   image: string;
   imageAlt: string;
+  /** No longer used: text and image stack, so there is no side to swap. */
   reverse?: boolean;
   raw?: boolean;
 }
 
-const { eyebrow, title, body, image, imageAlt, reverse = false, raw = false, hideHeading } = Astro.props;
+const { eyebrow, title, body, image, imageAlt, raw = false, hideHeading } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const src = raw ? image : `${base}${image.replace(/^\//, '')}`;
 ---
 
-<section class:list={['proj-ti', { 'proj-ti-reverse': reverse }]}>
+<section class="proj-ti">
   <div class="proj-ti-textbody">
-    <span class="proj-ti-eyebrow eyebrow">{eyebrow}</span>
-    {!hideHeading && <h2 class="proj-ti-title">{title}</h2>}
+    <span class="proj-ti-eyebrow t-label">{eyebrow}</span>
+    {!hideHeading && title && <h2 class="proj-ti-title">{title}</h2>}
     <p class="proj-ti-body" set:html={jargonify(body)} />
   </div>
-  <div class="proj-ti-image">
-    <div class="proj-ti-panel">
-      <div class="proj-ti-frame">
-        <img src={src} alt={imageAlt} />
-      </div>
-      <p class="proj-ti-caption">{imageAlt}</p>
-    </div>
-  </div>
+  <figure class="proj-ti-image">
+    <a class="proj-img-link screen-frame proj-ti-frame" href={src}>
+      <img src={src} alt={imageAlt} />
+    </a>
+    <figcaption class="proj-caption">{imageAlt}</figcaption>
+  </figure>
 </section>
 
 <style>
+  /* Stacked: eyebrow, text at full measure, then the image at full width. */
   .proj-ti {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
-    column-gap: 2rem;
-    padding: 0 3rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: 0 0 var(--space-4);
   }
 
   .proj-ti-eyebrow {
     display: block;
     line-height: 1;
-    margin-bottom: 0.25rem;
-  }
-
-  .proj-ti-textbody {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .proj-ti-image {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .proj-ti-reverse .proj-ti-textbody {
-    grid-column: 2;
-  }
-
-  .proj-ti-reverse .proj-ti-image {
-    grid-column: 1;
+    margin-bottom: var(--space-1);
   }
 
   .proj-ti-title {
-    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    margin-top: 0;
-    margin-bottom: 0.75rem;
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    font-weight: 600;
+    line-height: var(--lh-tight);
+    margin-bottom: var(--space-2);
+  }
+
+  .proj-ti-body {
+    color: var(--ink-2);
   }
 
   .proj-ti-body :global(a) {
     color: var(--blue);
     text-decoration: underline;
-    text-decoration-color: rgba(158,255,87,0.35);
     text-underline-offset: 2px;
   }
 
-  .proj-ti-body :global(a:hover) {
-    text-decoration-color: var(--blue);
-  }
-
-  .proj-ti-panel {
-    background: var(--bg0);
-    border: 1px solid var(--border-hi);
-    border-radius: 10px;
-    padding: 0.625rem;
-  }
-
-  .proj-ti-frame {
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    box-shadow: 0 12px 32px -16px rgba(0, 0, 0, 0.5);
-  }
-
-  .proj-ti-image img {
-    width: 100%;
-    display: block;
-  }
-
-  .proj-ti-caption {
-    margin: 0.5rem 0.125rem 0;
-    font-size: 0.6875rem;
-    line-height: 1.4;
-    color: var(--sub);
-    opacity: 0.75;
-  }
-
-  @media (max-width: 860px) {
-    .proj-ti {
-      grid-template-columns: 1fr;
-      padding: 0 1.25rem 3rem;
-      row-gap: 1.5rem;
-    }
-    .proj-ti-textbody,
-    .proj-ti-image,
-    .proj-ti-reverse .proj-ti-textbody,
-    .proj-ti-reverse .proj-ti-image {
-      grid-column: 1;
-      grid-row: auto;
-    }
-    .proj-ti-textbody {
-      order: 1;
-    }
-    .proj-ti-image {
-      order: 2;
-    }
-  }
+  .proj-ti-image .proj-caption { margin-top: var(--space-2); }
 </style>

@@ -27,9 +27,9 @@ const imageSrc = image ? `${base}${image.replace(/^\//, '')}` : undefined;
 
 <section class="proj-pki proj-section">
   <div class="proj-pki-narrative">
-    <span class="proj-pki-label">Problem</span>
+    <span class="proj-pki-label t-label">Problem</span>
     <p class="proj-pki-body">{problemBody}</p>
-    <span class="proj-pki-label proj-pki-label-context">Brief</span>
+    <span class="proj-pki-label t-label">Brief</span>
     {briefFindings ? (
       <ul class="proj-pki-findings">
         {briefFindings.map((f) => (
@@ -43,64 +43,38 @@ const imageSrc = image ? `${base}${image.replace(/^\//, '')}` : undefined;
       <p class="proj-pki-context">{contextBody}</p>
     )}
     {imageSrc && (
-      <img class="proj-pki-image" src={imageSrc} alt={imageAlt ?? ''} loading="lazy" />
+      <span class="screen-frame proj-pki-image"><img src={imageSrc} alt={imageAlt ?? ''} loading="lazy" /></span>
     )}
   </div>
-  <div class="proj-pki-side">
-    <div class="proj-pki-panel">
-      {infoItems.map((item) => (
-        <div class="proj-pki-info-item">
-          <span class="proj-pki-info-label">{item.label}</span>
-          <span class="proj-pki-info-value" set:html={jargonify(item.value)} />
-        </div>
-      ))}
-    </div>
-  </div>
+  <dl class="proj-pki-panel">
+    {infoItems.map((item) => (
+      <div class="proj-pki-info-item">
+        <dt class="proj-pki-info-label t-label">{item.label}</dt>
+        <dd class="proj-pki-info-value" set:html={jargonify(item.value)} />
+      </div>
+    ))}
+  </dl>
 </section>
 
 <style>
-  .proj-pki {
-    display: grid;
-    grid-template-columns: 7fr 3fr;
-    gap: 2.5rem;
-    align-items: start;
-  }
-
+  /* Narrative first, then the brief panel under it. Three side-by-side columns
+     would drop under 300px in a stop, so each item is a row with a label column. */
   .proj-pki-label {
     display: block;
-    font-family: var(--font-machine);
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 400;
-    margin-bottom: 0.75rem;
+    margin-bottom: var(--space-1);
   }
 
   .proj-pki-body {
-    max-width: 760px;
-    margin-bottom: 1.5rem;
-  }
-
-  .proj-pki-label-context {
-    margin-bottom: 0.75rem;
-  }
-
-  .proj-pki-context {
-    line-height: 1.65;
-    max-width: 62ch;
+    margin-bottom: var(--space-3);
   }
 
   .proj-pki-findings {
     list-style: none;
-    padding: 0;
-    margin: 0;
-    max-width: 62ch;
   }
 
   .proj-pki-finding {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--border);
+    padding: var(--space-2) 0;
+    border-bottom: 1px dashed var(--rule);
   }
 
   .proj-pki-finding:first-child {
@@ -115,68 +89,39 @@ const imageSrc = image ? `${base}${image.replace(/^\//, '')}` : undefined;
   .proj-pki-finding-label {
     display: block;
     font-family: var(--font-display);
-    font-size: 0.9375rem;
+    font-size: var(--fs-h3);
     font-weight: 600;
-    color: var(--muted);
-    letter-spacing: 0.03em;
-    margin-bottom: 0.4rem;
-  }
-
-  .proj-pki-finding-body {
-    margin: 0;
-    line-height: 1.6;
+    line-height: var(--lh-tight);
+    margin-bottom: var(--space-1);
   }
 
   .proj-pki-image {
-    display: block;
-    width: 100%;
-    margin-top: 1.75rem;
-    border: 1px solid var(--border-hi);
-    border-radius: var(--radius-md);
-  }
-
-  .proj-pki-side {
-    align-self: start;
+    margin-top: var(--space-3);
   }
 
   .proj-pki-panel {
-    border: 1px solid var(--border-hi);
-    border-radius: var(--radius-md);
-    padding: 1rem;
-    background: var(--bg1);
+    margin-top: var(--space-4);
+    border-bottom: 1px solid var(--ink);
   }
 
   .proj-pki-info-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    padding-bottom: 0.75rem;
-    margin-bottom: 0.75rem;
-    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 10rem minmax(0, 1fr);
+    align-items: baseline;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
+    border-top: 1px dashed var(--rule);
   }
 
-  .proj-pki-info-item:last-child {
-    padding-bottom: 0;
-    margin-bottom: 0;
-    border-bottom: none;
-  }
-
-  .proj-pki-info-label {
-    font-family: var(--font-machine);
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 400;
-    margin-bottom: 0.25rem;
-  }
+  .proj-pki-info-item:first-child { border-top: 1px solid var(--ink); }
 
   .proj-pki-info-value {
-    font-size: 0.9375rem;
-    color: var(--text);
+    font-size: var(--fs-small);
+    line-height: 1.6;
+    color: var(--ink);
   }
 
-  @media (max-width: 860px) {
-    .proj-pki { grid-template-columns: 1fr; gap: 1.5rem; }
+  @container (max-width: 600px) {
+    .proj-pki-info-item { grid-template-columns: 1fr; gap: 4px; }
   }
 </style>

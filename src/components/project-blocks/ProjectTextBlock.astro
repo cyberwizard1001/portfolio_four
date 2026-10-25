@@ -23,52 +23,15 @@ const { heading, body, hideHeading } = Astro.props;
     box-sizing: border-box;
   }
 
-  /* Prose lines are capped to ~80% width to match the ProjectTextImage
-     widgets' full (text+image) row width, not the page edge. Components
-     themselves (e.g. <ProjectTextImage>, rendered as direct-child
-     <section>s from markdown) are left full-width. */
-  .proj-text-col > :global(h1),
-  .proj-text-col > :global(h2),
-  .proj-text-col > :global(h3),
-  .proj-text-col > :global(p),
-  .proj-text-col > :global(ul),
-  .proj-text-col > :global(ol),
-  .proj-text-col > :global(blockquote),
-  .proj-text-col > :global(.meta-card) {
-    max-width: 80%;
-  }
-
-  /* ProjectTextImage/ProjectImageCarousel carry their own 3rem side
-     padding for use as full-bleed page sections. Nested here inside
-     .proj-text's own 3rem padding, that double-indents their left edge
-     vs. prose — cancel just the left side so content lines up, leaving
-     the right edge (and overall width) untouched. */
-  .proj-text-col > :global(section.proj-ti),
-  .proj-text-col > :global(section.proj-car) {
-    margin-left: -3rem;
-  }
-
-  @media (max-width: 860px) {
-    .proj-text-col > :global(section.proj-ti),
-    .proj-text-col > :global(section.proj-car) {
-      margin-left: -1.25rem;
-    }
-
-    .proj-text-col > :global(h1),
-    .proj-text-col > :global(h2),
-    .proj-text-col > :global(h3),
-    .proj-text-col > :global(p),
-    .proj-text-col > :global(ul),
-    .proj-text-col > :global(ol),
-    .proj-text-col > :global(blockquote),
-    .proj-text-col > :global(.meta-card) {
-      max-width: none;
-    }
+  /* Prose holds to the reading measure. Components rendered from markdown
+     (<ProjectTextImage> and friends) stay at the full column width. */
+  .proj-text-col > :global(:is(h1, h2, h3, p, ul, ol, blockquote, .meta-card)) {
+    max-width: var(--measure);
   }
 
   .proj-text-heading {
     font-family: var(--font-machine);
-    font-size: 12px;
+    font-size: var(--machine-label);
     color: var(--dim);
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -77,7 +40,7 @@ const { heading, body, hideHeading } = Astro.props;
   }
 
   /* Prose styling for markdown rendered via <Content /> in the default slot */
-  .proj-text :global(h1) {
+  .proj-text-col > :global(h1) {
     font-size: clamp(1.75rem, 4vw, 2.5rem);
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -86,24 +49,26 @@ const { heading, body, hideHeading } = Astro.props;
     margin: 0 0 1rem;
   }
 
-  .proj-text :global(h2) {
-    font-size: clamp(1.375rem, 3vw, 1.75rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.25;
-    color: var(--text);
-    margin: 2.5rem 0 1rem;
+  .proj-text-col > :global(h2) {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    font-weight: 600;
+    line-height: var(--lh-tight);
+    color: var(--ink);
+    margin: var(--space-5) 0 var(--space-3);
   }
 
-  .proj-text :global(h3) {
-    font-size: 1.125rem;
-    font-weight: 700;
-    color: var(--text);
-    margin: 2rem 0 0.75rem;
+  .proj-text-col > :global(h3) {
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    font-weight: 600;
+    line-height: var(--lh-tight);
+    color: var(--ink);
+    margin: var(--space-5) 0 var(--space-2);
   }
 
   .proj-text :global(p) {
-    margin: 0 0 1.25rem;
+    margin: 0 0 var(--space-2);
   }
 
   .proj-text :global(em) {
@@ -119,79 +84,73 @@ const { heading, body, hideHeading } = Astro.props;
   .proj-text :global(a) {
     color: var(--blue);
     text-decoration: underline;
-    text-decoration-color: rgba(158,255,87,0.35);
     text-underline-offset: 2px;
-  }
-
-  .proj-text :global(a:hover) {
-    text-decoration-color: var(--blue);
   }
 
   .proj-text :global(code) {
     font-family: var(--font-machine);
     font-size: 0.85em;
-    background: var(--tangerine-tint);
+    background: var(--panel);
     color: var(--ink);
     padding: 0.1em 0.4em;
-    border-radius: 3px;
   }
 
+  /* Quotes are a voice, so they take the display face, set open on the page. */
   .proj-text :global(blockquote) {
-    border-left: 2px solid var(--tangerine);
-    margin: 1.5rem 0;
-    padding: 0.25rem 0 0.25rem 1.25rem;
-    color: var(--text);
-    font-style: italic;
+    margin: var(--space-4) 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    font-style: normal;
+    line-height: 1.35;
+    color: var(--ink);
   }
 
   .proj-text :global(hr) {
     border: none;
-    border-top: 1px solid var(--border-hi);
-    margin: 2rem 0;
+    border-top: 1px dashed var(--rule);
+    margin: var(--space-4) 0;
   }
 
   .proj-text :global(img) {
     width: 100%;
     display: block;
-    border: 1px solid var(--border-hi);
-    border-radius: var(--radius-md);
-    margin: 0.5rem 0 1.25rem;
+    border: 1px solid var(--ink);
+    box-shadow: var(--win-shadow);
+    margin: var(--space-2) 0 var(--space-3);
   }
 
+  /* Set like the home page's glance list: open rows, solid rule at each end. */
   .proj-text :global(.meta-card) {
     display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 0;
-    margin: 1.5rem 0 2rem;
-    border: 1px solid var(--border-hi);
-    border-radius: 8px;
-    background: var(--bg2);
-    overflow: hidden;
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    column-gap: var(--space-3);
+    margin: var(--space-3) 0 var(--space-4);
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
   }
 
   .proj-text :global(.meta-card > div) {
     display: contents;
   }
 
+  .proj-text :global(.meta-card dt),
+  .proj-text :global(.meta-card dd) {
+    padding: var(--space-2) 0;
+    margin: 0;
+    border-top: 1px dashed var(--rule);
+  }
+
   .proj-text :global(.meta-card dt) {
-    padding: 0.85rem 1rem;
     font-family: var(--font-machine);
-    font-size: 12px;
+    font-size: var(--machine-label);
     font-weight: 400;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--ink);
-    border-top: 1px solid var(--border);
-    border-right: 1px solid var(--border);
-    background: var(--tangerine-tint);
+    color: var(--muted);
   }
 
   .proj-text :global(.meta-card dd) {
-    padding: 0.85rem 1.25rem;
-    margin: 0;
-    font-size: 0.9375rem;
-    line-height: 1.6;
-    border-top: 1px solid var(--border);
+    color: var(--ink);
   }
 
   .proj-text :global(.meta-card > div:first-child dt),
@@ -200,11 +159,7 @@ const { heading, body, hideHeading } = Astro.props;
   }
 
   @media (max-width: 600px) {
-    .proj-text :global(.meta-card) {
-      grid-template-columns: 1fr;
-    }
-    .proj-text :global(.meta-card dt) {
-      border-right: none;
-    }
+    .proj-text :global(.meta-card) { grid-template-columns: 1fr; }
+    .proj-text :global(.meta-card dd) { border-top: none; padding-top: 0; }
   }
 </style>

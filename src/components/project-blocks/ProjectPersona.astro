@@ -32,104 +32,97 @@ const cleanQuote = quote.trim().replace(/^["“]+/, '').replace(/["”]+$/, '');
 ---
 
 <section class="proj-persona proj-section">
-  <span class="proj-persona-eyebrow eyebrow">{eyebrow}</span>
+  <span class="proj-persona-eyebrow t-label">{eyebrow}</span>
 
   <div class="proj-persona-card">
-    <aside class="proj-persona-side">
+    <div class="proj-persona-profile">
       <div class="proj-persona-avatar">
         {avatarSrc
           ? <img src={avatarSrc} alt={avatarImageAlt ?? ''} loading="lazy" />
           : initial}
       </div>
-      <h3 class="proj-persona-name">{name}</h3>
-      <span class="proj-persona-role">{role}</span>
-
-      <div class="proj-persona-quote">
-        <span class="proj-persona-quote-mark" aria-hidden="true">&ldquo;</span>
+      <div class="proj-persona-who">
+        <h3 class="proj-persona-name">{name}</h3>
+        <span class="proj-persona-role">{role}</span>
+        {contextTags.length > 0 && (
+          <div class="proj-persona-tags">
+            {contextTags.map((tag) => <span class="chip proj-persona-tag">{tag}</span>)}
+          </div>
+        )}
+      </div>
+      <blockquote class="proj-persona-quote">
         <p>{cleanQuote}</p>
-      </div>
-
-      {contextTags.length > 0 && (
-        <div class="proj-persona-tags">
-          {contextTags.map((tag) => <span class="proj-persona-tag">{tag}</span>)}
-        </div>
-      )}
-    </aside>
-
-    <div class="proj-persona-main">
-      <div class="proj-persona-lists">
-        <div class="proj-persona-list proj-persona-list-goals">
-          <span class="proj-persona-list-label">Goals</span>
-          <ul>
-            {goals.map((g) => (
-              <li>
-                <span class="proj-persona-icon proj-persona-icon-goal" aria-hidden="true">+</span>
-                <span>{g}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div class="proj-persona-list proj-persona-list-frustrations">
-          <span class="proj-persona-list-label">Frustrations</span>
-          <ul>
-            {frustrations.map((f) => (
-              <li>
-                <span class="proj-persona-icon proj-persona-icon-frustration" aria-hidden="true">&minus;</span>
-                <span>{f}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      {context && (
-        <div class="proj-persona-context">
-          <span class="proj-persona-context-label">Why she matters</span>
-          <p class="proj-persona-context-body">{context}</p>
-        </div>
-      )}
+      </blockquote>
     </div>
+
+    <div class="proj-persona-lists">
+      <div class="proj-persona-list">
+        <span class="proj-persona-list-label t-label">Goals</span>
+        <ul>
+          {goals.map((g) => (
+            <li>
+              <span class="proj-persona-icon t-chip" aria-hidden="true">+</span>
+              <span>{g}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="proj-persona-list">
+        <span class="proj-persona-list-label t-label">Frustrations</span>
+        <ul>
+          {frustrations.map((f) => (
+            <li>
+              <span class="proj-persona-icon t-chip" aria-hidden="true">&minus;</span>
+              <span>{f}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    {context && (
+      <div class="proj-persona-context">
+        <span class="proj-persona-context-label t-label">Why she matters</span>
+        <p class="proj-persona-context-body">{context}</p>
+      </div>
+    )}
   </div>
 </section>
 
 <style>
+  /* Open on the page like the rest of the route: a rule above, the person,
+     their words, then goals and frustrations in two ruled columns. */
   .proj-persona-eyebrow {
     display: block;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-1);
   }
 
   .proj-persona-card {
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .proj-persona-profile {
     display: grid;
-    grid-template-columns: 260px 1fr;
-    border: 1px solid var(--border-hi);
-    border-radius: var(--radius-md);
-    overflow: hidden;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-2) var(--space-3);
+    padding: var(--space-3) 0;
   }
 
-  /* ── Sidebar: who ── */
-  .proj-persona-side {
-    padding: 2.25rem 1.75rem;
-    background: var(--bg1);
-    border-right: 1px solid var(--border-hi);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
+  /* A square tile with the initial in pixel type, like a desktop icon. */
   .proj-persona-avatar {
     width: 56px;
     height: 56px;
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--tangerine-tint);
-    border: 2px solid var(--ink);
+    background: var(--panel);
+    border: 1px solid var(--ink);
+    box-shadow: inset 1px 1px 0 var(--paper), inset -1px -1px 0 var(--bevel-lo);
     color: var(--ink);
-    font-size: 17px;
+    font-size: var(--machine-count);
     font-weight: 600;
     font-family: var(--font-machine);
-    margin-bottom: 1.25rem;
     overflow: hidden;
   }
 
@@ -140,181 +133,86 @@ const cleanQuote = quote.trim().replace(/^["“]+/, '').replace(/["”]+$/, '');
   }
 
   .proj-persona-name {
-    font-size: 1.25rem;
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
     font-weight: 600;
-    line-height: 1.2;
+    line-height: var(--lh-tight);
   }
 
   .proj-persona-role {
     display: block;
-    font-size: 1rem;
-    color: var(--sub);
-    line-height: 1.5;
-    margin-top: 0.5rem;
-    margin-bottom: 1.75rem;
-  }
-
-  .proj-persona-quote {
-    position: relative;
-    padding: 0.5rem 0 0 1.25rem;
-    border-left: 2px solid var(--tangerine);
-  }
-
-  .proj-persona-quote-mark {
-    position: absolute;
-    top: -0.6rem;
-    left: 0.6rem;
-    font-family: var(--font-display);
-    font-size: 2.5rem;
-    line-height: 1;
-    color: var(--tangerine);
-    opacity: 0.6;
-  }
-
-  .proj-persona-quote p {
-    font-size: 1.1875rem;
-    font-weight: 500;
-    font-style: italic;
-    color: var(--text);
-    line-height: 1.5;
-    letter-spacing: -0.01em;
+    color: var(--ink-2);
+    margin-top: 4px;
   }
 
   .proj-persona-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1.75rem;
+    gap: var(--space-1);
+    margin-top: var(--space-2);
   }
 
-  .proj-persona-tag {
-    font-family: var(--font-machine);
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--sub);
-    border: 1px solid var(--border-hi);
-    border-radius: 999px;
-    padding: 4px 11px;
+  .proj-persona-quote {
+    grid-column: 1 / -1;
+    margin-top: var(--space-1);
   }
 
-  /* ── Main: what + why ── */
-  .proj-persona-main {
-    display: flex;
-    flex-direction: column;
+  .proj-persona-quote p {
+    font-family: var(--font-display);
+    font-size: var(--fs-lead);
+    font-style: normal;
+    line-height: 1.45;
+    color: var(--ink);
   }
 
   .proj-persona-lists {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-4);
   }
 
   .proj-persona-list {
-    padding: 2rem 1.75rem;
-  }
-
-  .proj-persona-list-goals {
-    border-right: 1px solid var(--border);
+    padding: var(--space-3) 0;
+    border-top: 1px dashed var(--rule);
   }
 
   .proj-persona-list-label {
     display: block;
-    font-family: var(--font-machine);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 400;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 1.25rem;
-  }
-
-  .proj-persona-list-goals .proj-persona-list-label {
-    color: var(--muted);
-  }
-
-  .proj-persona-list-frustrations .proj-persona-list-label {
-    color: #ff8a7a;
+    margin-bottom: var(--space-2);
   }
 
   .proj-persona-list ul {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: var(--space-2);
     list-style: none;
   }
 
   .proj-persona-list li {
     display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    font-size: 0.9375rem;
-    color: var(--text);
-    line-height: 1.55;
+    align-items: baseline;
+    gap: 12px;
+    color: var(--ink);
   }
 
+  /* The glyph carries the meaning, not the colour. */
   .proj-persona-icon {
     flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    margin-top: 0.05em;
-    border-radius: 4px;
-    font-family: var(--font-machine);
-    font-weight: 600;
-    font-size: 13px;
-    line-height: 1;
+    width: 1ch;
+    color: var(--muted);
   }
 
-  .proj-persona-icon-goal {
-    color: var(--ink);
-    background: var(--tangerine-tint);
-    border: 1px solid rgba(158,255,87,0.25);
-  }
-
-  .proj-persona-icon-frustration {
-    color: #ff8a7a;
-    background: rgba(255,138,122,0.10);
-    border: 1px solid rgba(255,138,122,0.25);
-  }
-
-  /* ── Context ── */
   .proj-persona-context {
-    padding: 1.75rem 1.75rem 2rem;
-    border-top: 1px solid var(--border);
+    padding: var(--space-3) 0;
+    border-top: 1px dashed var(--rule);
   }
 
   .proj-persona-context-label {
     display: block;
-    font-family: var(--font-machine);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 400;
-    color: var(--muted);
-    margin-bottom: 0.75rem;
+    margin-bottom: var(--space-1);
   }
 
-  .proj-persona-context-body {
-    max-width: 70ch;
-  }
-
-  @media (max-width: 860px) {
-    .proj-persona-card { grid-template-columns: 1fr; }
-    .proj-persona-side {
-      border-right: none;
-      border-bottom: 1px solid var(--border-hi);
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.75rem 1rem;
-    }
-    .proj-persona-avatar { margin-bottom: 0; }
-    .proj-persona-role { margin-bottom: 0; flex-basis: 100%; }
-    .proj-persona-quote { flex-basis: 100%; margin-top: 0.5rem; }
-    .proj-persona-tags { flex-basis: 100%; margin-top: 0.5rem; }
+  @container (max-width: 700px) {
     .proj-persona-lists { grid-template-columns: 1fr; }
-    .proj-persona-list-goals { border-right: none; border-bottom: 1px solid var(--border); }
   }
 </style>

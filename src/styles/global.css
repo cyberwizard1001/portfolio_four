@@ -80,18 +80,18 @@ a:hover { color: var(--blue-hover); }
 .t-label,
 .eyebrow {
   font-family: var(--font-machine);
-  font-size: 12px;
+  font-size: var(--machine-label);
   font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
-.t-wintitle { font-family: var(--font-machine); font-size: 14px; font-weight: 400; }
+.t-wintitle { font-family: var(--font-machine); font-size: var(--machine-title); font-weight: 400; }
 
-.t-chip { font-family: var(--font-machine); font-size: 13px; font-weight: 400; }
+.t-chip { font-family: var(--font-machine); font-size: var(--machine-chip); font-weight: 400; }
 
-.t-count { font-family: var(--font-machine); font-size: 17px; font-weight: 600; }
+.t-count { font-family: var(--font-machine); font-size: var(--machine-count); font-weight: 600; }
 
 .t-body { font-family: var(--font-text); font-size: 17px; font-weight: 400; line-height: 1.65; }
 
@@ -112,6 +112,10 @@ a:hover { color: var(--blue-hover); }
   box-decoration-break: clone;
 }
 
+@media (forced-colors: active) {
+  .hl { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+}
+
 /* Dithered checkerboard placeholder for images that don't exist yet. */
 .dither {
   background-color: #E9E9E9;
@@ -125,19 +129,19 @@ a:hover { color: var(--blue-hover); }
 .dither-label {
   font-family: var(--font-machine);
   font-weight: 400;
-  font-size: 13px;
+  font-size: var(--machine-chip);
   background: var(--paper);
   border: 1px solid var(--ink);
-  padding: 4px 10px;
+  padding: 5px 12px;
   color: var(--ink);
 }
 
 .chip {
   font-family: var(--font-machine);
-  font-size: 13px;
+  font-size: var(--machine-chip);
   font-weight: 400;
   border: 1px solid var(--ink);
-  padding: 3px 9px;
+  padding: 4px 11px;
   border-radius: var(--radius-sm);
   background: var(--paper);
   color: var(--ink);
@@ -186,11 +190,11 @@ a:hover { color: var(--blue-hover); }
    The glyph is pixel; the button's label beside it stays in the text face. */
 .keycap {
   font-family: var(--font-machine);
-  font-size: 13px;
+  font-size: var(--machine-chip);
   font-weight: 400;
   background: var(--blue);
   color: var(--paper);
-  padding: 2px 7px;
+  padding: 2px 8px;
   border-radius: var(--radius-sm);
 }
 
@@ -254,13 +258,53 @@ a:hover { color: var(--blue-hover); }
 /* Standard section heading inside project case studies */
 .section-title {
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-size: var(--fs-h2);
   font-weight: 600;
-  line-height: 1.15;
+  line-height: var(--lh-tight);
   color: var(--ink);
 }
 
 /* Blocks sit inside a stop column that already has its own gutter. */
 .proj-section {
-  padding: 0 0 2.5rem;
+  padding: 0 0 var(--space-4);
 }
+
+/* Image caption on case studies: never under --fs-caption, never wider than the measure. */
+.proj-caption {
+  margin-top: var(--space-1);
+  max-width: var(--measure);
+  font-size: var(--fs-caption);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+/* A full-size link around a case study image. Works without JS; the lightbox takes over with it. */
+.proj-img-link { display: block; }
+
+/* ── Screen frame ──
+   On case studies, only screens and artefacts sit in window chrome: the same
+   ink border and hard shadow as a .window, with a 24px pinstripe title bar.
+   CaseStudy sets --frame-icon to the project's device (a data URI) so the bar
+   shows it at 1x on a solid plate, the way a Mac window shows its app's icon.
+   Without it the bar is plain pinstripe. Prose stays on the page, never boxed. */
+.screen-frame {
+  display: block;
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  box-shadow: var(--win-shadow);
+}
+
+.screen-frame::before {
+  content: '';
+  display: block;
+  height: 24px;
+  border-bottom: 1px solid var(--ink);
+  image-rendering: pixelated;
+  background:
+    var(--frame-icon, none) no-repeat 10px center / var(--frame-icon-w, 0) var(--frame-icon-h, 0),
+    linear-gradient(var(--chrome-hi), var(--chrome-hi)) no-repeat 4px 0 / calc(var(--frame-icon-w, -12px) + 12px) 100%,
+    repeating-linear-gradient(to bottom, var(--chrome-hi) 0 2px, var(--chrome-lo) 2px 3px);
+}
+
+.screen-frame img { display: block; width: 100%; }

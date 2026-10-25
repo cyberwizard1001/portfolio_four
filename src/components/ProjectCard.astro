@@ -1,6 +1,7 @@
 ---
 import WindowChrome from './WindowChrome.astro';
 import Device from './Device.astro';
+import ProjectScreen from './ProjectScreen.astro';
 import type { DeviceName } from '../data/sprites';
 
 interface Props {
@@ -22,7 +23,7 @@ const { href, slug, filename, eyebrow, year, title, problem, outcomeValue, outco
 
 <WindowChrome as="a" href={href} title={filename} isNew={isNew} class="pcard">
   <div class="pcard-image dither mono-img">
-    <span class="dither-label" aria-hidden="true">[ case study image, greyscale ]</span>
+    <ProjectScreen slug={slug} />
     {device && <Device name={device} scale={4} project={slug} class="pcard-device" />}
   </div>
   <div class="pcard-body">
@@ -46,6 +47,7 @@ const { href, slug, filename, eyebrow, year, title, problem, outcomeValue, outco
   .pcard-image {
     position: relative;
     height: 220px;
+    padding: 0 28px;
     border-bottom: 1px solid var(--ink);
   }
 
