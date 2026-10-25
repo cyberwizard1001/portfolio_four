@@ -32,7 +32,7 @@ import WindowChrome from './WindowChrome.astro';
   }
 
   .lightbox::backdrop {
-    background: color-mix(in srgb, var(--bg0) 85%, transparent);
+    background: color-mix(in srgb, var(--paper) 85%, transparent);
   }
 
   .lightbox[open] {
@@ -45,7 +45,7 @@ import WindowChrome from './WindowChrome.astro';
   }
 
   .lightbox :global(.window) {
-    border-color: var(--lime);
+    border-color: var(--blue);
   }
 
   .lightbox-tool {
@@ -53,9 +53,9 @@ import WindowChrome from './WindowChrome.astro';
     font-family: var(--font-text);
     font-size: 13px;
     font-weight: 600;
-    color: var(--sub);
+    color: var(--ink-2);
     background: transparent;
-    border: 1px solid var(--border-hi);
+    border: 1px solid var(--ink);
     border-radius: 4px;
     padding: 2px 8px;
     margin-left: 8px;
@@ -63,8 +63,8 @@ import WindowChrome from './WindowChrome.astro';
 
   .lightbox-tool:hover,
   .lightbox-tool:focus-visible {
-    color: var(--lime);
-    border-color: var(--lime);
+    color: var(--blue);
+    border-color: var(--blue);
   }
 
   .lightbox-zoom {
@@ -73,7 +73,7 @@ import WindowChrome from './WindowChrome.astro';
   }
 
   .lightbox-body {
-    background: var(--bg1);
+    background: var(--paper);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -123,9 +123,9 @@ import WindowChrome from './WindowChrome.astro';
     width: 2.25rem;
     height: 2.25rem;
     border-radius: 8px;
-    border: 1px solid var(--border-hi);
-    background: var(--bg1);
-    color: var(--text);
+    border: 1px solid var(--ink);
+    background: var(--paper);
+    color: var(--ink);
     font-size: 1.25rem;
     line-height: 1;
     cursor: pointer;
@@ -138,12 +138,12 @@ import WindowChrome from './WindowChrome.astro';
   .lightbox-nav[hidden] { display: none; }
 
   .lightbox-nav:hover {
-    border-color: var(--lime);
-    color: var(--lime);
+    border-color: var(--blue);
+    color: var(--blue);
   }
 
   .lightbox-nav:focus-visible {
-    outline: 2px solid var(--lime);
+    outline: 2px solid var(--blue);
     outline-offset: 2px;
   }
 
@@ -154,7 +154,7 @@ import WindowChrome from './WindowChrome.astro';
     margin: 0;
     font-family: var(--font-text);
     font-size: 13px;
-    color: var(--dim);
+    color: var(--muted);
     text-align: center;
   }
 

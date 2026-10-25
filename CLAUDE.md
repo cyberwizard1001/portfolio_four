@@ -31,7 +31,7 @@ Rules from the brief:
   - `--blue` means "you can click this": links, primary buttons, the strike line.
   - `--tangerine` means "look here": the `.hl` highlight, outcome values, NEW badges, active chips, "you are here".
   - Don't use blue for decoration or tangerine for links. Text on tangerine is `--ink` and text on blue is `--paper`.
-- **Legacy aliases.** The bottom of `tokens.css` maps the old terminal tokens (`--bg*`, `--text`, `--sub`, `--dim`, `--lime`, `--mono`, `--term-*`) onto the new palette. This is so the un-ported pages (ai, accessibility, colophon, contact, tokens) still render (the About page is now ported). Don't use the aliases in new code. Remove the block once those pages are ported.
+- **Legacy aliases.** The bottom of `tokens.css` maps the old terminal tokens (`--bg0–2`, `--border*`, `--text`, `--sub`, `--dim`, `--lime*`, `--term-*`) onto the new palette. This is so the un-ported pages (ai, accessibility, colophon, contact, tokens) still render (the About page is now ported). Don't use the aliases in new code. Remove the block once those pages are ported.
 - **Type.** Three self-hosted families (`@fontsource`, imported in `Layout.astro`), one job each:
   - `--font-display` (Playfair Display): Nirmal's voice raised. Used for headings, the name, quotes and the sign-off. Quotes (`ProjectQuote`, the persona quote, markdown blockquotes) are set upright in the display face, never italic; italic is only for `<em>` emphasis.
   - `--font-text` (Instrument Sans): everything people read or click. Used for body, nav, buttons, links and form controls.

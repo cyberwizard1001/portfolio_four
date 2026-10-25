@@ -32,7 +32,7 @@ const { heading, body, hideHeading } = Astro.props;
   .proj-text-heading {
     font-family: var(--font-machine);
     font-size: var(--machine-label);
-    color: var(--dim);
+    color: var(--muted);
     letter-spacing: 0.08em;
     text-transform: uppercase;
     font-weight: 400;
@@ -45,7 +45,7 @@ const { heading, body, hideHeading } = Astro.props;
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.15;
-    color: var(--text);
+    color: var(--ink);
     margin: 0 0 1rem;
   }
 
@@ -72,12 +72,12 @@ const { heading, body, hideHeading } = Astro.props;
   }
 
   .proj-text :global(em) {
-    color: var(--text);
+    color: var(--ink);
     font-style: italic;
   }
 
   .proj-text :global(strong) {
-    color: var(--text);
+    color: var(--ink);
     font-weight: 700;
   }
 

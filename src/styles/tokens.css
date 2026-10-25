@@ -87,11 +87,10 @@
 }
 
 /* ── Legacy aliases ──
-   Remove once the about, ai, accessibility, colophon, contact, tokens and
-   blocks-demo pages and the project-blocks are fully ported to the tokens
-   above. They let the old terminal-era styles render in the new palette. */
+   Remove once the ai, accessibility, colophon, contact and tokens pages are
+   fully ported to the tokens above. They let the old terminal-era styles
+   render in the new palette. */
 :root {
-  --bg:          var(--paper);
   --bg0:         var(--paper);
   --bg1:         var(--paper);
   --bg2:         var(--panel);
@@ -104,12 +103,5 @@
   --lime-dim:    var(--tangerine-tint);
   --lime-contrast: var(--paper);
   --term-bg:      var(--panel);
-  --term-bg2:     var(--paper);
   --term-hover:   var(--panel);
-  --term-hover2:  var(--panel);
-  --term-overlay: var(--paper);
-  --mac-red:    #C8102E;
-  --mac-yellow: var(--tangerine);
-  --mac-green:  #1E7A34;
-  --radius-lg: 7px;
 }
