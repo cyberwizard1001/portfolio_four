@@ -1,0 +1,691 @@
+---
+// Three small games carried over from the terminal-era /toys page, redrawn in the v8
+// palette: ink and greys for everything on the board, tangerine only for what you're
+// chasing (food, bullets). Nothing moves until a game is focused (click, tap or Tab),
+// and a game pauses as soon as focus leaves its window. Without JS the boards stay
+// hidden and the noscript note shows instead.
+import Layout from '../layouts/Layout.astro';
+import DocHeader from '../components/DocHeader.astro';
+import WindowChrome from '../components/WindowChrome.astro';
+import Device from '../components/Device.astro';
+
+const toys = [
+  {
+    id: 'asteroids',
+    title: 'asteroids.sim',
+    device: 'radio',
+    wide: true,
+    label: 'Asteroids. Left and right arrows rotate, up arrow thrusts, space shoots, R restarts.',
+    keys: [['←', '→', 'rotate'], ['↑', 'thrust'], ['space', 'shoot'], ['R', 'restart']],
+    pad: [
+      { key: 'ArrowLeft', glyph: '←', label: 'Rotate left' },
+      { key: 'ArrowUp', glyph: '↑', label: 'Thrust' },
+      { key: 'ArrowRight', glyph: '→', label: 'Rotate right' },
+      { key: ' ', glyph: '●', label: 'Shoot' },
+      { key: 'r', glyph: '↻', label: 'Restart' },
+    ],
+  },
+  {
+    id: 'snake',
+    title: 'snake.game',
+    device: 'phone',
+    label: 'Snake. Arrow keys or W A S D steer, R restarts.',
+    keys: [['WASD', '/', '←↑→↓', 'steer'], ['R', 'restart']],
+    pad: [
+      { key: 'ArrowLeft', glyph: '←', label: 'Left' },
+      { key: 'ArrowUp', glyph: '↑', label: 'Up' },
+      { key: 'ArrowDown', glyph: '↓', label: 'Down' },
+      { key: 'ArrowRight', glyph: '→', label: 'Right' },
+      { key: 'r', glyph: '↻', label: 'Restart' },
+    ],
+  },
+  {
+    id: 'tetris',
+    title: 'tetris.game',
+    device: 'player',
+    label: 'Tetris. Left and right arrows move, up arrow rotates, down arrow soft drops, space hard drops, R restarts.',
+    keys: [['←', '→', 'move'], ['↑', 'rotate'], ['↓', 'soft drop'], ['space', 'hard drop'], ['R', 'restart']],
+    pad: [
+      { key: 'ArrowLeft', glyph: '←', label: 'Move left' },
+      { key: 'ArrowUp', glyph: '↻', label: 'Rotate' },
+      { key: 'ArrowDown', glyph: '↓', label: 'Soft drop' },
+      { key: 'ArrowRight', glyph: '→', label: 'Move right' },
+      { key: ' ', glyph: '⤓', label: 'Hard drop' },
+      { key: 'r', glyph: 'R', label: 'Restart' },
+    ],
+  },
+] as const;
+---
+
+<Layout title="Toys — Nirmal">
+  <main id="main-content" class="page doc toys">
+    <DocHeader title="Toys">
+      <p class="doc-lead">[TOYS INTRO: from Nirmal]</p>
+    </DocHeader>
+
+    <noscript><p class="t-body toys-noscript">[TOYS NEED JS: from Nirmal]</p></noscript>
+
+    <div class="toys-grid" hidden>
+      {toys.map((t) => (
+        <WindowChrome title={t.title} as="section" class:list={['toy', { 'toy-wide': 'wide' in t && t.wide }]} data-toy={t.id} aria-label={t.title}>
+          <div class={`toy-stage toy-stage--${t.id}`}>
+            <canvas tabindex="0" role="application" aria-roledescription="game" aria-label={t.label}></canvas>
+          </div>
+          <div class="toy-foot">
+            <Device name={t.device} scale={3} class="deco toy-device" />
+            <p class="toy-keys">
+              {t.keys.map((group) => (
+                <span class="toy-key-group">
+                  {group.slice(0, -1).map((k) => (k === '/' ? <span>/</span> : <kbd>{k}</kbd>))}
+                  <span>{group[group.length - 1]}</span>
+                </span>
+              ))}
+            </p>
+          </div>
+          <div class="toy-pad">
+            {t.pad.map((b) => (
+              <button type="button" class="mbtn toy-btn" data-key={b.key} aria-label={b.label}>
+                <span aria-hidden="true">{b.glyph}</span>
+              </button>
+            ))}
+          </div>
+        </WindowChrome>
+      ))}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .toys-noscript { margin-bottom: var(--space-3); }
+
+  .toys-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4) var(--space-3);
+  }
+
+  .toys-grid[hidden] { display: none; }
+
+  .toy-wide { grid-column: 1 / -1; }
+
+  .toy :global(.win-body) { padding: 0; }
+
+  .toy-stage {
+    position: relative;
+    height: 360px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .toy-stage--asteroids { height: 420px; }
+
+  .toy-stage canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .toy-stage canvas:focus-visible { outline: 3px solid var(--blue); outline-offset: -3px; }
+
+  .toy-foot {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 12px var(--space-2);
+  }
+
+  .toy-device { flex: none; }
+
+  .toy-keys {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    font-size: var(--fs-caption);
+    color: var(--muted);
+  }
+
+  .toy-key-group { display: inline-flex; align-items: center; gap: 4px; }
+
+  .toy-keys kbd {
+    font-family: var(--font-machine);
+    font-size: var(--machine-label);
+    color: var(--ink);
+    background: var(--panel);
+    border: 1px solid var(--ink);
+    padding: 0 5px;
+  }
+
+  .toy-pad {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 var(--space-2) var(--space-2);
+  }
+
+  .toy-btn {
+    min-width: 44px;
+    justify-content: center;
+    padding: 0 12px;
+    font-size: 18px;
+    touch-action: manipulation;
+  }
+
+  /* Keyboards make the pad redundant; show it where touch is the main input. */
+  @media (hover: hover) and (pointer: fine) {
+    .toy-pad { display: none; }
+  }
+
+  @media (max-width: 860px) {
+    .toys-grid { grid-template-columns: minmax(0, 1fr); }
+    .toy-stage, .toy-stage--asteroids { height: 340px; }
+  }
+</style>
+
+<script>
+  type Game = {
+    start(): void;
+    pause(): void;
+    resume(): void;
+    draw(): void;
+    key(k: string): boolean;
+    running(): boolean;
+  };
+
+  const css = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  // Tokens don't change at runtime, so read them once.
+  let cached: ReturnType<typeof readPalette> | null = null;
+  const palette = () => (cached ??= readPalette());
+  const readPalette = () => ({
+    paper: css('--paper') || '#fff',
+    ink: css('--ink') || '#000',
+    ink2: css('--ink-2') || '#3a3a3a',
+    muted: css('--muted') || '#6b6b6b',
+    dark: css('--grey-dark') || '#1a1a1a',
+    mid: css('--grey-mid') || '#8c8c8c',
+    light: css('--grey-light') || '#d6d6d6',
+    panel: css('--panel') || '#f2f2f2',
+    tangerine: css('--tangerine') || '#ff7a1a',
+    machine: css('--font-machine') || 'monospace',
+  });
+
+  function setupCanvas(canvas: HTMLCanvasElement, onResize: () => void) {
+    const ctx = canvas.getContext('2d')!;
+    let dpr = 1;
+    function resize() {
+      dpr = window.devicePixelRatio || 1;
+      const el = canvas.parentElement!;
+      canvas.width = Math.round(el.clientWidth * dpr);
+      canvas.height = Math.round(el.clientHeight * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.imageSmoothingEnabled = false;
+    }
+    resize();
+    let lastW = canvas.width;
+    new ResizeObserver(() => {
+      resize();
+      if (canvas.width !== lastW) { lastW = canvas.width; onResize(); }
+      else onResize();
+    }).observe(canvas.parentElement!);
+    return {
+      ctx,
+      w: () => canvas.width / dpr,
+      h: () => canvas.height / dpr,
+    };
+  }
+
+  // Centred pixel-type message over a paper scrim. Kept to a few words.
+  function overlay(ctx: CanvasRenderingContext2D, cw: number, ch: number, lines: string[]) {
+    const p = palette();
+    ctx.globalAlpha = 0.82;
+    ctx.fillStyle = p.paper;
+    ctx.fillRect(0, 0, cw, ch);
+    ctx.globalAlpha = 1;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    lines.forEach((line, i) => {
+      ctx.fillStyle = i === 0 ? p.ink : p.muted;
+      ctx.font = i === 0 ? `600 24px ${p.machine}` : `400 16px ${p.machine}`;
+      ctx.fillText(line, cw / 2, ch / 2 + (i === 0 ? -12 : 10 + (i - 1) * 22));
+    });
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+  }
+
+  function hud(ctx: CanvasRenderingContext2D, text: string, x = 10, y = 22) {
+    const p = palette();
+    ctx.font = `400 16px ${p.machine}`;
+    ctx.fillStyle = p.ink;
+    ctx.fillText(text, x, y);
+  }
+
+  // A bevelled block, like the title-bar boxes: ink outline, light top-left edge.
+  function block(ctx: CanvasRenderingContext2D, x: number, y: number, s: number, fill: string) {
+    const p = palette();
+    ctx.fillStyle = p.ink;
+    ctx.fillRect(x, y, s, s);
+    ctx.fillStyle = fill;
+    ctx.fillRect(x + 1, y + 1, s - 2, s - 2);
+    ctx.fillStyle = 'rgba(255,255,255,0.45)';
+    ctx.fillRect(x + 1, y + 1, s - 2, 2);
+    ctx.fillRect(x + 1, y + 1, 2, s - 2);
+  }
+
+  /* ── Snake ───────────────────────────────────────── */
+  function snake(canvas: HTMLCanvasElement): Game {
+    const CELL = 16;
+    type Pt = { x: number; y: number };
+    let cols = 0, rows = 0, ox = 0, oy = 0;
+    let body: Pt[] = [], dir: Pt = { x: 1, y: 0 }, nextDir: Pt = dir, food: Pt = { x: 0, y: 0 };
+    let score = 0, alive = true, started = false, timer = 0;
+    const { ctx, w, h } = setupCanvas(canvas, () => {
+      if (started) { stop(); init(); }
+      else grid();
+      draw();
+    });
+
+    function grid() {
+      cols = Math.max(8, Math.floor((w() - 16) / CELL));
+      rows = Math.max(8, Math.floor((h() - 40) / CELL));
+      ox = Math.floor((w() - cols * CELL) / 2);
+      oy = 32 + Math.floor((h() - 32 - rows * CELL) / 2);
+    }
+    function randFood(): Pt {
+      for (let i = 0; i < 400; i++) {
+        const p = { x: Math.floor(Math.random() * cols), y: Math.floor(Math.random() * rows) };
+        if (!body.some((s) => s.x === p.x && s.y === p.y)) return p;
+      }
+      return { x: 0, y: 0 };
+    }
+    function init() {
+      grid();
+      const sx = Math.floor(cols / 2), sy = Math.floor(rows / 2);
+      body = [{ x: sx, y: sy }, { x: sx - 1, y: sy }, { x: sx - 2, y: sy }];
+      dir = nextDir = { x: 1, y: 0 };
+      food = randFood();
+      score = 0;
+      alive = true;
+    }
+    function stop() { clearInterval(timer); timer = 0; }
+    function go() { stop(); timer = window.setInterval(tick, 120); }
+    function tick() {
+      dir = nextDir;
+      const head = { x: body[0].x + dir.x, y: body[0].y + dir.y };
+      if (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows || body.some((s) => s.x === head.x && s.y === head.y)) {
+        alive = false;
+        stop();
+      } else {
+        body.unshift(head);
+        if (head.x === food.x && head.y === food.y) { score++; food = randFood(); }
+        else body.pop();
+      }
+      draw();
+    }
+    function draw() {
+      const p = palette(), cw = w(), ch = h();
+      ctx.fillStyle = p.paper;
+      ctx.fillRect(0, 0, cw, ch);
+      ctx.strokeStyle = p.ink;
+      ctx.lineWidth = 1;
+      ctx.strokeRect(ox - 0.5, oy - 0.5, cols * CELL + 1, rows * CELL + 1);
+      if (started) {
+        ctx.fillStyle = p.light;
+        for (let c = 1; c < cols; c++) for (let r = 1; r < rows; r++) ctx.fillRect(ox + c * CELL, oy + r * CELL, 1, 1);
+        block(ctx, ox + food.x * CELL + 2, oy + food.y * CELL + 2, CELL - 4, p.tangerine);
+        body.forEach((s, i) => block(ctx, ox + s.x * CELL, oy + s.y * CELL, CELL, i === 0 ? p.ink2 : p.mid));
+        hud(ctx, `score ${score}`, ox, 22);
+      }
+      if (!started) overlay(ctx, cw, ch, ['snake', 'click to start']);
+      else if (!alive) overlay(ctx, cw, ch, ['game over', `score ${score}`, 'R to restart']);
+      else if (!timer) overlay(ctx, cw, ch, ['paused', 'click to resume']);
+    }
+    const DIRS: Record<string, Pt> = {
+      ArrowUp: { x: 0, y: -1 }, w: { x: 0, y: -1 },
+      ArrowDown: { x: 0, y: 1 }, s: { x: 0, y: 1 },
+      ArrowLeft: { x: -1, y: 0 }, a: { x: -1, y: 0 },
+      ArrowRight: { x: 1, y: 0 }, d: { x: 1, y: 0 },
+    };
+    grid();
+    return {
+      start() { started = true; init(); go(); draw(); },
+      pause() { if (timer) { stop(); draw(); } },
+      resume() { if (started && alive && !timer) { go(); draw(); } },
+      draw,
+      running: () => started && alive,
+      key(k) {
+        const d = DIRS[k.length === 1 ? k.toLowerCase() : k];
+        if (d) {
+          if (!(d.x === -dir.x && d.y === -dir.y)) nextDir = d;
+          return true;
+        }
+        if (k.toLowerCase() === 'r') { this.start(); return true; }
+        return false;
+      },
+    };
+  }
+
+  /* ── Tetris ──────────────────────────────────────── */
+  function tetris(canvas: HTMLCanvasElement): Game {
+    const COLS = 10, CELL = 18;
+    const PIECES: [number, number][][][] = [
+      [[[0,0],[1,0],[2,0],[3,0]], [[1,0],[1,1],[1,2],[1,3]]],
+      [[[0,0],[1,0],[0,1],[1,1]]],
+      [[[1,0],[0,1],[1,1],[2,1]], [[0,0],[0,1],[1,1],[0,2]], [[0,0],[1,0],[2,0],[1,1]], [[1,0],[0,1],[1,1],[1,2]]],
+      [[[1,0],[2,0],[0,1],[1,1]], [[0,0],[0,1],[1,1],[1,2]]],
+      [[[0,0],[1,0],[1,1],[2,1]], [[1,0],[0,1],[1,1],[0,2]]],
+      [[[0,0],[0,1],[1,1],[2,1]], [[0,0],[1,0],[0,1],[0,2]], [[0,0],[1,0],[2,0],[2,1]], [[1,0],[1,1],[0,2],[1,2]]],
+      [[[2,0],[0,1],[1,1],[2,1]], [[0,0],[0,1],[0,2],[1,2]], [[0,0],[1,0],[2,0],[0,1]], [[0,0],[1,0],[1,1],[1,2]]],
+    ];
+    let ROWS = 18;
+    let board: number[][] = [];
+    let type = 0, rot = 0, x = 0, y = 0, cur: [number, number][] = [];
+    let score = 0, level = 0, lines = 0, over = false, started = false, timer = 0;
+    const { ctx, w, h } = setupCanvas(canvas, () => {
+      if (started && !over) { stop(); init(); }
+      draw();
+    });
+    const fills = () => { const p = palette(); return [p.ink2, p.mid, p.dark, p.light, p.muted, p.panel, p.mid]; };
+
+    function fits(nx: number, ny: number, shape: [number, number][]) {
+      return shape.every(([dc, dr]) => {
+        const cx = nx + dc, cy = ny + dr;
+        return cx >= 0 && cx < COLS && cy < ROWS && (cy < 0 || board[cy][cx] === 0);
+      });
+    }
+    function spawn() {
+      type = Math.floor(Math.random() * PIECES.length);
+      rot = 0;
+      cur = PIECES[type][0];
+      x = Math.floor((COLS - 4) / 2) + 1;
+      y = -1;
+      if (!fits(x, y, cur)) { over = true; stop(); }
+    }
+    function place() {
+      cur.forEach(([dc, dr]) => { if (y + dr >= 0) board[y + dr][x + dc] = type + 1; });
+      let cleared = 0;
+      for (let r = ROWS - 1; r >= 0; r--) {
+        if (board[r].every((c) => c !== 0)) {
+          board.splice(r, 1);
+          board.unshift(new Array(COLS).fill(0));
+          cleared++;
+          r++;
+        }
+      }
+      if (cleared) {
+        lines += cleared;
+        score += [0, 100, 300, 500, 800][cleared] * (level + 1);
+        level = Math.floor(lines / 10);
+        go();
+      }
+      spawn();
+    }
+    function ghost() { let g = y; while (fits(x, g + 1, cur)) g++; return g; }
+    function stop() { clearInterval(timer); timer = 0; }
+    function go() { stop(); timer = window.setInterval(tick, Math.max(90, 500 - level * 40)); }
+    function tick() {
+      if (fits(x, y + 1, cur)) y++;
+      else place();
+      draw();
+    }
+    function init() {
+      ROWS = Math.max(10, Math.floor((h() - 16) / CELL));
+      board = Array.from({ length: ROWS }, () => new Array(COLS).fill(0));
+      score = level = lines = 0;
+      over = false;
+      spawn();
+    }
+    function draw() {
+      const p = palette(), cw = w(), ch = h();
+      const ox = Math.floor((cw - COLS * CELL) / 2), oy = Math.floor((ch - ROWS * CELL) / 2);
+      ctx.fillStyle = p.paper;
+      ctx.fillRect(0, 0, cw, ch);
+      ctx.strokeStyle = p.ink;
+      ctx.lineWidth = 1;
+      ctx.strokeRect(ox - 0.5, oy - 0.5, COLS * CELL + 1, ROWS * CELL + 1);
+      if (started) {
+        const f = fills();
+        for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+          if (board[r][c]) block(ctx, ox + c * CELL, oy + r * CELL, CELL, f[board[r][c] - 1]);
+        }
+        if (!over) {
+          const g = ghost();
+          ctx.setLineDash([2, 2]);
+          ctx.strokeStyle = p.mid;
+          cur.forEach(([dc, dr]) => {
+            if (g + dr >= 0 && g !== y) ctx.strokeRect(ox + (x + dc) * CELL + 1.5, oy + (g + dr) * CELL + 1.5, CELL - 3, CELL - 3);
+          });
+          ctx.setLineDash([]);
+          cur.forEach(([dc, dr]) => { if (y + dr >= 0) block(ctx, ox + (x + dc) * CELL, oy + (y + dr) * CELL, CELL, f[type]); });
+        }
+        const hx = ox + COLS * CELL + 16;
+        if (hx + 70 < cw) {
+          hud(ctx, 'score', hx, oy + 16);
+          hud(ctx, String(score), hx, oy + 36);
+          ctx.fillStyle = p.muted;
+          ctx.fillText(`lvl ${level}`, hx, oy + 66);
+          ctx.fillText(`lines ${lines}`, hx, oy + 86);
+        } else {
+          hud(ctx, String(score), 8, 22);
+        }
+      }
+      if (!started) overlay(ctx, cw, ch, ['tetris', 'click to start']);
+      else if (over) overlay(ctx, cw, ch, ['game over', `score ${score}`, 'R to restart']);
+      else if (!timer) overlay(ctx, cw, ch, ['paused', 'click to resume']);
+    }
+    return {
+      start() { started = true; init(); go(); draw(); },
+      pause() { if (timer) { stop(); draw(); } },
+      resume() { if (started && !over && !timer) { go(); draw(); } },
+      draw,
+      running: () => started && !over,
+      key(k) {
+        const lk = k.length === 1 ? k.toLowerCase() : k;
+        if (lk === 'r') { this.start(); return true; }
+        if (over || !timer) return ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', ' '].includes(k);
+        if ((lk === 'ArrowLeft' || lk === 'a') && fits(x - 1, y, cur)) x--;
+        else if ((lk === 'ArrowRight' || lk === 'd') && fits(x + 1, y, cur)) x++;
+        else if ((lk === 'ArrowDown' || lk === 's') && fits(x, y + 1, cur)) y++;
+        else if (lk === 'ArrowUp' || lk === 'w') {
+          const nr = (rot + 1) % PIECES[type].length;
+          const ns = PIECES[type][nr];
+          for (const kick of [0, -1, 1, -2, 2]) {
+            if (fits(x + kick, y, ns)) { rot = nr; cur = ns; x += kick; break; }
+          }
+        } else if (lk === ' ') { y = ghost(); place(); if (!over) go(); }
+        else return ['ArrowLeft', 'ArrowRight', 'ArrowDown', 'a', 'd', 's'].includes(lk);
+        draw();
+        return true;
+      },
+    };
+  }
+
+  /* ── Asteroids ───────────────────────────────────── */
+  function asteroids(canvas: HTMLCanvasElement): Game {
+    type V = { x: number; y: number };
+    type Rock = V & { vx: number; vy: number; r: number; verts: V[]; spin: number; a: number };
+    type Bullet = V & { vx: number; vy: number; life: number };
+    const TAU = Math.PI * 2;
+    const held: Record<string, boolean> = {};
+    let ship = { x: 0, y: 0, vx: 0, vy: 0, a: 0, alive: true, inv: 0 };
+    let rocks: Rock[] = [], bullets: Bullet[] = [];
+    let score = 0, lives = 3, over = false, started = false, cd = 0, raf = 0, last = 0, respawn = 0;
+    const { ctx, w, h } = setupCanvas(canvas, () => draw());
+    const wrap = (v: number, m: number) => ((v % m) + m) % m;
+
+    function rock(x: number, y: number, r: number): Rock {
+      const dir = Math.random() * TAU, spd = 0.02 + Math.random() * 0.035, n = 8 + Math.floor(Math.random() * 4);
+      const verts = Array.from({ length: n }, (_, i) => {
+        const a = (i / n) * TAU + (Math.random() - 0.5) * 0.8, k = 0.65 + Math.random() * 0.6;
+        return { x: Math.cos(a) * k, y: Math.sin(a) * k };
+      });
+      return { x, y, vx: Math.cos(dir) * spd, vy: Math.sin(dir) * spd, r, verts, spin: (Math.random() - 0.5) * 0.05, a: 0 };
+    }
+    function edge(): V {
+      const side = Math.floor(Math.random() * 4), cw = w(), ch = h();
+      return { x: side === 0 ? 0 : side === 1 ? cw : Math.random() * cw, y: side === 2 ? 0 : side === 3 ? ch : Math.random() * ch };
+    }
+    function wave(n: number) { for (let i = 0; i < n; i++) { const p = edge(); rocks.push(rock(p.x, p.y, 26 + Math.random() * 16)); } }
+    function newShip(inv: number) { ship = { x: w() / 2, y: h() / 2, vx: 0, vy: 0, a: -Math.PI / 2, alive: true, inv }; }
+    function init() {
+      newShip(180);
+      bullets = []; rocks = [];
+      score = 0; lives = 3; over = false; cd = 0; respawn = 0;
+      wave(4);
+    }
+    function step(ts: number) {
+      const dt = last ? Math.min(ts - last, 50) : 16;
+      last = ts;
+      const cw = w(), ch = h();
+      rocks.forEach((r) => { r.x = wrap(r.x + r.vx * dt, cw); r.y = wrap(r.y + r.vy * dt, ch); r.a += (r.spin * dt) / 16; });
+      if (!over) {
+        if (ship.alive) {
+          if (held.ArrowLeft) ship.a -= 0.004 * dt;
+          if (held.ArrowRight) ship.a += 0.004 * dt;
+          if (held.ArrowUp) { ship.vx += Math.cos(ship.a) * 0.00022 * dt; ship.vy += Math.sin(ship.a) * 0.00022 * dt; }
+          const spd = Math.hypot(ship.vx, ship.vy);
+          if (spd > 0.38) { ship.vx *= 0.38 / spd; ship.vy *= 0.38 / spd; }
+          const drag = Math.pow(0.984, dt / 16);
+          ship.vx *= drag; ship.vy *= drag;
+          ship.x = wrap(ship.x + ship.vx * dt, cw);
+          ship.y = wrap(ship.y + ship.vy * dt, ch);
+          if (ship.inv > 0) ship.inv -= dt / 16;
+        } else if ((respawn -= dt) <= 0) newShip(200);
+        if (cd > 0) cd -= dt;
+        for (let i = bullets.length - 1; i >= 0; i--) {
+          const b = bullets[i];
+          b.x = wrap(b.x + b.vx * dt, cw); b.y = wrap(b.y + b.vy * dt, ch);
+          if ((b.life -= dt) <= 0) { bullets.splice(i, 1); continue; }
+          const hit = rocks.findIndex((r) => Math.hypot(b.x - r.x, b.y - r.y) < r.r);
+          if (hit >= 0) {
+            const r = rocks[hit];
+            bullets.splice(i, 1);
+            score += Math.round(400 / r.r);
+            if (r.r > 13) rocks.push(rock(r.x, r.y, r.r * 0.54), rock(r.x, r.y, r.r * 0.54));
+            rocks.splice(hit, 1);
+          }
+        }
+        if (ship.alive && ship.inv <= 0 && rocks.some((r) => Math.hypot(ship.x - r.x, ship.y - r.y) < r.r + 9)) {
+          ship.alive = false;
+          if (--lives <= 0) over = true;
+          else respawn = 1200;
+        }
+        if (!rocks.length) wave(5);
+      }
+      draw();
+      raf = over ? 0 : requestAnimationFrame(step);
+    }
+    function draw() {
+      const p = palette(), cw = w(), ch = h();
+      ctx.fillStyle = p.paper;
+      ctx.fillRect(0, 0, cw, ch);
+      ctx.lineWidth = 2;
+      ctx.lineJoin = 'miter';
+      rocks.forEach((r) => {
+        ctx.save();
+        ctx.translate(r.x, r.y);
+        ctx.rotate(r.a);
+        ctx.beginPath();
+        r.verts.forEach((v, i) => (i ? ctx.lineTo : ctx.moveTo).call(ctx, v.x * r.r, v.y * r.r));
+        ctx.closePath();
+        ctx.fillStyle = p.panel;
+        ctx.fill();
+        ctx.strokeStyle = p.ink;
+        ctx.stroke();
+        ctx.restore();
+      });
+      if (started) {
+        ctx.fillStyle = p.tangerine;
+        bullets.forEach((b) => ctx.fillRect(Math.round(b.x) - 2, Math.round(b.y) - 2, 4, 4));
+        if (ship.alive && (ship.inv <= 0 || Math.floor(ship.inv / 5) % 2 === 0)) {
+          ctx.save();
+          ctx.translate(ship.x, ship.y);
+          ctx.rotate(ship.a);
+          ctx.beginPath();
+          ctx.moveTo(14, 0); ctx.lineTo(-9, 7); ctx.lineTo(-5, 0); ctx.lineTo(-9, -7);
+          ctx.closePath();
+          ctx.fillStyle = p.ink;
+          ctx.fill();
+          if (held.ArrowUp && raf) {
+            ctx.beginPath();
+            ctx.moveTo(-6, 3); ctx.lineTo(-13, 0); ctx.lineTo(-6, -3);
+            ctx.strokeStyle = p.mid;
+            ctx.stroke();
+          }
+          ctx.restore();
+        }
+        hud(ctx, `score ${score}`);
+        for (let i = 0; i < lives; i++) block(ctx, cw - 22 - i * 16, 10, 12, p.ink2);
+      }
+      if (!started) overlay(ctx, cw, ch, ['asteroids', 'click to start']);
+      else if (over) overlay(ctx, cw, ch, ['game over', `score ${score}`, 'R to restart']);
+      else if (!raf) overlay(ctx, cw, ch, ['paused', 'click to resume']);
+    }
+    function go() { cancelAnimationFrame(raf); last = 0; raf = requestAnimationFrame(step); }
+    function stop() { cancelAnimationFrame(raf); raf = 0; Object.keys(held).forEach((k) => (held[k] = false)); }
+    // The idle board is a still: a few rocks, drawn once.
+    function idle() { rocks = []; wave(5); draw(); }
+    canvas.addEventListener('keyup', (e) => { held[e.key] = false; });
+    requestAnimationFrame(idle);
+    return {
+      start() { started = true; init(); go(); },
+      pause() { if (raf) { stop(); draw(); } },
+      resume() { if (started && !over && !raf) go(); },
+      draw,
+      running: () => started && !over,
+      key(k) {
+        if (k.toLowerCase() === 'r') { this.start(); return true; }
+        if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', ' '].includes(k)) return false;
+        if (k === ' ') {
+          if (raf && ship.alive && cd <= 0) {
+            cd = 160;
+            bullets.push({ x: ship.x + Math.cos(ship.a) * 16, y: ship.y + Math.sin(ship.a) * 16, vx: Math.cos(ship.a) * 0.52 + ship.vx, vy: Math.sin(ship.a) * 0.52 + ship.vy, life: 1300 });
+          }
+        } else held[k] = true;
+        return true;
+      },
+    };
+  }
+
+  const makers: Record<string, (c: HTMLCanvasElement) => Game> = { snake, tetris, asteroids };
+
+  function mount(win: HTMLElement) {
+    const canvas = win.querySelector('canvas')!;
+    const pad = win.querySelector<HTMLElement>('.toy-pad')!;
+    const game = makers[win.dataset.toy!](canvas);
+    let started = false;
+
+    // Focus anywhere in the window (canvas or pad) keeps the game live; leaving pauses it.
+    function wake() {
+      if (!started || !game.running()) { started = true; game.start(); }
+      else game.resume();
+    }
+    canvas.addEventListener('focus', wake);
+    win.addEventListener('focusout', (e) => {
+      if (!win.contains(e.relatedTarget as Node | null)) game.pause();
+    });
+    canvas.addEventListener('keydown', (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (game.key(e.key)) e.preventDefault();
+    });
+
+    pad.querySelectorAll<HTMLButtonElement>('button').forEach((btn) => {
+      const k = btn.dataset.key!;
+      const press = () => {
+        if (!started) { started = true; game.start(); }
+        else game.resume();
+        game.key(k);
+      };
+      // Held keys (thrust, rotate) need a release; taps for everything else.
+      btn.addEventListener('pointerdown', (e) => { e.preventDefault(); btn.focus(); press(); });
+      btn.addEventListener('pointerup', () => canvas.dispatchEvent(new KeyboardEvent('keyup', { key: k })));
+      btn.addEventListener('pointerleave', () => canvas.dispatchEvent(new KeyboardEvent('keyup', { key: k })));
+      btn.addEventListener('click', (e) => { if (e.detail === 0) press(); });
+    });
+
+    document.fonts?.ready.then(() => game.draw());
+    document.addEventListener('visibilitychange', () => { if (document.hidden) game.pause(); });
+  }
+
+  document.querySelector<HTMLElement>('.toys-grid')?.removeAttribute('hidden');
+  document.querySelectorAll<HTMLElement>('[data-toy]').forEach(mount);
+</script>

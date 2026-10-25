@@ -1,9 +1,15 @@
 ---
 import Device from './Device.astro';
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <section class="signoff" aria-label="Sign-off">
-  <Device name="radio" scale={4} class="deco" />
+  <!-- The radio is the Asteroids toy's device, so it doubles as the way in to /toys. -->
+  <a href={`${base}toys`} class="signoff-toys">
+    <Device name="radio" scale={4} />
+    <span class="visually-hidden">Toys</span>
+  </a>
   <p class="signoff-line">
     <span class="signoff-grey">Less friction,</span>
     more clarity,
@@ -31,6 +37,16 @@ import Device from './Device.astro';
   }
 
   /* --muted rather than --grey-mid: the lighter grey fails AA at the small end of the clamp. */
+  .signoff-toys {
+    display: inline-flex;
+    padding: 6px;
+    border: 1px solid transparent;
+  }
+
+  .signoff-toys:hover { border-color: var(--blue); }
+
+  .signoff-toys:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
   .signoff-grey { color: var(--muted); }
 
   .signoff-hl { padding: 0 4px; }
