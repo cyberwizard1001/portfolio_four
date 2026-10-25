@@ -1,0 +1,19 @@
+---
+// SCRATCH: preview of the regenerated diagrams. Delete before deploying.
+import Layout from '../../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL;
+const imgs = [
+  'perro/drop-off-funnel.svg', 'perro/before-after-screens.svg', 'counselling/admin-breakdown.svg',
+  'direct-quote/research/evidence-map.svg', 'placeholder.svg', 'counselling/persona-solo.svg', 'counselling/persona-institution.svg',
+];
+---
+<Layout title="Scratch: graphics">
+  <main class="page" style="padding: 40px 0 120px; max-width: 760px;">
+    {imgs.map((i) => (
+      <figure style="margin: 0 0 48px;">
+        <p class="t-label">{i}</p>
+        <img src={`${base}images/${i}`} alt="" style="display:block; max-width:100%; border:1px solid #000;" />
+      </figure>
+    ))}
+  </main>
+</Layout>
