@@ -36,7 +36,7 @@ export interface Stop {
   headingId?: string;
 }
 
-/** Blocks never placed on the route: the header and "next stop" replace them. */
+/** Data-only sections with no component: the hero and "next stop" do their job. */
 const OFF_ROUTE = new Set(['ProjectHero', 'ProjectMeta', 'ProjectIntro', 'MoreProjects']);
 
 /** Untitled blocks that can open a stop use their own visible label. */

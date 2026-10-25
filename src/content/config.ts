@@ -15,7 +15,6 @@ const sectionComponent = z.enum([
   'ProjectCallout',
   'ProjectQuote',
   'ProjectMetricsBand',
-  'ProjectBeforeAfter',
   'ProjectLearnings',
   'ProjectProcessSteps',
   'ProjectFindingsGrid',

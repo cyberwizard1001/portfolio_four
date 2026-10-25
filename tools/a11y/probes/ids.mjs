@@ -4,7 +4,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 const walk = (dir) => readdirSync(dir).flatMap((f) => {
   const p = join(dir, f);
-  if (p === 'dist/scratch' || p === 'dist/blocks-demo') return [];
+  if (p === 'dist/scratch') return [];
   return statSync(p).isDirectory() ? walk(p) : p.endsWith('.html') ? [p] : [];
 });
 let problems = 0;
