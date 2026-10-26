@@ -186,6 +186,20 @@ const items = [
     .menubar { position: static; }
     .menubar.js-menu { position: sticky; }
 
+    /* Without JS: the links sit on one row under the name and scroll sideways, rather than
+       wrapping and leaving contact stranded on a line of its own. */
+    .menubar:not(.js-menu) .mb-nav {
+      flex-basis: 100%;
+      flex-wrap: nowrap;
+      gap: 0 20px;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+      /* Room for the "you are here" underline inside the scroll box. */
+      padding-bottom: 6px;
+    }
+    .menubar:not(.js-menu) .mb-nav > * { flex: none; }
+
     .js-menu .mb-toggle { display: inline-flex; }
 
     /* Folded: one 48px row. Open: the links stack under it. */
